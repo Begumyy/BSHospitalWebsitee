@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BSHospital.Repository\BSHospital.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
