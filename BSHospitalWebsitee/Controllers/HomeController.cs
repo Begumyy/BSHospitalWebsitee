@@ -15,9 +15,6 @@ namespace BSHospitalWebsitee.Controllers
             return View();
         }
 
-        public IActionResult Appointment()
-        {
-            return View();
-        }
+      
     }
 }

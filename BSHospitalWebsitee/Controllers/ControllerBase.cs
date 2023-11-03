@@ -5,7 +5,7 @@ namespace BSHospitalWebsitee.Controllers
 {
     public class ControllerBase : Controller
     {
-        private readonly IUnitOfWork unitOfWork;
+        public readonly IUnitOfWork unitOfWork;
 
         public ControllerBase(IUnitOfWork unitOfWork)
         {
