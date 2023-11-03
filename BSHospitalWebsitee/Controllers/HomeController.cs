@@ -5,8 +5,6 @@ namespace BSHospitalWebsitee.Controllers
 {
     public class HomeController : Controller
     {
-        
-
         public IActionResult Index()
         {
             return View();
@@ -17,6 +15,9 @@ namespace BSHospitalWebsitee.Controllers
             return View();
         }
 
-        
+        public IActionResult Appointment()
+        {
+            return View();
+        }
     }
 }

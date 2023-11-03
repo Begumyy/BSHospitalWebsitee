@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSHospitalWebsitee", "BSHospitalWebsitee\BSHospitalWebsitee.csproj", "{D600E205-939D-421A-A767-EA40A198B7B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Websitee", "BSHospitalWebsitee\BSHospital.Websitee.csproj", "{D600E205-939D-421A-A767-EA40A198B7B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSHospital.Models", "BSHospital.Models\BSHospital.Models.csproj", "{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Models", "BSHospital.Models\BSHospital.Models.csproj", "{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSHospital.Data", "BSHospital.Data\BSHospital.Data.csproj", "{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Data", "BSHospital.Data\BSHospital.Data.csproj", "{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSHospital.Repository", "BSHospital.Repository\BSHospital.Repository.csproj", "{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Repository", "BSHospital.Repository\BSHospital.Repository.csproj", "{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

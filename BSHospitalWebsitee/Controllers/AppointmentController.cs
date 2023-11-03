@@ -1,4 +1,6 @@
-﻿using BSHospital.Repository.Shared.Abstract;
+﻿using BSHospital.Models;
+using BSHospital.Repository.Shared.Abstract;
+using BSHospital.Repository.Shared.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BSHospitalWebsitee.Controllers
@@ -11,6 +13,13 @@ namespace BSHospitalWebsitee.Controllers
         }
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(Appointment appointment)
+        {
+            
             return View();
         }
     }
