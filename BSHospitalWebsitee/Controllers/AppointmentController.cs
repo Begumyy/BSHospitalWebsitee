@@ -15,12 +15,5 @@ namespace BSHospitalWebsitee.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public IActionResult Add(Appointment appointment)
-        {
-            
-            return View();
-        }
     }
 }
