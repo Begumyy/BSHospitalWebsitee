@@ -14,7 +14,5 @@ namespace BSHospitalWebsitee.Controllers
         {
             return View();
         }
-
-      
     }
 }
