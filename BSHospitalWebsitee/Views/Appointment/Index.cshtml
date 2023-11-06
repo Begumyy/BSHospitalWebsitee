@@ -1,0 +1,111 @@
+﻿<div id="divList" class="row"></div>
+<a class="btn btn-success" id="btnEkle">Randevu Ekle</a>
+<form>
+    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Name</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="txtName" placeholder="Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Listele();
+            $("#btnEkle").click(function () {
+                $("#modalId").modal('show')
+            });
+
+            function Listele() {
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/GetAll',
+                    success: function (res) {
+                        $("#divList").empty();
+                        for (var item of res) {
+                            $("#divList").append(`<div class="col-4">
+                                   <div class="card">
+                                      <div class="card-body">
+                                          <h3 class="card-title bg-danger text-white"></h3>
+                                                 HastaneId : ${item.hospitalId}
+                                               <p class="card-text">${item.departmentId}</p>
+
+                                                <p class="card-text">${item.appointmentDate}</p>
+
+                                                 <p class="card-text">${item.hospital}</p>
+
+                                                 <p class="card-text">${item.department}</p>
+
+                                                 <p class="card-text">${item.nameSurname}</p>
+
+                                                 <p class="card-text">${item.isCanceled}</p>
+                                        </div>
+                                               <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
+                                 </div>
+                            </div>`)
+                        }
+                    }
+                });
+
+            }
+
+
+            function Sil(id) {
+               
+                Swal.fire({
+                    title: 'Bunu silmek istediğinizden emin misiniz?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Evet',
+                    cancelButtonText: `İptal`,
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        let x = {
+                            id: id
+                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Appointment/Delete',
+                            data: { id: id},
+                            success: function () {
+                                Listele();
+                                
+                                Swal.fire('Başarıyla silindi', '', 'success');
+                            },
+                            error: function (error) {
+                                Swal.fire('Silme işlemi sırasında bir hata oluştu', '', 'error');
+                            }
+                        })
+                    }
+                })
+
+            }
+     
+        });
+    </script>
+}
+
+

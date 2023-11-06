@@ -1,3 +1,8 @@
+using BSHospital.Data;
+using BSHospital.Repository.Shared.Abstract;
+using BSHospital.Repository.Shared.Concrete;
+using Microsoft.EntityFrameworkCore;
+
 namespace BSHospitalWebsitee
 {
     public class Program
@@ -8,6 +13,8 @@ namespace BSHospitalWebsitee
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 

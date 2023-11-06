@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSHospitalWebsitee", "BSHospitalWebsitee\BSHospitalWebsitee.csproj", "{D600E205-939D-421A-A767-EA40A198B7B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Websitee", "BSHospitalWebsitee\BSHospital.Websitee.csproj", "{D600E205-939D-421A-A767-EA40A198B7B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Models", "BSHospital.Models\BSHospital.Models.csproj", "{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Data", "BSHospital.Data\BSHospital.Data.csproj", "{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BSHospital.Repository", "BSHospital.Repository\BSHospital.Repository.csproj", "{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{D600E205-939D-421A-A767-EA40A198B7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D600E205-939D-421A-A767-EA40A198B7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D600E205-939D-421A-A767-EA40A198B7B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D88943B7-AB99-44E3-B5C7-0F7CD6B77542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F11D9A8-AADB-45C9-B1F7-8D4688AFC61F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5F3313-38B5-4998-B9B9-E76CCA1D46FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
