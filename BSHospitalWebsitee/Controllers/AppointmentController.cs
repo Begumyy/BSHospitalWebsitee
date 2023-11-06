@@ -2,6 +2,7 @@
 using BSHospital.Repository.Shared.Abstract;
 using BSHospital.Repository.Shared.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BSHospitalWebsitee.Controllers
 {
@@ -9,26 +10,27 @@ namespace BSHospitalWebsitee.Controllers
     {
         public AppointmentController(IUnitOfWork unitOfWork):base(unitOfWork)
         {
-            
+           
         }
         public IActionResult Index()
         {
-            List<Appointment> appointments = new List<Appointment>(); //veritabanından randevular alınacak
-            return View(appointments);//randevular da view'a gönderilecek   ???? admin'de yapılacak!!!
-        }
-
-        [HttpPost]
-
-        public IActionResult Add(Appointment appointment)
-        {
-            unitOfWork.Appointments.Add(appointment);
-            unitOfWork.Save();
+           
             return View();
         }
 
         public IActionResult GetAll()
         {
-            return Json(new {data=unitOfWork.Appointments.GetAll().ToList()});
+            //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
+            var list = unitOfWork.Appointments.GetAll().ToList();
+            return Json(list);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            unitOfWork.Appointments.DeleteById(id);
+            unitOfWork.Save();
+            return Ok();
         }
 
         [HttpPost]
@@ -37,15 +39,6 @@ namespace BSHospitalWebsitee.Controllers
             unitOfWork.Appointments.DeleteById(id);
             unitOfWork.Save();
             return Ok("Başarıyla silindi");
-        }
-
-        [HttpPost]
-        public IActionResult Update(Appointment appointment)
-        {
-            unitOfWork.Appointments.Update(appointment);
-            unitOfWork.Save();
-            return Ok();
-
         }
     }
 }
