@@ -2,6 +2,7 @@ using BSHospital.Data;
 using BSHospital.Repository.Shared.Abstract;
 using BSHospital.Repository.Shared.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BSHospitalWebsitee
 {
@@ -12,7 +13,10 @@ namespace BSHospitalWebsitee
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
