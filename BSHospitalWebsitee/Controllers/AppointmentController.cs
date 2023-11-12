@@ -25,7 +25,7 @@ namespace BSHospitalWebsitee.Controllers
         public IActionResult GetAll()
         {
             //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
-            var list = _unitOfWork.Appointments.GetAll().Include(u=>u.Hospital).ToList();
+            var list = _unitOfWork.Appointments.GetAll().Include(u=>u.Hospital).Include(u=>u.Department).ToList();
             return Json(list);
         }
 
