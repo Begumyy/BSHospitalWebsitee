@@ -6,12 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BSHospitalWebsitee.Controllers
 {
-    public class AppointmentController : ControllerBase
+    public class AppointmentController : Controller
     {
-        public AppointmentController(IUnitOfWork unitOfWork):base(unitOfWork)
+
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AppointmentController(IUnitOfWork unitOfWork)
         {
-           
+            _unitOfWork = unitOfWork;
         }
+
         public IActionResult Index()
         {
            
@@ -21,23 +25,23 @@ namespace BSHospitalWebsitee.Controllers
         public IActionResult GetAll()
         {
             //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
-            var list = unitOfWork.Appointments.GetAll().ToList();
+            var list = _unitOfWork.Appointments.GetAll().Include(u=>u.Hospital).ToList();
             return Json(list);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            unitOfWork.Appointments.DeleteById(id);
-            unitOfWork.Save();
+            _unitOfWork.Appointments.DeleteById(id);
+            _unitOfWork.Save();
             return Ok();
         }
 
         [HttpPost]
         public IActionResult DeleteById(int id)
         {
-            unitOfWork.Appointments.DeleteById(id);
-            unitOfWork.Save();
+            _unitOfWork.Appointments.DeleteById(id);
+            _unitOfWork.Save();
             return Ok("Başarıyla silindi");
         }
     }
