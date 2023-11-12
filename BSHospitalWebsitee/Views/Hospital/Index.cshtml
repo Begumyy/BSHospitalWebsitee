@@ -1,0 +1,97 @@
+﻿<div id="divList" class="row"></div>
+<a class="btn btn-success" id="btnEkle">Hastane Ekle</a>
+<form>
+    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Yeni bir Hastane Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Name</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="txtName" placeholder="Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+
+
+            $("#btnAdd").click(function () {
+                $("input.form-control").val('')
+                $("#modalAdd").modal('show');
+                $("#btnSave").off().click(function () {
+                    var hospitalname = $("#txtHospital").val();
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Hospital/Add',
+                        data: { id: id, hospitalname: hospitalname },
+                        success: function () {
+                            $("#modalAdd").modal("hide");
+                            $("#tblHospitals").DataTable().ajax.reload();
+                        }
+                    })
+                });
+            });
+        });
+
+
+        function fillDataTable() {
+            $("#tblHospitals").DataTable({
+                ajax: '/Hospital/GetAll',
+                columns: [
+                    { data: 'id', title: 'ID' },
+                    { data: 'hospitalname', title: 'Hastane Adı' }
+                ],
+            });
+        }
+
+
+        function updateHospital(id, nameSurname, isCanceled) {
+            $("#txtHospital").val(nameSurname);
+
+            $("#modalAdd").modal("show");
+            $("#modalTitle").text("Hastane Güncelle");
+            $("#btnSave").text("Güncelle");
+            $("#btnSave").off();
+
+            $("#btnSave").click(function () {
+                var hospitalname = $("#txtHospital").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Hospital/Update',
+                    data: { id: id, hospitalname: hospitalname },
+                    success: function () {
+                        $("#modalAdd").modal("hide");
+                        $("#tblHospitals").DataTables().ajax.reload();
+                    }
+                })
+            })
+        }
+
+    </script>
+}
+
+
+

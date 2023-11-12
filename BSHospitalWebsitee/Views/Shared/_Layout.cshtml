@@ -44,6 +44,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="Index">Doktorlar</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Hospital" asp-action="Index">Hastaneler</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Hastalar</a>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -67,6 +77,8 @@
     <!-- Responsive examples -->
     <script src="~/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

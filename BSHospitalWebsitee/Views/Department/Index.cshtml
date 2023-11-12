@@ -11,7 +11,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitleId">Yeni bir Departman Ekle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -51,7 +51,7 @@
                     $.ajax({
                         type: 'POST',
                         url: '/Department/Add',
-                        data: { id:id, Department: departmentname },
+                        data: { id:id, departmentname: departmentname },
                         success: function () {
                             $("#modalAdd").modal("hide");
                             $("#tblDepartments").DataTable().ajax.reload();
@@ -87,7 +87,7 @@
                     $.ajax({
                         type:'POST',
                         url:'/Department/Update',
-                        data: { id: id, Department: departmentname },
+                        data: { id: id, departmentname: departmentname },
                         success: function () {
                             $("#modalAdd").modal("hide");
                             $("#tblDepartments").DataTables().ajax.reload();
