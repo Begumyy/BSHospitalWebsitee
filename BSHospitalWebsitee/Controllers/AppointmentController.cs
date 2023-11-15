@@ -27,8 +27,11 @@ namespace BSHospitalWebsitee.Controllers
             //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
 
 
-            var list = _unitOfWork.Appointments.GetAll().Select(a => a.Patients).ToList();
-            return Json(list);
+            //var list = _unitOfWork.Appointments.GetAll().Select(a => a.Patients).ToList();
+            //return Json(list);
+
+
+
 
             //var appointments = _unitOfWork.Appointments.GetAll().Select(a=> new
             //{
@@ -39,6 +42,10 @@ namespace BSHospitalWebsitee.Controllers
             //return Ok();
 
             //var list =_unitOfWork.Appointments.GetAll().Select(a=>a.Patients.Where(a=>a.PatientName.));
+
+
+            //var list = _unitOfWork.Appointments.GetAll(a=>a.Patients.).Include(a => a.Hospital).Include(a => a.Department).Include(a => a.Patients).ToList();
+            //return Json(list);
 
         }
 
