@@ -9,7 +9,7 @@ namespace BSHospital.Models
     public class BaseModel
     {
         public int Id { get; set; }
-        public string NameSurname { get; set; }
+        
         public bool IsCanceled { get; set; } = false;
     }
 }
