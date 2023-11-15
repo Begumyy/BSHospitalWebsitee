@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/BSHospitalWebsitee.styles.css" asp-append-version="true" />
 
     <!-- Responsive datatable examples -->
-    <link href="~/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -25,13 +25,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                       
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Index">Randevular</a>
@@ -74,10 +68,11 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Responsive examples -->
-    <script src="~/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="~/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ 
+ 
+   
+    <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+   
 
 
     @await RenderSectionAsync("Scripts", required: false)

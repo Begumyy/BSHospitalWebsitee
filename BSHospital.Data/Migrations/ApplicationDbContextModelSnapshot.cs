@@ -33,16 +33,16 @@ namespace BSHospital.Data.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HospitalId")
+                    b.Property<int?>("HospitalId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameSurname")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -66,7 +66,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameSurname")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -83,31 +83,21 @@ namespace BSHospital.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DepartmentName")
+                    b.Property<string>("DoctorName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HospitalId")
+                    b.Property<int?>("HospitalId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameSurname")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("DoctorId");
 
                     b.HasIndex("HospitalId");
 
@@ -133,7 +123,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameSurname")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -161,13 +151,13 @@ namespace BSHospital.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameSurname")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -184,6 +174,21 @@ namespace BSHospital.Data.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("DepartmentDoctor", b =>
+                {
+                    b.Property<int>("DepartmentsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DepartmentsId", "DoctorsId");
+
+                    b.HasIndex("DoctorsId");
+
+                    b.ToTable("DepartmentDoctor");
                 });
 
             modelBuilder.Entity("DepartmentHospital", b =>
@@ -235,15 +240,11 @@ namespace BSHospital.Data.Migrations
                 {
                     b.HasOne("BSHospital.Models.Department", "Department")
                         .WithMany("Appointments")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("BSHospital.Models.Hospital", "Hospital")
                         .WithMany("Appointments")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HospitalId");
 
                     b.Navigation("Department");
 
@@ -252,19 +253,9 @@ namespace BSHospital.Data.Migrations
 
             modelBuilder.Entity("BSHospital.Models.Doctor", b =>
                 {
-                    b.HasOne("BSHospital.Models.Department", null)
-                        .WithMany("Doctors")
-                        .HasForeignKey("DepartmentId");
-
-                    b.HasOne("BSHospital.Models.Doctor", null)
-                        .WithMany("Doctors")
-                        .HasForeignKey("DoctorId");
-
                     b.HasOne("BSHospital.Models.Hospital", "Hospital")
                         .WithMany("Doctors")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HospitalId");
 
                     b.Navigation("Hospital");
                 });
@@ -273,11 +264,24 @@ namespace BSHospital.Data.Migrations
                 {
                     b.HasOne("BSHospital.Models.Department", "Department")
                         .WithMany("Patients")
-                        .HasForeignKey("DepartmentId")
+                        .HasForeignKey("DepartmentId");
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("DepartmentDoctor", b =>
+                {
+                    b.HasOne("BSHospital.Models.Department", null)
+                        .WithMany()
+                        .HasForeignKey("DepartmentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
+                    b.HasOne("BSHospital.Models.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DepartmentHospital", b =>
@@ -329,14 +333,7 @@ namespace BSHospital.Data.Migrations
                 {
                     b.Navigation("Appointments");
 
-                    b.Navigation("Doctors");
-
                     b.Navigation("Patients");
-                });
-
-            modelBuilder.Entity("BSHospital.Models.Doctor", b =>
-                {
-                    b.Navigation("Doctors");
                 });
 
             modelBuilder.Entity("BSHospital.Models.Hospital", b =>

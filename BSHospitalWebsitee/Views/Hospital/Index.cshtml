@@ -1,5 +1,6 @@
 ﻿<div id="divList" class="row"></div>
 <a class="btn btn-success" id="btnEkle">Hastane Ekle</a>
+<table id="tblHospitals" class="table table-bordered table-striped"></table>
 <form>
     <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -32,7 +33,7 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-
+            fillDataTable();
 
 
             $("#btnAdd").click(function () {
@@ -61,7 +62,7 @@
                 ajax: '/Hospital/GetAll',
                 columns: [
                     { data: 'id', title: 'ID' },
-                    { data: 'hospitalname', title: 'Hastane Adı' }
+                    { data: 'hospitalName', title: 'Hastane Adı' }
                 ],
             });
         }

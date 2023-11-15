@@ -1,6 +1,8 @@
 using BSHospital.Data;
 using BSHospital.Repository.Shared.Abstract;
 using BSHospital.Repository.Shared.Concrete;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -21,6 +23,13 @@ namespace BSHospitalWebsitee
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Admin/User/Login";
+                options.LogoutPath = "/Admin/User/Login";
+                options.AccessDeniedPath = "/Admin/Login/AccessDenied";
+            });
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
@@ -38,6 +47,7 @@ namespace BSHospitalWebsitee
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

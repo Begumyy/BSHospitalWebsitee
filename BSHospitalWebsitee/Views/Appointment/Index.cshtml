@@ -2,7 +2,7 @@
 <div id="divList" class="row"></div>
 
 <form>
-    <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -12,40 +12,41 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Name Surname</label>
+                            <label for="inputName" class="col-4 col-form-label">Adınız Soyadınız</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtName" placeholder="Name Surname ">
+                                <input type="text" class="form-control" id="txtName" placeholder="Lütfen adınızı ve soyadınızı giriniz">
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">TCKN</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtTCKN" placeholder="TC Number ">
+                                <input type="text" class="form-control" id="txtTCKN" placeholder="Lütfen TC Kimlik No giriniz">
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Department</label>
+                            <label for="inputName" class="col-4 col-form-label">Bölüm Adı</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtDepartment" placeholder="Entry Department ">
+                                <select class="form-select" name="script" id="ddlDepartment"> </select>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
+                            <label for="inputName" class="col-4 col-form-label">Doktor Adı</label>
                             <div class="col-8">
-                                <select class="form-select" name="script" id="txtDoctor"> </select>
+                                <select class="form-select" name="script" id="ddlDoctor"> </select>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Appoimtment</label>
+                            <label for="inputName" class="col-4 col-form-label">Randevu Tarihi</label>
                             <div class="col-8">
-                                <input type="datetime-local" class="form-control" id="txtDepartment" placeholder="Entry Days ">
+                                <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Lütfen bir randevu tarihi giriniz">
                             </div>
                         </div>
+                       
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a  id="btnAppoimtent" class="btn btn-primary">Create Appoimtment</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <a  id="btnSave" class="btn btn-primary">Randevu Oluştur</a>
                 </div>
             </div>
         </div>
@@ -57,14 +58,45 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            Listele();
-
+            
             fillList();
-
+            fillDepartment();
+            Listele();
+            
+            
             $("#btnEkle").click(function () {
-                $("#modalId").modal('show')
+                $("#modalAdd").modal('show')
+                fillList();
+                Listele();
+
+
+                $("#btnSave").off().click(function () {
+                    let randevu = {
+                        appointment: {
+                            name: $("#txtName").val(),
+                            tckn: $("#txtTCKN").val(),
+                            departmentId: $("#ddlDepartment").val(),
+                            doctorId: $("#ddlDoctor").val(),
+                            appointment: $("#txtAppointment").val()
+
+                        }
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Appointment/Add',
+                        data: randevu,
+                        success: function () {
+                            $("#modalAdd").modal('hide');
+                            
+                            Listele();
+                        }
+                    });
+                });
             });
 
+            
+            
             function Listele() {
 
                 $.ajax({
@@ -82,11 +114,11 @@
 
                                                 <p class="card-text">${item.appointmentDate}</p>
 
-                                                 <p class="card-text">${item.hospital.hospitalName}</p>
+                                                 <p class="card-text">${item.hospitalName}</p>
 
-                                                
+                                                           <p class="card-text">${item.departmentName}</p>
 
-                                                 <p class="card-text">${item.department.nameSurname}</p>
+                                                         <p class="card-text">${item.doctorName}</p>
 
                                                  <p class="card-text">${item.isCanceled}</p>
                                         </div>
@@ -98,26 +130,40 @@
                 });
 
             }
-            function fillList(nameSurname) {
+
+
+            function fillList() {
                 $.ajax({
-                    type:"GET",
-                    url:"/Doctor/GetAll",
-                    success:function(res){
-                        $("#txtDoctor").empty();
+                    type: 'GET',
+                    url: '/Doctor/GetAll',
+                    success: function (res) {
+                        $("#ddlDoctor").empty();
                         for (var item of res) {
-                            $("#txtDoctor").append(new Option(item.departmentName, item.departmentName, false));
+                            $("#ddlDoctor").append(new Option(item.name, item.id, false));
+                           
+
                         }
                     }
 
-
-
-                })
+                });
 
             }
 
+            function fillDepartment() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Department/GetAll',
+                    success: function (res) {
+                        $("#ddlDepartment").empty();
+                        for (var item of res) {
+                            $("#ddlDepartment").append(new Option(item.name, item.id, false));
+                        }
+                    }
+                    
+                });
+                
+            }
 
-           
-     
         });
     </script>
 }

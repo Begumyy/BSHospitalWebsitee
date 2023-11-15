@@ -1,4 +1,4 @@
-﻿<a href="#" id="btnAdd" class="btn btn-success">Departman Ekle</a>
+﻿@* <a href="#" id="btnAdd" class="btn btn-success">Departman Ekle</a>
 <div class="row">
     <table id="tblDepartments" class="table table-striped table-hover">
     </table>
@@ -20,7 +20,7 @@
                     <div class="mb-3 row">
                         <label for="inputName" class="col-4 col-form-label">Departman Adı</label>
                         <div class="col-8">
-                            <input type="text" class="form-control" id="txtDepartment" placeholder="Lütfen Departman Adı Giriniz">
+                            <input type="text" class="form-control" id="ddlDepartment" placeholder="Lütfen Departman Adı Giriniz">
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@
                 $("input.form-control").val('')
                 $("#modalAdd").modal('show');
                 $("#btnSave").off().click(function () {
-                    var departmentname = $("#txtDepartment").val();
+                    var departmentname = $("#ddlDepartment").val();
 
 
                     $.ajax({
@@ -74,7 +74,7 @@
 
 
         function updateDepartment(id, nameSurname, isCanceled) {
-                $("#txtDepartment").val(nameSurname);
+                $("#ddlDepartment").val(nameSurname);
 
                 $("#modalAdd").modal("show");
                 $("#modalTitle").text("Departman Güncelle");
@@ -82,7 +82,7 @@
                 $("#btnSave").off();
 
                 $("#btnSave").click(function () {
-                    var departmentname = $("#txtDepartment").val();
+                    var departmentname = $("#ddlDepartment").val();
 
                     $.ajax({
                         type:'POST',
@@ -97,4 +97,4 @@
         }
 
     </script>
-}
+} *@
