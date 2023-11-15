@@ -37,9 +37,17 @@ namespace BSHospitalWebsitee.Controllers
             var list = _unitOfWork.Appointments.GetAll().ToList();
             return Json(list);
 
+            //var appointments = _unitOfWork.Appointments.GetAll().Select(a => new
+            //{
+            //    Id = a.Id,
+            //    Date = a.AppointmentDate,
+            //    Name = a.Name
+            //}).ToList();
+            //return Ok();
 
-           
-            
+
+
+
         }
 
         [HttpPost]
