@@ -43,31 +43,6 @@ namespace BSHospital.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Patients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TCKN = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    NameSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsCanceled = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Patients_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Appointments",
                 columns: table => new
                 {
@@ -129,7 +104,6 @@ namespace BSHospital.Data.Migrations
                     DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HospitalId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: true),
-                    DoctorId = table.Column<int>(type: "int", nullable: true),
                     NameSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsCanceled = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -142,14 +116,65 @@ namespace BSHospital.Data.Migrations
                         principalTable: "Departments",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Doctors_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Doctors_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TCKN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
+                    AppointmentId = table.Column<int>(type: "int", nullable: false),
+                    NameSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_Appointments_AppointmentId",
+                        column: x => x.AppointmentId,
+                        principalTable: "Appointments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Patients_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorPatient",
+                columns: table => new
+                {
+                    DoctorsId = table.Column<int>(type: "int", nullable: false),
+                    PatientsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorPatient", x => new { x.DoctorsId, x.PatientsId });
+                    table.ForeignKey(
+                        name: "FK_DoctorPatient_Doctors_DoctorsId",
+                        column: x => x.DoctorsId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DoctorPatient_Patients_PatientsId",
+                        column: x => x.PatientsId,
+                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -172,30 +197,6 @@ namespace BSHospital.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_HospitalPatient_Patients_PatientsId",
-                        column: x => x.PatientsId,
-                        principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DoctorPatient",
-                columns: table => new
-                {
-                    DoctorsId = table.Column<int>(type: "int", nullable: false),
-                    PatientsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DoctorPatient", x => new { x.DoctorsId, x.PatientsId });
-                    table.ForeignKey(
-                        name: "FK_DoctorPatient_Doctors_DoctorsId",
-                        column: x => x.DoctorsId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DoctorPatient_Patients_PatientsId",
                         column: x => x.PatientsId,
                         principalTable: "Patients",
                         principalColumn: "Id",
@@ -228,11 +229,6 @@ namespace BSHospital.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctors_DoctorId",
-                table: "Doctors",
-                column: "DoctorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Doctors_HospitalId",
                 table: "Doctors",
                 column: "HospitalId");
@@ -243,6 +239,11 @@ namespace BSHospital.Data.Migrations
                 column: "PatientsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Patients_AppointmentId",
+                table: "Patients",
+                column: "AppointmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patients_DepartmentId",
                 table: "Patients",
                 column: "DepartmentId");
@@ -251,9 +252,6 @@ namespace BSHospital.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Appointments");
-
             migrationBuilder.DropTable(
                 name: "DepartmentHospital");
 
@@ -270,10 +268,13 @@ namespace BSHospital.Data.Migrations
                 name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "Hospitals");
+                name: "Appointments");
 
             migrationBuilder.DropTable(
                 name: "Departments");
+
+            migrationBuilder.DropTable(
+                name: "Hospitals");
         }
     }
 }
