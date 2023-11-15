@@ -25,10 +25,19 @@ namespace BSHospitalWebsitee.Controllers
         public IActionResult GetAll()
         {
             //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
-            
 
-            var list = _unitOfWork.Appointments.GetAll().Select(a=>a.Patients).ToList();
-            return Json(list);
+
+            //var list = _unitOfWork.Appointments.GetAll().Select(a=>a.Patients).ToList();
+            //return Json(list);
+
+            var appointments = _unitOfWork.Appointments.GetAll().Select(a=> new
+            {
+                Id=a.Id,
+                Date=a.AppointmentDate,
+                Name=a.Patients
+            }).ToList();
+            return Ok();
+
         }
 
         [HttpPost]
