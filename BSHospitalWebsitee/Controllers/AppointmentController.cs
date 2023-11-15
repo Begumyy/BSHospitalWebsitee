@@ -37,6 +37,8 @@ namespace BSHospitalWebsitee.Controllers
             var list = _unitOfWork.Appointments.GetAll().ToList();
             return Json(list);
 
+
+           
             
         }
 
