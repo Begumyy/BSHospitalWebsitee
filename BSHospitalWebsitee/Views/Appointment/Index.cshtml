@@ -12,6 +12,13 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Hastane Adı</label>
+                            <div class="col-8">
+                                <select  class="form-select" id="txtHospital" placeholder="Hastane Adı  "></select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Name Surname</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" id="txtName" placeholder="Name Surname ">
@@ -26,14 +33,21 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Departman</label>
                             <div class="col-8">
-                                <select class="form-select" name="script" id="txtDepartment"> </select>
+                                <select class="form-select" name="script" id="ddlDepartment"> </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Select Patient</label>
+                            <div class="col-8">
+                                <select class="form-select" name="script" id="ddlPatient"> </select>
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
                             <div class="col-8">
-                                <select class="form-select" name="script" id="txtDoctor"> </select>
+                                <select class="form-select" name="script" id="ddlDoctor"> </select>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -59,13 +73,42 @@
     <script type="text/javascript">
         $(document).ready(function () {
             Listele();
-
+            fillListHospital();
             fillListDoctor();
             fillListDepartment();
+            addPatient();
 
             $("#btnEkle").click(function () {
                 $("#modalId").modal('show')
             });
+
+            $("#btnAppoimtent").off().click(function () {
+                let randevu = {
+                        hospitalId: $("#txtHospital").val(),
+                        departmentId: $("#ddlDepartment").val(),
+                        doctorId: $("#ddlDoctor").val(),
+                        patientId: $("#ddlPatient").val(),
+                    appointmentDate: $("#txtAppointment").val()
+                       
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Appointment/Add',
+                    data: randevu,
+
+                    success: function () {
+                        $("#modalId").modal('hide');
+                        Listele();
+                    }
+                })
+
+                
+            })
+               
+                
+        })
+            
 
             function Listele() {
 
@@ -75,24 +118,27 @@
                     success: function (res) {
                         $("#divList").empty();
                         for (var item of res) {
-                            for (var patient of item.patients) {
+                           
+                                 
 
                                 $("#divList").append(`<div class="col-4">
                                    <div class="card">
                                       <div class="card-body">
                                           <h3 class="card-title bg-danger text-white"></h3>
-                                                                
-                                                 <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-                                                          <p class="card-text">Hasta ismi ${patient.patientName}</p>
-                                                          <p class="card-text">Hasta TCKN ${patient.tckn}</p>
+
+                                                         <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
+                                                          <p class="card-text">Hasta ismi ${item.patient.patientName}</p>
+                                                          <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
                                                          <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
-                                                         <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
+                                                          <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
+                                                                 <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
                                                 
                                         </div>
                                                <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
                                  </div>
                             </div>`)
-                            }
+                                
+                            
                         }
                     }
                 });
@@ -105,7 +151,7 @@
                     success:function(res){
                         $("#txtDoctor").empty();
                         for (var item of res) {
-                            $("#txtDoctor").append(new Option(item.doctorName));
+                            $("#ddlDoctor").append(new Option(item.doctorName));
                         }
                     }
                 })
@@ -113,18 +159,42 @@
             function fillListDepartment(departmantName) {
                 $.ajax({
                     type:"GET",
-                    url:"Department/GetAll",
+                    url:"/Department/GetAll",
                     success: function (res) {
                         $("#txtDepartment").empty();
                         for (var item of res) {
-                            $("#txtDepartment").append(new Option(item.departmantName))
+                            $("#ddlDepartment").append(new Option(item.departmantName))
                         }
                     }
                 })
             }
 
+            function fillListHospital(hospitalName){
+                $.ajax({
+                    type:'GET',
+                    url:'/Hospital/GetAll',
+                    success: function (res) {
+                        $("#txtHospital").empty();
+                        for (var item of res) {
+                            $("#txtHospital").append(new Option(item.hospitalName))
+                        }
+                    }
+                })
+            }
+
+        function addPatient(patientName) {
+            $.ajax({
+                type: 'POST',
+                url: '/Patient/Add',
+                success: function (res) {
+                    $("#ddlPatient").empty();
+                    for (var item of res) {
+                        $("#ddlPatient").append(new Option(item.patientName))
+                    }
+                }
+            })
+        }
            
-     
-        });
+    
     </script>
 }

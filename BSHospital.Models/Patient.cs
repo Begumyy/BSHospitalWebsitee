@@ -17,10 +17,7 @@ namespace BSHospital.Models
        
         public int Age { get; set; }
         public int DepartmentId { get; set; }
-        public int AppointmentId { get; set; }
-
-
-        public virtual Appointment Appointment { get; set; }
+      
         public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();
         public virtual ICollection<Hospital> Hospitals { get; set; } = new List<Hospital>();
         public virtual Department Department { get; set; }

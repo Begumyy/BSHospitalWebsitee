@@ -16,6 +16,20 @@ namespace BSHospitalWebsitee.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpPost]
+        public IActionResult Add(Appointment appointment)
+        {
+            //_unitOfWork.Appointments.Add(appointment);
+            //_unitOfWork.Save();
+            //return Ok();
+
+            //appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
+            appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
+            _unitOfWork.Appointments.Add(appointment);
+            _unitOfWork.Save();
+            return Ok();
+        }
+
         public IActionResult Index()
         {
            
@@ -27,7 +41,7 @@ namespace BSHospitalWebsitee.Controllers
             //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
             
 
-            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patients).Include(u=>u.Hospital).Include(u=>u.Department).ToList();
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u=>u.Hospital).Include(u=>u.Department).Include(u=>u.Doctor).ToList();
             return Json(list);
         }
 

@@ -11,13 +11,16 @@ namespace BSHospital.Models
     {
         public int HospitalId { get; set; }
         public int DepartmentId { get; set; }
+        public int? DoctorId { get; set; }
+        public int? PatientId { get; set; }
         
         
 
-        public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
+        public virtual Patient Patient { get; set; }
         public DateTime AppointmentDate { get; set; } = DateTime.Now;
         public virtual Hospital Hospital { get; set; }
         public virtual Department Department { get; set; }
+        public virtual Doctor Doctor { get; set; }
         
     }
 }

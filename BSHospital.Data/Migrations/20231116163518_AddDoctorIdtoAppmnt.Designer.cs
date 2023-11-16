@@ -4,6 +4,7 @@ using BSHospital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSHospital.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231116163518_AddDoctorIdtoAppmnt")]
+    partial class AddDoctorIdtoAppmnt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
@@ -55,8 +55,6 @@ namespace BSHospital.Data.Migrations
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("HospitalId");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
                 });
@@ -150,6 +148,9 @@ namespace BSHospital.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
@@ -169,6 +170,8 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
 
                     b.HasIndex("DepartmentId");
 
@@ -238,17 +241,11 @@ namespace BSHospital.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BSHospital.Models.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
                     b.Navigation("Department");
 
                     b.Navigation("Doctor");
 
                     b.Navigation("Hospital");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("BSHospital.Models.Doctor", b =>
@@ -268,11 +265,19 @@ namespace BSHospital.Data.Migrations
 
             modelBuilder.Entity("BSHospital.Models.Patient", b =>
                 {
+                    b.HasOne("BSHospital.Models.Appointment", "Appointment")
+                        .WithMany("Patients")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BSHospital.Models.Department", "Department")
                         .WithMany("Patients")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Appointment");
 
                     b.Navigation("Department");
                 });
@@ -320,6 +325,11 @@ namespace BSHospital.Data.Migrations
                         .HasForeignKey("PatientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BSHospital.Models.Appointment", b =>
+                {
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("BSHospital.Models.Department", b =>
