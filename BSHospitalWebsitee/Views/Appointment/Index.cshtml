@@ -24,11 +24,12 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Department</label>
+                            <label for="inputName" class="col-4 col-form-label">Select Departman</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtDepartment" placeholder="Entry Department ">
+                                <select class="form-select" name="script" id="txtDepartment"> </select>
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
                             <div class="col-8">
@@ -38,7 +39,7 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Appoimtment</label>
                             <div class="col-8">
-                                <input type="datetime-local" class="form-control" id="txtDepartment" placeholder="Entry Days ">
+                                <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Entry Days ">
                             </div>
                         </div>
                     </div>
@@ -59,7 +60,8 @@
         $(document).ready(function () {
             Listele();
 
-            fillList();
+            fillListDoctor();
+            fillListDepartment();
 
             $("#btnEkle").click(function () {
                 $("#modalId").modal('show')
@@ -73,48 +75,53 @@
                     success: function (res) {
                         $("#divList").empty();
                         for (var item of res) {
-                            $("#divList").append(`<div class="col-4">
+                            for (var patient of item.patients) {
+
+                                $("#divList").append(`<div class="col-4">
                                    <div class="card">
                                       <div class="card-body">
                                           <h3 class="card-title bg-danger text-white"></h3>
-                                                         HastaneId : ${item.hospital.nameSurname}
-                                               <p class="card-text">${item.departmentId}</p>
-
-                                                <p class="card-text">${item.appointmentDate}</p>
-
+                                                                
                                                  <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-                                                   <p class="card-text">Hasta ismi ${item.patients.patientName}</p>
-
-
-                                                         <p class="card-text">${item.department.departmantName}</p>
-
-                                                 <p class="card-text">${item.isCanceled}</p>
+                                                          <p class="card-text">Hasta ismi ${patient.patientName}</p>
+                                                          <p class="card-text">Hasta TCKN ${patient.tckn}</p>
+                                                         <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
+                                                         <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
+                                                
                                         </div>
                                                <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
                                  </div>
                             </div>`)
+                            }
                         }
                     }
                 });
 
             }
-            function fillList(nameSurname) {
+            function fillListDoctor(doctorName) {
                 $.ajax({
                     type:"GET",
                     url:"/Doctor/GetAll",
                     success:function(res){
                         $("#txtDoctor").empty();
                         for (var item of res) {
-                            $("#txtDoctor").append(new Option(item.departmentName, item.departmentName, false));
+                            $("#txtDoctor").append(new Option(item.doctorName));
                         }
                     }
-
-
-
                 })
-
             }
-
+            function fillListDepartment(departmantName) {
+                $.ajax({
+                    type:"GET",
+                    url:"Department/GetAll",
+                    success: function (res) {
+                        $("#txtDepartment").empty();
+                        for (var item of res) {
+                            $("#txtDepartment").append(new Option(item.departmantName))
+                        }
+                    }
+                })
+            }
 
            
      
