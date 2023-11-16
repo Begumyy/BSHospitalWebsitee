@@ -27,8 +27,8 @@ namespace BSHospitalWebsitee.Controllers
             //var list=unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
 
 
-            //var list = _unitOfWork.Appointments.GetAll().Select(a => a.Patients).ToList();
-            //return Json(list);
+            var list = _unitOfWork.Appointments.GetAll().Select(a => a.Patients).ToList();
+            return Json(list);
 
 
 
