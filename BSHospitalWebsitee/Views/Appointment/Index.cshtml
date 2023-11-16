@@ -74,25 +74,26 @@
                         $("#divList").empty();
                         for (var item of res) {
                             $("#divList").append(`<div class="col-4">
-                                   <div class="card">
-                                      <div class="card-body">
-                                          <h3 class="card-title bg-danger text-white"></h3>
-                                                         HastaneId : ${item.hospital.nameSurname}
-                                               <p class="card-text">${item.departmentId}</p>
+                                           <div class="card">
+                                              <div class="card-body">
+                                                  <h3 class="card-title bg-danger text-white"></h3>
+                                                         HastaneId : ${item.hospitalId}
+                                                       <p class="card-text">${item.departmentId}</p>
 
-                                                <p class="card-text">${item.appointmentDate}</p>
+                                                        <p class="card-text">${item.appointmentDate}</p>
 
-                                                 <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-                                                   <p class="card-text">Hasta ismi ${item.patients.patientName}</p>
+                                                         <p class="card-text">${item.hospitalName}</p>
 
 
-                                                         <p class="card-text">${item.department.departmantName}</p>
+                                                                   <p class="card-text">${item.departmentName}</p>
 
-                                                 <p class="card-text">${item.isCanceled}</p>
-                                        </div>
-                                               <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
-                                 </div>
-                            </div>`)
+                                                                 <p class="card-text">${item.doctorName}</p>
+
+                                                         <p class="card-text">${item.isCanceled}</p>
+                                                </div>
+                                                       <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
+                                         </div>
+                                    </div>`)
                         }
                     }
                 });
