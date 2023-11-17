@@ -36,7 +36,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DoctorId")
+                    b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<int>("HospitalId")
@@ -45,7 +45,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -223,24 +223,28 @@ namespace BSHospital.Data.Migrations
             modelBuilder.Entity("BSHospital.Models.Appointment", b =>
                 {
                     b.HasOne("BSHospital.Models.Department", "Department")
-                        .WithMany("Appointments")
+                        .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BSHospital.Models.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("DoctorId");
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BSHospital.Models.Hospital", "Hospital")
-                        .WithMany("Appointments")
+                        .WithMany()
                         .HasForeignKey("HospitalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BSHospital.Models.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
 
@@ -324,8 +328,6 @@ namespace BSHospital.Data.Migrations
 
             modelBuilder.Entity("BSHospital.Models.Department", b =>
                 {
-                    b.Navigation("Appointments");
-
                     b.Navigation("Doctors");
 
                     b.Navigation("Patients");
@@ -333,8 +335,6 @@ namespace BSHospital.Data.Migrations
 
             modelBuilder.Entity("BSHospital.Models.Hospital", b =>
                 {
-                    b.Navigation("Appointments");
-
                     b.Navigation("Doctors");
                 });
 #pragma warning restore 612, 618

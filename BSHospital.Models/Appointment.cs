@@ -11,8 +11,8 @@ namespace BSHospital.Models
     {
         public int HospitalId { get; set; }
         public int DepartmentId { get; set; }
-        public int? DoctorId { get; set; }
-        public int? PatientId { get; set; }
+        public int DoctorId { get; set; }
+        public int PatientId { get; set; }
         
         
 
