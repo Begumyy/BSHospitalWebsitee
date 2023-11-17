@@ -19,15 +19,16 @@ namespace BSHospitalWebsitee.Controllers
         [HttpPost]
         public IActionResult Add(Appointment appointment)
         {
-            //_unitOfWork.Appointments.Add(appointment);
-            //_unitOfWork.Save();
-            //return Ok();
-
-            //appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
-            appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
             _unitOfWork.Appointments.Add(appointment);
             _unitOfWork.Save();
             return Ok();
+
+            //appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
+
+            //appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
+            //_unitOfWork.Appointments.Add(appointment);
+            //_unitOfWork.Save();
+            //return Ok();
         }
 
         public IActionResult Index()

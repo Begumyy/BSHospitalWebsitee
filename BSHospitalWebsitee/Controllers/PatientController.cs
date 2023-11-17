@@ -2,6 +2,7 @@
 using BSHospital.Models;
 using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BSHospitalWebsitee.Controllers
 {
@@ -29,7 +30,11 @@ namespace BSHospitalWebsitee.Controllers
 
         public IActionResult GetAll()
         {
-            return Json(new {data=_unitOfWork.Patients.GetAll().ToList() });
+            return Json(_unitOfWork.Patients.GetAll().ToList());
+
+
+            //var list = _unitOfWork.Patients.GetAll().Include(p => p.PatientName).ToList();
+            //return Json(list);
         }
 
         [HttpPost]

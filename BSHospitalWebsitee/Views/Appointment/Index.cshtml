@@ -14,7 +14,7 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Hastane Adı</label>
                             <div class="col-8">
-                                <select  class="form-select" id="txtHospital" placeholder="Hastane Adı  "></select>
+                                <select  class="form-select" id="ddlHospital" placeholder="Hastane Adı  "></select>
                             </div>
                         </div>
 
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Appoimtment</label>
+                            <label for="inputName" class="col-4 col-form-label">Appointment</label>
                             <div class="col-8">
                                 <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Entry Days ">
                             </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a  id="btnAppoimtent" class="btn btn-primary">Create Appoimtment</a>
+                    <a  id="btnAppointment" class="btn btn-primary">Create Appointment</a>
                 </div>
             </div>
         </div>
@@ -76,19 +76,19 @@
             fillListHospital();
             fillListDoctor();
             fillListDepartment();
-            addPatient();
+            fillListPatient();
 
             $("#btnEkle").click(function () {
                 $("#modalId").modal('show')
             });
 
-            $("#btnAppoimtent").off().click(function () {
+            $("#btnAppointment").off().click(function () {
                 let randevu = {
-                        hospitalId: $("#txtHospital").val(),
+                        hospitalId: $("#ddlHospital").val(),
                         departmentId: $("#ddlDepartment").val(),
                         doctorId: $("#ddlDoctor").val(),
                         patientId: $("#ddlPatient").val(),
-                    appointmentDate: $("#txtAppointment").val()
+                        appointmentDate: $("#txtAppointment").val()
                        
                 }
 
@@ -96,7 +96,6 @@
                     type: 'POST',
                     url: '/Appointment/Add',
                     data: randevu,
-
                     success: function () {
                         $("#modalId").modal('hide');
                         Listele();
@@ -119,8 +118,6 @@
                         $("#divList").empty();
                         for (var item of res) {
                            
-                                 
-
                                 $("#divList").append(`<div class="col-4">
                                    <div class="card">
                                       <div class="card-body">
@@ -144,24 +141,28 @@
                 });
 
             }
+
+
             function fillListDoctor(doctorName) {
                 $.ajax({
-                    type:"GET",
-                    url:"/Doctor/GetAll",
+                    type:'GET',
+                    url:'/Doctor/GetAll',
                     success:function(res){
-                        $("#txtDoctor").empty();
+                        $("#ddlDoctor").empty();
                         for (var item of res) {
                             $("#ddlDoctor").append(new Option(item.doctorName));
                         }
                     }
                 })
             }
+
+
             function fillListDepartment(departmantName) {
                 $.ajax({
-                    type:"GET",
-                    url:"/Department/GetAll",
+                    type:'GET',
+                    url:'/Department/GetAll',
                     success: function (res) {
-                        $("#txtDepartment").empty();
+                        $("#ddlDepartment").empty();
                         for (var item of res) {
                             $("#ddlDepartment").append(new Option(item.departmantName))
                         }
@@ -169,23 +170,25 @@
                 })
             }
 
+
             function fillListHospital(hospitalName){
                 $.ajax({
                     type:'GET',
                     url:'/Hospital/GetAll',
                     success: function (res) {
-                        $("#txtHospital").empty();
+                        $("#ddlHospital").empty();
                         for (var item of res) {
-                            $("#txtHospital").append(new Option(item.hospitalName))
+                            $("#ddlHospital").append(new Option(item.hospitalName))
                         }
                     }
                 })
             }
 
-        function addPatient(patientName) {
+
+        function fillListPatient(patientName) {
             $.ajax({
-                type: 'POST',
-                url: '/Patient/Add',
+                type: 'GET',
+                url: '/Patient/GetAll',
                 success: function (res) {
                     $("#ddlPatient").empty();
                     for (var item of res) {
