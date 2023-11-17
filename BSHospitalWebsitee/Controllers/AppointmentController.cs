@@ -46,13 +46,13 @@ namespace BSHospitalWebsitee.Controllers
             return Json(list);
         }
 
-        [HttpPost]
-        public IActionResult Delete(int id)
-        {
-            _unitOfWork.Appointments.DeleteById(id);
-            _unitOfWork.Save();
-            return Ok();
-        }
+        //[HttpPost]
+        //public IActionResult Delete(int id)
+        //{
+        //    _unitOfWork.Appointments.DeleteById(id);
+        //    _unitOfWork.Save();
+        //    return Ok();
+        //}
 
         [HttpPost]
         public IActionResult DeleteById(int id)
