@@ -21,6 +21,13 @@ namespace BSHospitalWebsitee.Controllers
            
             return View();
         }
+        [HttpPost]
+        public IActionResult Add(Appointment appointment)
+        {
+            _unitOfWork.Appointments.Add(appointment);
+            _unitOfWork.Save();
+            return Ok();
+        }
 
         public IActionResult GetAll()
         {

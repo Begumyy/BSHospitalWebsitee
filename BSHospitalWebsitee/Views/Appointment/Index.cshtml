@@ -12,6 +12,12 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Select Hospital</label>
+                            <div class="col-8">
+                                <select class="form-select" name="script" id="txtHospital"> </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Name Surname</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" id="txtName" placeholder="Name Surname ">
@@ -46,7 +52,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a  id="btnAppoimtent" class="btn btn-primary">Create Appoimtment</a>
+                    <a id="btnEkle" class="btn btn-primary">Ekle</a>
                 </div>
             </div>
         </div>
@@ -59,7 +65,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             Listele();
-
+            fillListHospital();
             fillListDoctor();
             fillListDepartment();
 
@@ -98,6 +104,30 @@
                 });
 
             }
+            // $("#btnEkle").off().click(function () {
+            //     let randevu = {
+            //         appointment: {
+            //             hospital: $("#txtHospital").val(),
+            //             name: $("#txtName").val(),
+            //             tckn: $("#txtTCKN").val(),
+            //             department: $("#txtDepartment").val(),
+            //             doctor: $("#txtDoctor").val(),
+            //             appointment: $("#txtAppointment").val()
+            //         }
+            //     }
+            // })
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "/Appointment/Add",
+
+            //         success: function () {
+            //             $("#modalId").modal("hide");
+            //             Listele();
+            //         }
+            //     })
+
+
+
             function fillListDoctor(doctorName) {
                 $.ajax({
                     type:"GET",
@@ -122,6 +152,20 @@
                     }
                 })
             }
+            function fillListHospital(hospitalName) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Hospital/GetAll",
+                    success: function (res) {
+                        $("#txtHospital").empty();
+                        for (var item of res) {
+                            $("#txtHospital").append(new Option(item.hospitalName))
+                        }
+                    }
+                })
+            }
+
+
 
            
      
