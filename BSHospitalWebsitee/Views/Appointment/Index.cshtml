@@ -151,7 +151,7 @@
                     success:function(res){
                         $("#ddlDoctor").empty();
                         for (var item of res) {
-                            $("#ddlDoctor").append(new Option(item.doctorName));
+                            $("#ddlDoctor").append(new Option(item.doctorName,item.id));
                         }
                     }
                 })
@@ -165,7 +165,7 @@
                     success: function (res) {
                         $("#ddlDepartment").empty();
                         for (var item of res) {
-                            $("#ddlDepartment").append(new Option(item.departmantName))
+                            $("#ddlDepartment").append(new Option(item.departmantName, item.id));
                         }
                     }
                 })
@@ -179,7 +179,7 @@
                     success: function (res) {
                         $("#ddlHospital").empty();
                         for (var item of res) {
-                            $("#ddlHospital").append(new Option(item.hospitalName))
+                            $("#ddlHospital").append(new Option(item.hospitalName,item.id))
                         }
                     }
                 })
@@ -193,7 +193,7 @@
                 success: function (res) {
                     $("#ddlPatient").empty();
                     for (var item of res) {
-                        $("#ddlPatient").append(new Option(item.patientName))
+                        $("#ddlPatient").append(new Option(item.patientName,item.id))
                     }
                 }
             })
