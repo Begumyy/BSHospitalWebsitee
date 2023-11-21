@@ -13,9 +13,9 @@ namespace BSHospital.Models
         public string Phone {  get; set; }
         public string Address { get; set; }
         public string TCKN { get; set; }
-
-       
         public int Age { get; set; }
+
+
         public int DepartmentId { get; set; }
       
         public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();

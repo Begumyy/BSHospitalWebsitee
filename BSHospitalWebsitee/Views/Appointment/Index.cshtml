@@ -31,18 +31,36 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Yas</label>
+                            <div class="col-8">
+                                <input type="number" class="form-control" id="txtYas" placeholder="Yas ">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Adres</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="txtAdres" placeholder="Adress">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Phone</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="txtPhone" placeholder="Telefon">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Departman</label>
                             <div class="col-8">
                                 <select class="form-select" name="script" id="ddlDepartment"> </select>
                             </div>
                         </div>
 
-                        <div class="mb-3 row">
+                        @* <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Patient</label>
                             <div class="col-8">
                                 <select class="form-select" name="script" id="ddlPatient"> </select>
                             </div>
-                        </div>
+                        </div> *@
 
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
@@ -77,22 +95,29 @@
             fillListDoctor();
             fillListDepartment();
             fillListPatient();
-
+            
             $("#btnEkle").click(function () {
                 $("input").val('');
                 $("#modalId").modal('show')
             });
-
             $("#btnAppointment").off().click(function () {
                 let randevu = {
-                        hospitalId: $("#ddlHospital").val(),
-                        departmentId: $("#ddlDepartment").val(),
-                        patientId: $("#ddlPatient").val(),
-                        doctorId: $("#ddlDoctor").val(),
-                        appointmentDate: $("#txtAppointment").val()
-                       
+                    hospitalId: $("#ddlHospital").val(),
+                    departmentId: $("#ddlDepartment").val(),
+                    patientName: $("#txtName").val() || "Belirtilmemiş", // Burada değer boşsa "Belirtilmemiş" olarak gösterilir
+                    patientId: $("#txtName").val(),
+                    tckn: $("#txtTCKN").val() || "Belirtilmemiş",
+                    doctorId: $("#ddlDoctor").val(),
+                    appointmentDate: $("#txtAppointment").val(),
+                    address: $("#txtAdres").val(),
+                    Phone: $("#txtPhone").val(),
+                    age: $("#txtYas").val()
                 }
-
+                    // let patient = {
+                    
+                    //     address: $("#txtAdres").val(),
+                    //     Phone: $("#txtPhone").val()
+                    // }
                 $.ajax({
                     type: 'POST',
                     url: '/Appointment/Add',
@@ -101,50 +126,118 @@
                         $("#modalId").modal('hide');
                         Listele();
                     }
-                   
-                })
-
-                
-            })
-               
-                
-        })
-            
-
-            function Listele() {
-
-                $.ajax({
-                    type: 'GET',
-                    url: '/Appointment/GetAll',
-                    success: function (res) {
-                        $("#divList").empty();
-                        for (var item of res) {
-                           
-                                $("#divList").append(`<div class="col-4">
-                                   <div class="card">
-                                      <div class="card-body">
-                                          <h3 class="card-title bg-danger text-white"></h3>
-
-                                         <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-                                         <p class="card-text">Hasta ismi ${item.patient.patientName}</p>
-                                         <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
-                                         <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
-                                         <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
-                                         <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
-                                                
-                                        </div>
-                                               <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
-                                 </div>
-                            </div>`)
-                                
-                            
+                }),
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Patient/Add',
+                        data: randevu,
+                        success: function () {
+                            $("#modalId").modal('hide');
+                            Listele();
                         }
+                    })
+
+
+            })    
+        })
+            // function Listele() {
+
+            //     $.ajax({
+            //         type: 'GET',
+            //         url: '/Appointment/GetAll',
+            //         success: function (res) {
+            //             $("#divList").empty();
+            //             for (var item of res) {
+            //                 console.log(item);
+            //                     $("#divList").append(`<div class="col-4">
+            //                        <div class="card">
+            //                           <div class="card-body">
+            //                               <h3 class="card-title bg-danger text-white"></h3>
+
+            //                              <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
+            //                              <p class="card-text">Hasta ismi ${item.patient.patientName}</p>
+            //                              <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
+            //                              <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
+            //                              <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
+            //                              <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
+                                                
+            //                             </div>
+            //                                    <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
+            //                      </div>
+            //                 </div>`)
+            //             }
+            //         }
+            //     });
+            // }
+
+        // function Listele() {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Appointment/GetAll',
+        //         success: function (res) {
+        //             $("#divList").empty();
+        //             for (var item of res) {
+        //                 console.log(item);
+        //                 $("#divList").append(`
+        //                     <div class="col-4">
+        //                         <div class="card">
+        //                             <div class="card-body">
+        //                                 <h3 class="card-title bg-danger text-white"></h3>
+        //                                 <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
+        //                                 <p class="card-text">Hasta ismi ${item.patient ? item.patient.patientName : 'Belirtilmemiş'}</p>
+        //                                 <p class="card-text">Hasta TCKN ${item.patient ? item.patient.tckn : 'Belirtilmemiş'}</p>
+        //                                 <p class="card-text"> Departman Adı :${item.department ? item.department.departmantName : 'Belirtilmemiş'}</p>
+        //                                 <p class="card-text"> Doktor Adı :${item.doctor ? item.doctor.doctorName : 'Belirtilmemiş'}</p>
+        //                                 <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
+        //                             </div>
+        //                             <div class="card-footer text-center">
+        //                                 <a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>
+        //                                 <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a>
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 `);
+        //             }
+        //         }
+        //     });
+        // }
+
+        function Listele() {
+            $.ajax({
+                type: 'GET',
+                url: '/Appointment/GetAll',
+                success: function (res) {
+                    $("#divList").empty();
+                    for (var item of res) {
+                        console.log(item);
+                        const patientName = item.patient && item.patient.patientName ? item.patient.patientName : 'Belirtilmemiş';
+                        const patientTCKN = item.patient && item.patient.tckn ? item.patient.tckn : 'Belirtilmemiş';
+
+                        $("#divList").append(`
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title bg-danger text-white"></h3>
+                                        <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
+                                                <p class="card-text">Hasta ismi ${patientName}</p>
+                                                        <p class="card-text">Hasta TCKN ${patientTCKN}</p>
+
+                                                <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
+                                        <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
+                                        <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>
+                                        <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
                     }
-                });
-
-            }
-
-
+                }
+            });
+        }
+        
             function fillListDoctor(doctorName) {
                 $.ajax({
                     type:'GET',
@@ -157,8 +250,6 @@
                     }
                 })
             }
-
-
             function fillListDepartment(departmantName) {
                 $.ajax({
                     type:'GET',
@@ -171,8 +262,6 @@
                     }
                 })
             }
-
-
             function fillListHospital(hospitalName){
                 $.ajax({
                     type:'GET',
@@ -185,19 +274,17 @@
                     }
                 })
             }
-
-
-        function fillListPatient(patientName) {
+        function fillListPatient() {
             $.ajax({
                 type: 'GET',
                 url: '/Patient/GetAll',
                 success: function (res) {
-                    $("#ddlPatient").empty();
+                    $("#txtName").empty(); // Alanı temizleyelim
                     for (var item of res) {
-                        $("#ddlPatient").append(new Option(item.patientName, item.id, false));
+                        $("#txtName").append(`<option value="${item.tckn}">${item.patientName}</option>`);
                     }
                 }
-            })
+            });
         }
            
     

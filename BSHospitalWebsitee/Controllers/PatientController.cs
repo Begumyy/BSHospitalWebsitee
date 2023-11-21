@@ -33,8 +33,7 @@ namespace BSHospitalWebsitee.Controllers
             return Json(_unitOfWork.Patients.GetAll().ToList());
 
 
-            //var list = _unitOfWork.Patients.GetAll().Include(p => p.PatientName).ToList();
-            //return Json(list);
+            
         }
 
         [HttpPost]
