@@ -26,28 +26,9 @@ namespace BSHospitalWebsitee.Controllers
         [HttpPost]
         public IActionResult Add(Patient patient)
         {
-            //Appointment appointment = new Appointment();
-            //var hasta = _unitOfWork.Patients.GetFirstOrDefault(p => p.Id == appointment.PatientId);
-
-
-
-
-            //// Hasta bulunduğunda randevu nesnesine hasta bilgisini ekle
-            //patient = hasta;
-
-            // Ardından randevuyu ekleyin
-
-            
-
-                _unitOfWork.Patients.Add(patient);
-                _unitOfWork.Save();
-                return Ok(patient.Id);
-            
-           
-
-            //_unitOfWork.Patients.Add(patient);
-            //_unitOfWork.Save();
-            // return View();
+           _unitOfWork.Patients.Add(patient);
+           _unitOfWork.Save();
+            return ok(pa);
         }
 
         public IActionResult GetAll()
