@@ -72,12 +72,14 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            Listele();
+            
             fillListHospital();
             fillListDoctor();
             fillListDepartment();
             fillListPatient();
+            Listele();
 
+            
             $("#btnEkle").click(function () {
                 $("input").val('');
                 $("#modalId").modal('show')
@@ -85,12 +87,16 @@
 
             $("#btnAppointment").off().click(function () {
                 let randevu = {
-                        hospitalId: $("#ddlHospital").val(),
-                        departmentId: $("#ddlDepartment").val(),
-                        patientId: $("#ddlPatient").val(),
-                        doctorId: $("#ddlDoctor").val(),
-                        appointmentDate: $("#txtAppointment").val()
-                       
+                    hospitalId: $("#ddlHospital").val(),
+                    departmentId: $("#ddlDepartment").val(),
+                    patientName: $("#txtName").val() || "Belirtilmemiş", // Burada değer boşsa "Belirtilmemiş" olarak gösterilir
+                    patientId: $("#txtName").val(),
+                    tckn: $("#txtTCKN").val() || "Belirtilmemiş",
+                    doctorId: $("#ddlDoctor").val(),
+                    appointmentDate: $("#txtAppointment").val(),
+                    address: $("#txtAdres").val(),
+                    Phone: $("#txtPhone").val(),
+                    age: $("#txtYas").val()
                 }
 
                 $.ajax({
