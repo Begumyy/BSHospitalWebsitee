@@ -91,71 +91,36 @@
     <script type="text/javascript">
         $(document).ready(function () {
             
-           
+            fillListHospital();
+            fillListDoctor();
+            fillListDepartment();
+            fillListPatient();
             Listele();
+
             
             $("#btnEkle").click(function () {
                 $("input").val('');
                 $("#modalId").modal('show')
-                fillListHospital();
-                fillListDoctor();
-                fillListDepartment();
-                fillListPatient();
             });
-            $("#btnAppointment").off().click(function () {                            
 
-                // let randevu = {
-                //     hospitalId: $("#ddlHospital").val(),
-                //     departmentId: $("#ddlDepartment").val(),
+            $("#btnAppointment").off().click(function () {
+                let randevu = {
+                    hospitalId: $("#ddlHospital").val(),
+                    departmentId: $("#ddlDepartment").val(),
+                    patientName: $("#txtName").val() || "Belirtilmemiş", // Burada değer boşsa "Belirtilmemiş" olarak gösterilir
+                    patientId: $("#txtName").val(),
+                    tckn: $("#txtTCKN").val() || "Belirtilmemiş",
+                    doctorId: $("#ddlDoctor").val(),
+                    appointmentDate: $("#txtAppointment").val(),
+                    address: $("#txtAdres").val(),
+                    Phone: $("#txtPhone").val(),
+                    age: $("#txtYas").val()
+                }
 
-                    
-                //    patientName: $("#txtName").val(), // Burada değer boşsa "Belirtilmemiş" olarak gösterilir
-                   
-                //     tckn: $("#txtTCKN").val() || "Belirtilmemiş",
-                //     doctorId: $("#ddlDoctor").val(),
-                //     appointmentDate: $("#txtAppointment").val(),
-                //     address: $("#txtAdres").val(),
-                //     Phone: $("#txtPhone").val(),
-                //     age: $("#txtYas").val()
-                // }
-                    // let patient = {
-                    
-                    //     address: $("#txtAdres").val(),
-                    //     Phone: $("#txtPhone").val()
-                    // }
-               
-
-
-
-                // $.ajax({
-                //     type: 'POST',
-                //     url: '/Appointment/Add',
-                //     data: randevu,
-                //     success: function () {
-                //         $("#modalId").modal('hide');
-                        
-                //     }
-                // }),
-
-               
                 $.ajax({
                     type: 'POST',
                     url: '/Appointment/Add',
-                    data: randevu1 = {
-                        hospitalId: $("#ddlHospital").val(),
-                        departmentId: $("#ddlDepartment").val(),
-                        doctorId: $("#ddlDoctor").val(),
-                        appointmentDate: $("#txtAppointment").val(),
-
-                        patient: {
-                            patientName: $("#txtName").val(),
-                            tckn: $("#txtTCKN").val(),
-                            address: $("#txtAdres").val(),
-                            Phone: $("#txtPhone").val(),
-                            age: $("#txtYas").val(),
-                            departmentId: $("#ddlDepartment").val(),
-                        }
-                    },
+                    data: randevu,
                     success: function () {
                         $("#modalId").modal('hide');
                         Listele();
