@@ -28,7 +28,7 @@ namespace BSHospitalWebsitee.Controllers
         {
            _unitOfWork.Patients.Add(patient);
            _unitOfWork.Save();
-            return ok(pa);
+            return Ok(patient.Id);
         }
 
         public IActionResult GetAll()
