@@ -90,10 +90,7 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            
-           
             Listele();
-            
             $("#btnEkle").click(function () {
                 $("input").val('');
                 $("#modalId").modal('show')
@@ -104,40 +101,6 @@
             });
             $("#btnAppointment").off().click(function () {                            
 
-                // let randevu = {
-                //     hospitalId: $("#ddlHospital").val(),
-                //     departmentId: $("#ddlDepartment").val(),
-
-                    
-                //    patientName: $("#txtName").val(), // Burada değer boşsa "Belirtilmemiş" olarak gösterilir
-                   
-                //     tckn: $("#txtTCKN").val() || "Belirtilmemiş",
-                //     doctorId: $("#ddlDoctor").val(),
-                //     appointmentDate: $("#txtAppointment").val(),
-                //     address: $("#txtAdres").val(),
-                //     Phone: $("#txtPhone").val(),
-                //     age: $("#txtYas").val()
-                // }
-                    // let patient = {
-                    
-                    //     address: $("#txtAdres").val(),
-                    //     Phone: $("#txtPhone").val()
-                    // }
-               
-
-
-
-                // $.ajax({
-                //     type: 'POST',
-                //     url: '/Appointment/Add',
-                //     data: randevu,
-                //     success: function () {
-                //         $("#modalId").modal('hide');
-                        
-                //     }
-                // }),
-
-               
                 $.ajax({
                     type: 'POST',
                     url: '/Appointment/Add',
@@ -166,69 +129,6 @@
 
             })    
         })
-            // function Listele() {
-
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: '/Appointment/GetAll',
-            //         success: function (res) {
-            //             $("#divList").empty();
-            //             for (var item of res) {
-            //                 console.log(item);
-            //                     $("#divList").append(`<div class="col-4">
-            //                        <div class="card">
-            //                           <div class="card-body">
-            //                               <h3 class="card-title bg-danger text-white"></h3>
-
-            //                              <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-            //                              <p class="card-text">Hasta ismi ${item.patient.patientName}</p>
-            //                              <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
-            //                              <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
-            //                              <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
-            //                              <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
-                                                
-            //                             </div>
-            //                                    <div class="card-footer text-center"><a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>    <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a> </div>
-            //                      </div>
-            //                 </div>`)
-            //             }
-            //         }
-            //     });
-            // }
-
-        // function Listele() {
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/Appointment/GetAll',
-        //         success: function (res) {
-        //             $("#divList").empty();
-        //             for (var item of res) {
-        //                 console.log(item);
-        //                 $("#divList").append(`
-        //                     <div class="col-4">
-        //                         <div class="card">
-        //                             <div class="card-body">
-        //                                 <h3 class="card-title bg-danger text-white"></h3>
-        //                                 <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-        //                                 <p class="card-text">Hasta ismi ${item.patient ? item.patient.patientName : 'Belirtilmemiş'}</p>
-        //                                 <p class="card-text">Hasta TCKN ${item.patient ? item.patient.tckn : 'Belirtilmemiş'}</p>
-        //                                 <p class="card-text"> Departman Adı :${item.department ? item.department.departmantName : 'Belirtilmemiş'}</p>
-        //                                 <p class="card-text"> Doktor Adı :${item.doctor ? item.doctor.doctorName : 'Belirtilmemiş'}</p>
-        //                                 <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
-        //                             </div>
-        //                             <div class="card-footer text-center">
-        //                                 <a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>
-        //                                 <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a>
-        //                             </div>
-        //                         </div>
-        //                     </div>
-        //                 `);
-        //             }
-        //         }
-        //     });
-        // }
-
-       
 
         function Listele() {
             $.ajax({
@@ -249,14 +149,13 @@
                                         <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
                                                  <p class="card-text">Hasta ismi ${patientName}</p>
                                           <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
-
                                                 <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
                                         <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
                                         <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>
-                                        <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a>
+                                                    <a onclick="Update(${item.id}),'${item.hospital.hospitalId}','${patientName}','${item.patient.tckn}','${item.department.departmantId}','${item.doctor.doctorId}','${item.appointmentDate}'  " class="btn btn-success">Guncelle</a>
+                                        <a onclick="Delete(${item.id})" class="btn btn-danger">Sil</a>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +164,115 @@
                 }
             });
         }
+            function Delete(id){
+            let deleteee ={id:id }
+
+           
+            $.ajax({
+                type:"POST",
+                url:"/Appointment/DeleteById",
+                data: deleteee,
+                success: function () {
+                    Listele()
+                }
+
+            })
+        }
+        // function Update(id, hospitalName, departmantName, doctorName, appointmentDate, patientName, tckn, address, phone, age) {
+
+        //     Listele(id);
+          
+        //     $("#ddlHospital").val(hospitalName);
+        //     $("#ddlDepartment").val(departmantName);
+        //     $("#ddlDoctor").val(doctorName);
+        //     $("#txtAppointment").val(appointmentDate);
+        //     $("#txtName").val(patientName);
+        //     $("#txtTCKN").val(tckn);
+        //     $("#txtAdres").val(address);
+        //     $("#txtPhone").val(phone);
+        //     $("#txtYas").val(age);
+        //         $("#modalId").modal('show')
+
+        //     $("#Update").off();
+        //     $("#Update").click(function () {
+        //         var hospitalname = $("#ddlHospital").val();
+        //         var departmantname = $("#ddlDepartment").val();
+        //         var doctorname = $("#ddlDoctor").val();
+        //         var appointmentdate=  $("#txtAppointment").val();
+        //         var patientname= $("#txtName").val();
+        //         var tckn= $("#txtTCKN").val();
+        //         var address=  $("#txtAdres").val();
+        //         var phone=  $("#txtPhone").val();
+        //         var age=  $("#txtYas").val();
+
+        //         $.ajax({
+        //             type:"POST",
+        //             url: "/Appointment/Update",
+        //             data: { id: id, hospitalName: hospitalname, departmantName: departmantname, doctorName: doctorname, appointmentDate: appointmentdate, patientName: patientname, TCKN: tckn, Address: address, Phone: phone, Age: age }
+        //             success:function(){
+        //                 alert("Guncelleme yapıldı");
+        //                 $("#modalId").modal('hide');
+        //             }
+        //         })
+
+
+        //     });
+
+            
+
+
+            
+       //  }
+
+        function Update(id, hospitalId, patientName, tckn, departmantId, doctorId, appointmentDate) {
+            // $("input").val("");
+            
+                fillListHospital(hospitalId);
+            $("#ddlHospital").val(hospitalId);
+                fillListDepartment(departmantId);
+            $("#ddlDepartment").val(departmantId);
+                fillListDoctor(doctorId);
+            $("#ddlDoctor").val(doctorId);
+                $("#txtAppointment").val(appointmentDate);
+
+                $("#txtName").val(patientName);
+                $("#txtTCKN").val(tckn);
+                $("#txtAdres").val();
+                $("#txtPhone").val();
+                $("#txtYas").val();
+            $("#modalId").modal("show");
+                $("#modalTitleId").text("Randevu Güncelle ");
+            $("#btnAppointment").text("Guncelle");
+
+            $("#btnAppointment").off();
+            $("#btnAppointment").click(function () {
+                var hospitalId = $("#ddlHospital").val();
+                var departmantId = $("#ddlDepartment").val();
+                var doctorId = $("#ddlDoctor").val();
+                var appointmentDate = $("#txtAppointment").val();
+                var patientName = $("#txtName").val();
+                var tckn = $("#txtTCKN").val();
+                var address = $("#txtAdres").val();
+                var Phone = $("#txtPhone").val();
+                var age = $("#txtYas").val();
+
+                $.ajax({
+                    type:"POST",
+                    url:"/Appointment/Update",
+                    data: { id: id, hospitalId: hospitalId, patientName: patientName, tckn: tckn, departmantId: departmantId, doctorId: doctorId, appointmentDate: appointmentDate },
+                    success: function () {
+                        alert("Güncelleme Yapıldı");
+                        $("#modalId").modal("hide");
+                    }
+                })
+            })
+        }
         
+
+
+
+
+
             function fillListDoctor(doctorName) {
                 $.ajax({
                     type:'GET',
@@ -290,26 +297,25 @@
                     }
                 })
             }
-            function fillListHospital(hospitalName){
+            function fillListHospital(hospitalId){
                 $.ajax({
                     type:'GET',
                     url:'/Hospital/GetAll',
                     success: function (res) {
                         $("#ddlHospital").empty();
                         for (var item of res) {
-                            $("#ddlHospital").append(new Option(item.hospitalName, item.id, false));
+                        $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
                         }
                     }
                 })
             }
-        function fillListPatient(patientName) {
+            function fillListPatient(patientName) {
             $.ajax({
                 type: 'GET',
                 url: '/Patient/GetAll',
                 success: function (res) {
-                    $("#txtName").empty(); // Alanı temizleyelim
+                    $("#txtName").empty(); 
                     for (var item of res) {
-                       // $("#txtName").append(new Option(item.patientName, item.id, false));
                         $("#txtName").append(`<option value="${item.tckn}">${item.patientName}</option>`);
                     }
                 }

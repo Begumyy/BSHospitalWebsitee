@@ -26,12 +26,6 @@ namespace BSHospitalWebsitee.Controllers
             _unitOfWork.Save();
             return Ok(appointment.Id);
 
-
-
-
-
-
-
             //_unitOfWork.Appointments.Add(appointment);
             //_unitOfWork.Save();
             //return Ok();
@@ -69,7 +63,16 @@ namespace BSHospitalWebsitee.Controllers
         {
             _unitOfWork.Appointments.DeleteById(id);
             _unitOfWork.Save();
-            return Ok("Başarıyla silindi");
+            return Ok(id);
+        }
+       
+
+        [HttpPost]
+        public IActionResult Update(Appointment appointment)
+        {
+            _unitOfWork.Appointments.Update(appointment);
+            _unitOfWork.Save();
+            return Ok();
         }
     }
 }
