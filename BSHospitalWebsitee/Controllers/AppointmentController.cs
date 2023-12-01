@@ -28,10 +28,6 @@ namespace BSHospitalWebsitee.Controllers
 
 
 
-
-
-
-
             //_unitOfWork.Appointments.Add(appointment);
             //_unitOfWork.Save();
             //return Ok();
@@ -69,7 +65,50 @@ namespace BSHospitalWebsitee.Controllers
         {
             _unitOfWork.Appointments.DeleteById(id);
             _unitOfWork.Save();
-            return Ok("Başarıyla silindi");
+            return Ok(id);
+
+           
+        }
+
+        //[HttpPost]
+        //public IActionResult Update(Appointment appointment)
+        //{
+        //    //_unitOfWork.Appointments.GetById();
+        //    _unitOfWork.Appointments.Update(appointment);
+        //    _unitOfWork.Save();
+        //    return Ok(appointment.Id);
+
+
+        //}
+
+
+        [HttpPost]
+        public IActionResult Update(Appointment updatedAppointment)
+        {
+            // Mevcut randevuyu al
+            Appointment existingAppointment = _unitOfWork.Appointments.GetById(updatedAppointment.Id);
+
+            if (existingAppointment == null)
+            {
+                // Güncellenmesi gereken randevu bulunamazsa işle
+                return NotFound("Randevu bulunamadı");
+            }
+
+            // Mevcut randevunun özelliklerini yeni değerlerle güncelle  
+            existingAppointment.HospitalId = updatedAppointment.HospitalId; // Property1 ve diğer özellikleri gerçek özellik adlarıyla değiştir
+            existingAppointment.DepartmentId = updatedAppointment.DepartmentId;
+            existingAppointment.DoctorId = updatedAppointment.DoctorId;
+            existingAppointment.PatientId = updatedAppointment.PatientId;
+            existingAppointment.AppointmentDate = updatedAppointment.AppointmentDate;
+
+            // Diğer özellikleri buna göre güncelle
+
+            // Gerekiyorsa ilişkileri güncelle (örneğin, randevuyla ilişkili diğer varlıklar varsa)
+
+            // Değişiklikleri veritabanına kaydet
+            _unitOfWork.Save();
+
+            return Ok(existingAppointment.Id);
         }
     }
 }

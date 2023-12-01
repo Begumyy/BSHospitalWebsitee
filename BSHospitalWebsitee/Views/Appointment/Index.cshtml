@@ -10,6 +10,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="txtAppointmentId" />
                     <div class="container-fluid">
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Hastane Adı</label>
@@ -161,9 +162,7 @@
                         Listele();
                     }
                 });
-                   
-               
-
+           
             })    
         })
             // function Listele() {
@@ -237,9 +236,9 @@
                 success: function (res) {
                     $("#divList").empty();
                     for (var item of res) {
-                        console.log(item);
+                        //console.log(item);
                          const patientName = item.patient && item.patient.patientName ? item.patient.patientName : 'Belirtilmemiş';
-                        // const patientTCKN = item.patient && item.patient.tckn ? item.patient.tckn : 'Belirtilmemiş';
+                         const patientTCKN = item.patient && item.patient.tckn ? item.patient.tckn : 'Belirtilmemiş';
 
                         $("#divList").append(`
                             <div class="col-4">
@@ -248,14 +247,14 @@
                                         <h3 class="card-title bg-danger text-white"></h3>
                                         <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
                                                  <p class="card-text">Hasta ismi ${patientName}</p>
-                                          <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
+                                                  <p class="card-text">Hasta TCKN ${patientTCKN}</p>
 
                                                 <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
                                         <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
                                         <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <a onclick="setYapildi(${item.id})" class="btn btn-success">Done</a>
+                                        <a onclick="Guncelle(${item.id})" class="btn btn-success">Güncelle</a>
                                         <a onclick="Sil(${item.id})" class="btn btn-danger">Sil</a>
                                     </div>
                                 </div>
@@ -267,6 +266,7 @@
         }
         
             function fillListDoctor(doctorName) {
+
                 $.ajax({
                     type:'GET',
                     url:'/Doctor/GetAll',
@@ -315,7 +315,425 @@
                 }
             });
         }
+
+        function Sil(id) {
+
+            let x = {
+                id:id
+            }
+
+            $.ajax({
+                type:'POST',
+                url:'/Appointment/DeleteById',
+                data:x,
+                success: function () {
+                    Listele();
+                }
+            })
+            
+        }
+
+
+        function fillTextBoxes(id) {
+            $.ajax({
+                type: 'GET',
+                url: '/Appointment/GetAll',
+                success: function (data) {
+                    $("#btnAppointment").empty();
+                    for (var item of data) {
+                        $("#btnAppointment").append(new Option(item.name, item.id, false));
+                    }
+                }
+            })
+        }
+
+        function Guncelle(id, hospitalId, patientName, tckn, departmentId, doctorId, appointmentDate) {
+            fillListHospital(hospitalId);
+            $("#ddlHospital").val(hospitalId);
+            fillListDepartment(departmentId);
+            $("#ddlDepartment").val(departmentId);
+            fillListDoctor(doctorId);
+            $("#ddlDoctor").val(doctorId);
+            $("#txtAppointment").val(appointmentDate);
+
+            $("#txtName").val(patientName);
+            $("#txtTCKN ").val(tckn);
+            $("#txtAdres").val();
+            $("#txtPhone").val();
+            $("#txtYas").val();
+            $("#modalId").modal("show");
+            $("#modalTitleId").text("Randevu Güncelle");
+            $("#btnAppointment").text("Güncelle");
+            
+        }
+
+
+                    //GÜNCELLEME İÇİN !!
+                    // $("input").val('');
+                    // $("#modalId").modal('show'),
+                    // fillListDepartment();
+                    // fillListDoctor();
+                    // fillListHospital();
+                    // fillListPatient();
+                    // $("#modalTitleId").text("Randevu Güncelle");
+                    // $("#btnAppointment").text("Güncelle");
+
+            
+            //10.DENEME
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+            //    fillListDepartment();
+            //    fillListDoctor();
+            //    fillListHospital();
+            //    fillListPatient();
+            // $("#modalTitleId").text("Randevu Güncelle");
+            // $("#btnAppointment").text("Güncelle");
+            
+            // var hospital: $("#ddlHospital").val();
+            // var name: $("#txtName").val();
+            // var tckn: $("#txtTCKN").val();
+            // var yas: ("#txtYas").val();
+            // var address: $("#txtAdres").val();
+            // var phone: $("#txtPhone").val();
+            // var department: ("#ddlDepartment").val();
+            // var doctor: ("#ddlDoctor").val();
+            // var appointment: ("#txtAppointment").val();
+            // fillTextBoxes();
+
+
+            // $.ajax({
+            //     type:'POST',
+            //     url:'/Appointment/Update',
+            //     data: { id: id, hospital: hospital, Name: name, tckn:tckn, yas:yas, adres: address, phone:phone, department:department,doctor:doctor, appointment:appointment },
+            //     success: function () {
+            //         $("#modalAdd").modal("hide");
+            // })
+
+            
+
+
            
-    
+        
+            //9.DENEME
+            // $("#btnAppointment").click(function () {
+            //     var id = $("#txtAppointmentId").val(); // Güncellenecek randevu ID'sini alın
+            //     var department = $("#ddlDepartment").val();
+            //     var doctor = $("#ddlDoctor").val();
+            //     var hospital = $("#ddlHospital").val()
+
+            //     var updatedData = {
+            //         Id: id,
+            //         Department: department,
+            //         Doctor: doctor,
+            //         Hospital: hospital,
+            //         Appointment: appointment,
+            //         Name: name,
+            //         Tckn: tckn,
+            //         Address: address,
+            //         Phone: phone,
+            //         Yas: yas
+            //         // Diğer randevu özelliklerini ekleyin
+            //     };
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/Appointment/Update',
+            //         data: updatedData,
+            //         success: function (updatedAppointmentId) {
+            //             console.log('Güncellenen randevu Id:', updatedAppointmentId);
+
+            //             $("#card-" + id + " .hospital-name").text("Hastane Adı: " + hospital);
+            //             $("#card-" + id + " .patient-name").text("Hasta Adı: " + name);
+            //             $("#card-" + id + " .patient-tckn").text("TCKN: " + tckn);
+            //             $("#card-" + id + " .patient-age").text("Yaş: " + age);
+            //             $("#card-" + id + " .patient-address").text("Adres: " + address);
+            //             $("#card-" + id + " .patient-phone").text("Telefon: " + phone);
+            //             $("#card-" + id + " .department-name").text("Departman Adı: " + department);
+            //             $("#card-" + id + " .doctor-name").text("Doktor Adı: " + doctor);
+            //             $("#card-" + id + " .appointment-date").text("Randevu Tarihi: " + appointment);
+
+            //             $("#modalId").modal('hide');
+            //         },
+            //         error: function (error) {
+            //             console.error('Randevu güncelleme hatası:', error);
+            //         }
+            //     });
+
+
+            // });
+        
+            
+            
+            
+            
+            //8.DENEME
+            // $("#btnAppointment").click(function () {
+            //     var id = $("#txtAppointmentId").val(); // Güncellenecek randevu ID'sini alın
+            //     var department = $("#ddlDepartment").val();
+            //     var doctor = $("#ddlDoctor").val();
+            //     var hospital = $("#ddlHospital").val();
+
+            //     var appointment = {
+            //         Id: id,
+            //         Department: department,
+            //         Doctor: doctor,
+            //         Hospital: hospital,
+            //         Appointment: appointment,
+            //         Name: name,
+            //         Tckn: tckn,
+            //         Address: address,
+            //         Phone: phone,
+            //         Yas: yas
+            //         // Diğer randevu özelliklerini ekleyin
+            //     };
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/Appointment/Update',
+            //         contentType: 'application/json',
+            //         data: JSON.stringify(appointment),
+            //         success: function (updatedAppointmentId) {
+            //             console.log('Güncellenen randevu ID:', updatedAppointmentId);
+            //             $("#modalId").modal('hide');
+            //             // İsteğin başarılı olması durumunda isteğe bağlı olarak randevu listesini güncelleyebilirsiniz
+            //             Listele();
+            //         },
+            //         error: function (error) {
+            //             console.error('Randevu güncelleme hatası:', error);
+            //         }
+            //     });
+            // });
+
+
+
+            //7.DENEME2
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+            // fillListDepartment();
+            // fillListDoctor();
+            // fillListHospital();
+            // fillListPatient();
+            // $("#modalTitleId").text("Randevu Güncelle");
+            // $("#btnAppointment").text("Güncelle");
+            // $("#btnAppointment").click(function () {
+            //     let appointment= {
+            //         hospital: $("#ddlHospital").val(),
+            //         department: $("#ddlDepartment").val(),
+            //         doctor: $("#ddlDoctor").val(),
+            //         appointment: $("#txtAppointment").val(),
+            //         name: $("#txtName").val(),
+            //         tckn: $("#txtTCKN").val(),
+            //         address: $("#txtAdres").val(),
+            //         phone: $("#txtPhone").val(),
+            //         yas: $("#txtYas").val(),
+
+            //         $.ajax({
+            //             type: 'POST',
+            //             url: '/Appointment/Update',
+            //             success: function (appointment) {
+            //                 Listele();
+            //             }
+            //         })
+                     
+                    //7.DENEME1
+                    // $("#ddlHospital").val(appointment.hospitalId),
+                    // $("#ddlDepartment").val(appointment.departmentId),
+                    // $("#ddlDoctor").val(appointment.doctorId),
+                    // $("#txtAppointment").val(appointment.appointmentDate),
+                    // $("#txtName").val(appointment.patient.patientName),
+                    // $("#txtTCKN").val(appointment.patient.tckn),
+                    // $("#txtAdres").val(appointment.patient.address),
+                    // $("#txtPhone").val(appointment.patient.Phone),
+                    // $("#txtYas").val(appointment.patient.age)
+                
+
+                    
+
+            //6.DENEME
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+            // fillListDepartment();
+            // fillListDoctor();
+            // fillListHospital();
+            // fillListPatient();
+            // $("#modalTitleId").text("Randevu Güncelle");
+            // $("#btnAppointment").text("Güncelle");
+            // $("#btnAppointment").off();
+            // $("#txtAppointmentId").val(id);
+            // $.ajax({
+            //     type: 'GET',
+            //     url: '/Appointment/Update',
+            //     success: function (appointment) {
+            //         // Modal alanlarını mevcut verilerle doldurun
+            //         $("#ddlHospital").val(appointment.hospitalId);
+            //         $("#ddlDepartment").val(appointment.departmentId);
+            //         $("#ddlDoctor").val(appointment.doctorId);
+            //         $("#txtAppointment").val(appointment.appointmentDate);
+            //         $("#txtName").val(appointment.patient.patientName);
+            //         $("#txtTCKN").val(appointment.patient.tckn);
+            //         $("#txtAdres").val(appointment.patient.address);
+            //         $("#txtPhone").val(appointment.patient.Phone);
+            //         $("#txtYas").val(appointment.patient.age);
+            //     }
+            // })
+
+
+
+            //5.DENEME (function icine patientname, tckn, address, phone, age yazıldı.)
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+            // fillListDepartment();
+            // fillListDoctor();
+            // fillListHospital();
+            // fillListPatient();
+
+            // $("#modalTitleId").text("Randevu Güncelle");
+            // $("#btnAppointment").text("Güncelle");
+            // $("#btnAppointment").off();
+            // $("#btnAppointment").click(function () {
+            //     let patient = {
+            //         patientName: $("#txtName").val(),
+            //         tckn: $("#txtTCKN").val(),
+            //         address: $("#txtAdres").val(),
+            //         Phone: $("#txtPhone").val(),
+            //         age: $("#txtYas").val(),
+            //     };
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: 'Appointment/Update',
+            //         data: {patientName:patientname, tckn:tckn, address:address, Phone:phone, age:age},
+            //         success: function (res) {
+            //             alert("güncelleme yapıldı");
+            //         }
+            //     });
+            // });
+
+           
+            //4.DENEME
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+            // fillListDepartment();
+            // fillListDoctor();
+            // fillListHospital();
+            // fillListPatient();
+            // $("#txtAppointmentId").val(id);
+            // $.ajax({
+            //     type: 'GET',
+            //     url: '/Appointment/Update',
+            //     success: function (appointment) {
+            //         // Modal alanlarını mevcut verilerle doldurun
+            //         $("#ddlHospital").val(appointment.hospitalId);
+            //         $("#ddlDepartment").val(appointment.departmentId);
+            //         $("#ddlDoctor").val(appointment.doctorId);
+            //         $("#txtAppointment").val(appointment.appointmentDate);
+            //         $("#txtName").val(appointment.patient.patientName);
+            //         $("#txtTCKN").val(appointment.patient.tckn);
+            //         $("#txtAdres").val(appointment.patient.address);
+            //         $("#txtPhone").val(appointment.patient.Phone);
+            //         $("#txtYas").val(appointment.patient.age);
+            //     }
+            // })
+            
+
+
+
+            //3.DENEME
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+
+            //     fillListDepartment();
+            //     fillListDoctor();
+            //    fillListHospital();
+            //    fillListPatient();
+            // $("#modalTitleId").text("Randevu Güncelle");
+            // $("#btnAppointment").text("Güncelle");
+            // $("#btnAppointment").off();
+            // $("#btnAppointment").click(function () {
+            //     var department = $("#ddlDepartment").val();
+            //     var doctor = $("#ddlDoctor").val();
+            //     var hospital = $("#ddlHospital").val();
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/Appointment/Update',
+            //         data: { id: id, department: department, doctor: doctor, hospital: hospital },
+            //         success: function () {
+            //             $("#modalId").modal('hide');
+
+            //         }
+
+            //     })
+            // });
+
+            
+
+
+            //2.DENEME
+            // $("#txtAppointmentId").val(id);
+
+            // $.ajax({
+            //     type: 'GET',
+            //     url: '/Appointment/Update',
+            //     success: function (appointment) {
+            //         // Modal alanlarını mevcut verilerle doldurun
+            //         $("#ddlHospital").val(appointment.hospitalId);
+            //         $("#ddlDepartment").val(appointment.departmentId);
+            //         $("#ddlDoctor").val(appointment.doctorId);
+            //         $("#txtAppointment").val(appointment.appointmentDate);
+            //         $("#txtName").val(appointment.patient.patientName);
+            //         $("#txtTCKN").val(appointment.patient.tckn);
+            //         $("#txtAdres").val(appointment.patient.address);
+            //         $("#txtPhone").val(appointment.patient.Phone);
+            //         $("#txtYas").val(appointment.patient.age);
+
+            //         // Modali göster
+            //         $("#modalId").modal('show');
+            //     }
+
+
+            //         $("#btnAppointment").off().click(function () {
+            //         // Gizli alandan randevu ID'sini alın
+            //         var appointmentId = $("#btnAppointment").val();
+
+            //         // Güncelleme AJAX isteğinde randevu ID'sini kullanın
+            //         $.ajax({
+            //             type: 'POST',
+            //             url: '/Appointment/Update',
+            //             data: {
+            //                 id: appointmentId,
+            //                 hospitalId: $("#ddlHospital").val(),
+            //                 departmentId: $("#ddlDepartment").val(),
+            //                 doctorId: $("#ddlDoctor").val(),
+            //                 appointmentDate: $("#txtAppointment").val(),
+            //                 patientName: $("#txtName").val(),
+            //                 tckn: $("#txtTCKN").val(),
+            //                 address: $("#txtAdres").val(),
+            //                 Phone: $("#txtPhone").val(),
+            //                 age: $("#txtYas").val(),
+            //                 departmentId: $("#ddlDepartment").val()
+            //                 // ... diğer veri alanları
+            //             },
+            //             success: function () {
+            //                 $("#modalId").modal('hide');
+            //                 Listele();
+            //             }
+            //         });
+            //     });
+
+            // });
+
+
+            
+
+            //1.DENEME
+            // $("input").val('');
+            // $("#modalId").modal('show'),
+
+            //     fillListDepartment();
+            //     fillListDoctor();
+            //    fillListHospital();
+            //    fillListPatient();
+
     </script>
 }
