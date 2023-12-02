@@ -124,13 +124,9 @@
                         Listele();
                     }
                 });
-                   
-               
-
             })    
         })
-
-        function Listele() {
+        function Listele() {//büyük harfle yazmıssın sen metodu ama guncelleme yapıldıktan sonra kucuk harfle cagirmissin, normalde javascript dunyasında metod isimleri camelCase dir yani kucuk harfle baslr bilgin olsun.
             $.ajax({
                 type: 'GET',
                 url: '/Appointment/GetAll',
@@ -149,12 +145,15 @@
                                         <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
                                                  <p class="card-text">Hasta ismi ${patientName}</p>
                                           <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
+                                                  <p class="card-text">Hasta Yas ${item.patient.age}</p>
+                                                 <p class="card-text">Hasta Adress ${item.patient.address}</p>
+                                                                 <p class="card-text">Hasta Telefon ${item.patient.phone}</p>
                                                 <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
                                         <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
                                         <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
                                     </div>
                                     <div class="card-footer text-center">
-                                                    <a onclick="Update(${item.id}),'${item.hospital.hospitalId}','${patientName}','${item.patient.tckn}','${item.department.departmantId}','${item.doctor.doctorId}','${item.appointmentDate}'  " class="btn btn-success">Guncelle</a>
+                                                                                    <a onclick="Update(${item.id},'${item.hospital.hospitalId}','${patientName}','${item.patient.tckn}','${item.patient.age}','${item.patient.address}','${item.patient.phone}','${item.department.departmantId}','${item.doctor.doctorId}','${item.appointmentDate}')  " class="btn btn-success">Guncelle</a>
                                         <a onclick="Delete(${item.id})" class="btn btn-danger">Sil</a>
                                     </div>
                                 </div>
@@ -166,8 +165,6 @@
         }
             function Delete(id){
             let deleteee ={id:id }
-
-           
             $.ajax({
                 type:"POST",
                 url:"/Appointment/DeleteById",
@@ -175,7 +172,6 @@
                 success: function () {
                     Listele()
                 }
-
             })
         }
         // function Update(id, hospitalName, departmantName, doctorName, appointmentDate, patientName, tckn, address, phone, age) {
@@ -224,7 +220,7 @@
             
        //  }
 
-        function Update(id, hospitalId, patientName, tckn, departmantId, doctorId, appointmentDate) {
+        function Update(id, hospitalId, patientName, tckn, age, address, phone, departmantId, doctorId, appointmentDate) {
             // $("input").val("");
             
                 fillListHospital(hospitalId);
@@ -237,32 +233,41 @@
 
                 $("#txtName").val(patientName);
                 $("#txtTCKN").val(tckn);
-                $("#txtAdres").val();
-                $("#txtPhone").val();
-                $("#txtYas").val();
+            $("#txtAdres").val(address);
+            $("#txtPhone").val(phone);
+            $("#txtYas").val(age);
             $("#modalId").modal("show");
                 $("#modalTitleId").text("Randevu Güncelle ");
             $("#btnAppointment").text("Guncelle");
 
             $("#btnAppointment").off();
-            $("#btnAppointment").click(function () {
-                var hospitalId = $("#ddlHospital").val();
-                var departmantId = $("#ddlDepartment").val();
-                var doctorId = $("#ddlDoctor").val();
-                var appointmentDate = $("#txtAppointment").val();
-                var patientName = $("#txtName").val();
-                var tckn = $("#txtTCKN").val();
-                var address = $("#txtAdres").val();
-                var Phone = $("#txtPhone").val();
-                var age = $("#txtYas").val();
 
+
+            $("#btnAppointment").click(function () {
+               
                 $.ajax({
                     type:"POST",
                     url:"/Appointment/Update",
-                    data: { id: id, hospitalId: hospitalId, patientName: patientName, tckn: tckn, departmantId: departmantId, doctorId: doctorId, appointmentDate: appointmentDate },
+                    data: {
+                        id:id,
+                        hospitalId: $("#ddlHospital").val(),
+                        departmentId: $("#ddlDepartment").val(),
+                        doctorId: $("#ddlDoctor").val(),
+                        appointmentDate: $("#txtAppointment").val(),
+
+                        patient: {
+                            patientName: $("#txtName").val(),
+                            tckn: $("#txtTCKN").val(),
+                            address: $("#txtAdres").val(),
+                            Phone: $("#txtPhone").val(),
+                            age: $("#txtYas").val(),
+                            departmentId: $("#ddlDepartment").val(),
+                        }
+                    },
                     success: function () {
                         alert("Güncelleme Yapıldı");
                         $("#modalId").modal("hide");
+                        Listele();
                     }
                 })
             })
@@ -285,14 +290,14 @@
                     }
                 })
             }
-            function fillListDepartment(departmantName) {
+        function fillListDepartment(departmantId) {
                 $.ajax({
                     type:'GET',
                     url:'/Department/GetAll',
                     success: function (res) {
                         $("#ddlDepartment").empty();
                         for (var item of res) {
-                            $("#ddlDepartment").append(new Option(item.departmantName, item.id, false));
+                        $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
                         }
                     }
                 })
