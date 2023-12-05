@@ -1,4 +1,5 @@
 ﻿using BSHospital.Models;
+using CineScore.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace BSHospital.Data
         public virtual DbSet<Hospital> Hospitals { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<AppUser> Users { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
         
     }
 }

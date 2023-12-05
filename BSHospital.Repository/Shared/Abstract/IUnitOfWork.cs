@@ -1,4 +1,5 @@
 ﻿using BSHospital.Models;
+using CineScore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace BSHospital.Repository.Shared.Abstract
         IRepository<Doctor> Doctors { get; }
         IRepository<Hospital> Hospitals { get; }
         IRepository<Patient> Patients { get; }
+        IRepository<AppUser> Users { get; }
+        IRepository<UserType> UserTypes { get; }
         
 
         void Save();
