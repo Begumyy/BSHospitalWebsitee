@@ -1,6 +1,7 @@
 using BSHospital.Data;
 using BSHospital.Repository.Shared.Abstract;
 using BSHospital.Repository.Shared.Concrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -23,6 +24,13 @@ namespace BSHospitalWebsitee
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie("AdminLogin", options =>
+            {
+                options.LoginPath = "/Admin/Login/Index";
+                options.LogoutPath = "/Admin/Login/Logout";
+                options.AccessDeniedPath = "/Admin/Login/AccessDenied";  
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -38,7 +46,13 @@ namespace BSHospitalWebsitee
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
 
             app.MapControllerRoute(
                 name: "default",

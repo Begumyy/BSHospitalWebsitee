@@ -21,6 +21,7 @@ namespace BSHospital.Repository.Shared.Concrete
         public IRepository<Hospital> Hospitals { get; private set; }
 
         public IRepository<Patient> Patients { get; private set; }
+        public IRepository<AppUser> Users { get; private set; }
         
 
         public UnitOfWork(ApplicationDbContext context)
@@ -32,6 +33,7 @@ namespace BSHospital.Repository.Shared.Concrete
             Doctors = new Repository<Doctor>(_context);
             Hospitals = new Repository<Hospital>(_context);
             Patients = new Repository<Patient>(_context);
+            Users = new Repository<AppUser>(_context);
            
         }
         public void Save()
