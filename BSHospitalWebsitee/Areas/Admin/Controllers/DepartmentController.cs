@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : ControllerBase1
     {
         private readonly IUnitOfWork _unitOfWork;
 

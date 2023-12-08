@@ -17,9 +17,14 @@ namespace CineScore.Models
         public string Password { get; set; }
         public string? Gsm { get; set; }
         public int UserTypeId { get; set; }
+        
+        public virtual ICollection< Hospital>? Hospitals { get; set; }
         public virtual UserType UserType { get; set; }
+        public virtual ICollection< Department>? Departments { get; set; }
+        public virtual ICollection< Appointment>? Appointments { get; set; }
 
         public virtual ICollection<Patient> Patients { get; set; }=new List<Patient>();
+        
       
     }
 }

@@ -207,18 +207,12 @@
         $(document).ready(function () {
             var DataTable;
             $("#tblDestinations").DataTable({
-                ajax: '/Admin/Department/GetAll',
+                ajax: { url:'/Admin/Department/GetAll', dataSrc:''},
                 columns: [
                     { data: 'id', title: 'ID', },
-                    { data: "DepartmantName", title: 'Departman AD ' },
+                    { data: "departmantName", title: 'Departman AD ' },
 
-                    {
-                        data: 'pictures', title: 'Fotolar', render: function (data, type, row) {
-
-                            return `<a href="/Admin/Service/Pictures/?serviceId=${row.id}" class="btn btn-sm btn-primary">${data.length}</a>`;
-
-                        }
-                    },
+                    
                     // {
                     //     data: "departmentName",title:'Departmanlar',
                     //     render: function (data,type,row) {

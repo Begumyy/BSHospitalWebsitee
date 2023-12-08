@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineScore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,9 @@ namespace BSHospital.Models
         public string HospitalName { get; set; }
        
         public string Address { get; set; }
+        public int? AppUserId { get; set; }
 
+        public virtual AppUser  User { get; set; }
         public virtual ICollection<Doctor> Doctors { get; set; } = new List<Doctor>();
         public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();

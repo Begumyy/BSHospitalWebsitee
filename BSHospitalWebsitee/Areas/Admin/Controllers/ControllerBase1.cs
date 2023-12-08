@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class ControllerBase1 : Controller
     {
         //public readonly IUnitOfWork unitOfWork;

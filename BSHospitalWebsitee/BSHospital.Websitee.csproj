@@ -7,6 +7,58 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill-bs4\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill-bs4\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill-bs4\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\datatables.net\License.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\datatables.net\License.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons-bs4\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons-bs4\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons-bs4\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\datatables.net\License.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable-bs4\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable-bs4\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable-bs4\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\datatables.net\License.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive-bs4\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive-bs4\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive-bs4\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\datatables.net\License.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select-bs4\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select-bs4\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select-bs4\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select\node_modules\datatables.net\License.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net-select\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\datatables.net\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\jquery.counterup\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\jquery.counterup\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\jquery.counterup\node_modules\jquery\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\jquery.easing\bower_components\jquery\MIT-LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\toastr\node_modules\jquery\AUTHORS.txt" />
+    <Content Include="wwwroot\assets\libs\toastr\node_modules\jquery\external\sizzle\LICENSE.txt" />
+    <Content Include="wwwroot\assets\libs\toastr\node_modules\jquery\LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
@@ -20,6 +72,64 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BSHospital.Repository\BSHospital.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\User\Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\libs\datatables.net-autofill-bs4\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-autofill-bs4\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-autofill-bs4\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-autofill\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-bs4\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons-bs4\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons-bs4\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons-bs4\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-buttons\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable-bs4\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable-bs4\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable-bs4\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-keytable\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive-bs4\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive-bs4\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive-bs4\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-responsive\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select-bs4\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select-bs4\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select-bs4\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select\node_modules\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net-select\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\datatables.net\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\jquery.counterup\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\jquery.counterup\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\jquery.counterup\node_modules\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\libs\jquery.easing\bower_components\jquery-easing-original\jquery.easing.compatibility.js" />
+    <None Include="wwwroot\assets\libs\jquery.easing\bower_components\jquery-easing-original\jquery.easing.min.js" />
+    <None Include="wwwroot\assets\libs\jquery.easing\bower_components\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\toastr\node_modules\jquery\external\sizzle\sizzle.min.js" />
+    <None Include="wwwroot\assets\libs\toastr\node_modules\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\libs\toastr\node_modules\jquery\jquery.slim.min.js" />
   </ItemGroup>
 
 </Project>

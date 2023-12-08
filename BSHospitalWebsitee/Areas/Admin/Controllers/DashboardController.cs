@@ -19,7 +19,7 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             return View();
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User")] // silinicek user areaya eklenecek
         public IActionResult User ()
         {
             return View();

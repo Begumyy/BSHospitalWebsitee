@@ -30,6 +30,9 @@ namespace BSHospital.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
@@ -50,6 +53,8 @@ namespace BSHospital.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("DoctorId");
@@ -69,6 +74,9 @@ namespace BSHospital.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DepartmantName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -77,6 +85,8 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Departments");
                 });
@@ -123,6 +133,9 @@ namespace BSHospital.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("HospitalName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -131,6 +144,8 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Hospitals");
                 });
@@ -150,7 +165,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("AppUserId")
+                    b.Property<int?>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("DepartmentId")
@@ -279,6 +294,10 @@ namespace BSHospital.Data.Migrations
 
             modelBuilder.Entity("BSHospital.Models.Appointment", b =>
                 {
+                    b.HasOne("CineScore.Models.AppUser", "User")
+                        .WithMany("Appointments")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("BSHospital.Models.Department", "Department")
                         .WithMany("Appointments")
                         .HasForeignKey("DepartmentId")
@@ -306,6 +325,17 @@ namespace BSHospital.Data.Migrations
                     b.Navigation("Hospital");
 
                     b.Navigation("Patient");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BSHospital.Models.Department", b =>
+                {
+                    b.HasOne("CineScore.Models.AppUser", "User")
+                        .WithMany("Departments")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BSHospital.Models.Doctor", b =>
@@ -323,13 +353,20 @@ namespace BSHospital.Data.Migrations
                     b.Navigation("Hospital");
                 });
 
+            modelBuilder.Entity("BSHospital.Models.Hospital", b =>
+                {
+                    b.HasOne("CineScore.Models.AppUser", "User")
+                        .WithMany("Hospitals")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BSHospital.Models.Patient", b =>
                 {
                     b.HasOne("CineScore.Models.AppUser", "AppUser")
                         .WithMany("Patients")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppUserId");
 
                     b.HasOne("BSHospital.Models.Department", "Department")
                         .WithMany("Patients")
@@ -416,6 +453,12 @@ namespace BSHospital.Data.Migrations
 
             modelBuilder.Entity("CineScore.Models.AppUser", b =>
                 {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Departments");
+
+                    b.Navigation("Hospitals");
+
                     b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618

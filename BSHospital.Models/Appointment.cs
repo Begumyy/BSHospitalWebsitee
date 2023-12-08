@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineScore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace BSHospital.Models
         public int DepartmentId { get; set; }
         public int? DoctorId { get; set; }
         public int? PatientId { get; set; }
-        
+        public int? AppUserId { get; set; }
         
 
         public virtual Patient Patient { get; set; }
@@ -21,6 +22,7 @@ namespace BSHospital.Models
         public virtual Hospital Hospital { get; set; }
         public virtual Department Department { get; set; }
         public virtual Doctor Doctor { get; set; }
+        public virtual AppUser User { get; set; }
         
     }
 }

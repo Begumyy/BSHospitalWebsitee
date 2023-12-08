@@ -30,6 +30,13 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public IActionResult User()
+        {
+            return Json(unitOfWork.Users.GetAll().ToList());
+        }
+
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginDto LoginDto)
