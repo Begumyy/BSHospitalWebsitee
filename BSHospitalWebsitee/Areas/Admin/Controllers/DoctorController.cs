@@ -1,13 +1,15 @@
-﻿using BSHospital.Models;
+﻿using BSHospital.Data;
+using BSHospital.Models;
 using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace BSHospitalWebsitee.Controllers
+namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
-    public class HospitalController : Controller
+    public class DoctorController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public HospitalController(IUnitOfWork unitOfWork)
+        public DoctorController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -17,30 +19,32 @@ namespace BSHospitalWebsitee.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Hospital hospital)
+        public IActionResult Add(Doctor doctor)
         {
-            _unitOfWork.Hospitals.Add(hospital);
+            _unitOfWork.Doctors.Add(doctor);
             _unitOfWork.Save();
             return View();
         }
 
         public IActionResult GetAll()
         {
-            return Json(_unitOfWork.Hospitals.GetAll().ToList());
+
+
+            return Json(_unitOfWork.Doctors.GetAll().ToList());
         }
 
         [HttpPost]
         public IActionResult DeleteById(int id)
         {
-            _unitOfWork.Hospitals.DeleteById(id);
+            _unitOfWork.Doctors.DeleteById(id);
             _unitOfWork.Save();
             return Ok("Başarıyla silindi");
         }
 
         [HttpPost]
-        public IActionResult Update(Hospital hospital)
+        public IActionResult Update(Doctor doctor)
         {
-            _unitOfWork.Hospitals.Update(hospital);
+            _unitOfWork.Doctors.Update(doctor);
             _unitOfWork.Save();
             return Ok();
         }

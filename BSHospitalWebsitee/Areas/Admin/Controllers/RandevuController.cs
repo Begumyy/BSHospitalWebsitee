@@ -3,12 +3,12 @@ using BSHospital.Repository.Shared.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BSHospital.Websitee.Controllers
+namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
     public class RandevuController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        
+
         public RandevuController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

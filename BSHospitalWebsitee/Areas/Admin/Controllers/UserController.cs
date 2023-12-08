@@ -11,12 +11,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase1
     {
-        public UserController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        private readonly IUnitOfWork unitOfWork;
+
+        public UserController(IUnitOfWork unitOfWork)
         {
-            
+            this.unitOfWork = unitOfWork;
         }
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
@@ -36,22 +39,25 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             {
                 List<Claim> claims = new List<Claim>();
                 claims.Add(new Claim(ClaimTypes.Name, user.Email));
-                claims.Add(new Claim(ClaimTypes.Role, user.UserType.TypeName));
-                claims.Add(new Claim(ClaimTypes.GivenName, user.Email));
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Login");
+
+                claims.Add(new Claim(ClaimTypes.Role,user.UserType.TypeName));
+                //claims.Add(new Claim(ClaimTypes.Role, "Agent"));
+                //claims.Add(new Claim(ClaimTypes.Role, "User"));
+                //claims.Add(new Claim(ClaimTypes.Actor, user.Email));
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Dashboard");
 
                 HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties { IsPersistent = LoginDto.RememberMe });
-                if (HttpContext.User.IsInRole("Admin"))
+                if (user.UserType.TypeName=="Admin")
                 {
                     return RedirectToAction("Index", "Dashboard");
                 }
-                else if (HttpContext.User.IsInRole("Editor"))
+                else if (user.UserType.TypeName=="Agent")
                 {
                     return RedirectToAction("Agent", "Dashboard");
                 }
-                else
+                else if (user.UserType.TypeName=="User")
                 {
                     return RedirectToAction("User", "Dashboard");
                 }
@@ -61,6 +67,7 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
                 TempData["Error"] = "Kullanıcı adı veya şifre hatalı";
                 return View();
             }
+            return Ok();
         }
     }
 }
