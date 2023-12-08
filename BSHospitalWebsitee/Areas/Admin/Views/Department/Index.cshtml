@@ -6,125 +6,34 @@
             </div><!-- end card-header -->
             <div class="card-body">
                 <a href="#" id="btnAdd" class="btn btn-primary">Yeni Departman Ekle</a>
-                <table id="tblDestinations" class="table table-striped table-bordered">
+                <table id="tblListDepartment" class="table table-striped table-bordered">
                 </table>
             </div><!-- end card-body -->
         </div><!-- end card -->
     </div>
 </div>
 
-<div class="modal fade" id="modalAddUpdate" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+<div class="modal fade" id="modalList" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTitleId">Yeni Rota Ekle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#modalAddUpdate" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#modalList" aria-label="Close"></button>
             </div>
             <form id="frmAddDestination" class="needs-validation">
                 <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
                     <div class="container">
+                        
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Fotoğraf</label>
-                            <img src="assest/images/users/avatar/4.jpg" id="imgProfilePicture" alt="" height="250">
-                            <input type="file" name="uploadfife" id="fileProfilePicture" style="display:none; " accept=".jpeg,.jpg,.png" />
+                            <label for="inputName" class="col-4 col-form-label">Departman Ekle </label>
                             <div class="col-8">
-                                <label for="fileProfilePicture"><a class="btn btn-success btn-sm">Seç</a></label>
+                                <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtDepartment" placeholder="Lütfen Departman Giriniz" />
                             </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Fotoğraf 2</label>
-                            <img src="assest/images/users/avatar/4.jpg" id="imgProfilePicture2" alt="" height="250">
-                            <input type="file" name="uploadfife2" id="fileProfilePicture2" style="display:none; " accept=".jpeg,.jpg,.png" />
-                            <div class="col-8">
-                                <label for="fileProfilePicture2"><a class="btn btn-success btn-sm">Seç</a></label>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Fotoğraf 3</label>
-                            <img src="assest/images/users/avatar/4.jpg" id="imgProfilePicture3" alt="" height="250">
-                            <input type="file" name="uploadfife3" id="fileProfilePicture3" style="display:none; " accept=".jpeg,.jpg,.png" />
-                            <div class="col-8">
-                                <label for="fileProfilePicture3"><a class="btn btn-success btn-sm">Seç</a></label>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputCity" class="col-4 col-form-label">Şehir</label>
-                            <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen şehir giriniz" class="form-control needs-validation" required id="txtCity" placeholder="Lütfen şehir giriniz" />
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Fiyat</label>
-                            <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtPrice" placeholder="Lütfen fiyat giriniz" />
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Açıklama</label>
-                            <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen açıklama giriniz" data-parsley-minlength="20" class="form-control needs-validation" required id="txtDescription" placeholder="Lütfen açıkalama giriniz" />
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputCity" class="col-4 col-form-label">Açıklama 2 </label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message=" Lütfen açıklama giriniz " class="form-control needs-validation" required id="txtDescription2" placeholder="Lütfen açıklama giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputCity" class="col-4 col-form-label">Açıklama 3 </label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message=" Lütfen açıklama giriniz " class="form-control needs-validation" required id="txtDescription3" placeholder="Lütfen açıklama giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-
-                                <label for="inputName" class="col-4 col-form-label">Kaç Kişilik</label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message="Lütfen kaç kişilik olduğunu giriniz" class="form-control needs-validation" required id="txtCapacity" placeholder="Lütfen kapasiteyi giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputName" class="col-4 col-form-label">Kaç Gündüz</label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message="Lütfen kaç gündüz olduğunu giriniz" class="form-control needs-validation" required id="txtDay" placeholder="Lütfen kaç gün olduğunu giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputName" class="col-4 col-form-label">Kaç Gece</label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message="Lütfen kaç gece olduğunu giriniz" class="form-control needs-validation" required id="txtNight" placeholder="Lütfen kaç gün olduğunu giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputEat" class="col-4 col-form-label">Yeme-İçme</label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message="Lütfen yeme-içme bilgilerini giriniz" class="form-control needs-validation" required id="txtEati" placeholder="Lütfen yeme-içme bilgilerini giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputGezi" class="col-4 col-form-label">Gezi Noktaları</label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message="Lütfen gezi noktalarını giriniz" class="form-control needs-validation" required id="txtGezi" placeholder="Lütfen gezi noktalarını giriniz" />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputGuide" class="col-4 col-form-label">Rehber</label>
-                                <div class="col-8">
-                                    <select id="selectGuide" class="form-control" name="SelectedGuides" asp-items="@ViewBag.Guides"></select>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="inputOnem" class="col-4 col-form-label">Önemli Bilgiler</label>
-                                <div class="col-8">
-                                    <input type="text" data-parsley-required-message="Lütfen önemli bilgileri giriniz" class="form-control needs-validation" required id="txtOnem" placeholder="Lütfen önemli bilgileri giriniz" />
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#modalAddUpdate">Kapat</button>
-                    <button type="submit" class="btn btn-primary" id="btnSave">Kaydet</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#modalList">Kapat</button>
+                        <a id="btnSave" class="btn btn-primary">Kaydet</a>
                 </div>
             </form>
         </div>
@@ -132,9 +41,8 @@
 
 </div>
 
-@section Scripts
-    {
-    <script>
+@section Scripts{
+    <script type="text/javascript">
 
 
         // $("#btnAdd").click(function () {
@@ -182,51 +90,52 @@
         // })
 
         
-            // var DataTable;
-            // $("#tblDestinations").DataTable({
-            //     ajax: '@Url.Action("GetAll", "Department")',
-            //     columns: [
-            //         { data: 'departmantname', title: 'ad' },
-            //         // {
-            //         //     data: 'image3', title: 'Fotoğraf3', render: function (data) {
-            //         //         return `<a class="btn btn-success" href="/Files/Destinations/${data}">Görsel</a>`
-            //         //     }
-            //         // },
-            //         {
-            //             data: 'id', render: function (data) {
-            //                 return `<a href="#" onclick="deleteDestination(${data})" class="btn btn-sm btn-danger">Sil</a>`;
-            //             }
-            //         }
-
-            //     ],
-            //     language: {
-            //         "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
-            //     }
-            // });
+           
 
         $(document).ready(function () {
-            var DataTable;
-            $("#tblDestinations").DataTable({
-                ajax: { url:'/Admin/Department/GetAll', dataSrc:''},
-                columns: [
-                    { data: 'id', title: 'ID', },
-                    { data: "departmantName", title: 'Departman AD ' },
+            list();
+            $("#btnAdd").click(function () {
+                $("input").val('');
+                $("#modalList").modal('show')
 
-                    
-                    // {
-                    //     data: "departmentName",title:'Departmanlar',
-                    //     render: function (data,type,row) {
-                    //         return `<a href="/Admin/Department/GetAll/class="btn btn-sm btn-primary">${data.length}</a>`;
-                    //     }
-                    // }
-                ],
-
-                language: {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
-                }
             });
-        });
+            
+            
+            function list() {
+                $("#tblListDepartment").DataTable({
+                    ajax: { url: '/Admin/Department/GetAll', dataSrc: '' },
+                    columns: [
+                        { data: 'id', title: 'ID', },
+                        { data: "departmantName", title: 'Departman AD ' },
+                    ],
 
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+                    }
+                });
+            }
+
+            $("#btnSave").off().click(function () {
+                    var department = $("#txtDepartment").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/Department/Add',
+                     data: { departmantName: department },
+                    success: function () {
+                        $("#modalList").modal('hide');
+                        list();
+                    }
+                });
+              
+
+
+
+            });
+            
+
+
+        });
+       
 
 
         // function deleteDestination(id) {
