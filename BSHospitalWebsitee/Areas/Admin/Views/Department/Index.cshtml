@@ -17,20 +17,23 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitleId">Yeni Rota Ekle</h5>
+                <h5 class="modal-title" id="modalTitleId">Yeni Departman Ekle</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#modalList" aria-label="Close"></button>
             </div>
             <form id="frmAddDestination" class="needs-validation">
                 <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
                     <div class="container">
                         
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Departman Ekle </label>
+                         <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Departman Adı </label>
                             <div class="col-8">
                                 <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtDepartment" placeholder="Lütfen Departman Giriniz" />
                             </div>
+                         </div>
+
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#modalList">Kapat</button>
                         <a id="btnSave" class="btn btn-primary">Kaydet</a>
@@ -97,27 +100,6 @@
             $("#btnAdd").click(function () {
                 $("input").val('');
                 $("#modalList").modal('show')
-
-                window.deleteDepartment = function (id) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '@Url.Action("DeleteById","Department")',
-                        data: { departmentId: id },
-                        success: function (data) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Başarılı',
-                                message: 'Departman Silindi',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-
-                            $("#tblListDepartment").DataTable().ajax.reload();
-
-                        }
-                    })
-
-                }
             });
             
             
@@ -129,8 +111,8 @@
                         { data: "departmantName", title: 'Departman AD ' },
                         {
                             data:"id",
-                            render: function (data) {
-                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a>`;
+                            render: function (data,type,row) {
+                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a href="#" onclick="updateDepartment(${data}), ${type.departmantName}, ${data.appUserId}" class="btn btn-sm btn-primary">Güncelle</a>`;
                             }
                         }],
                     language: {
@@ -156,19 +138,6 @@
 
             });
 
-            // function Sil(id) {
-            //     let sil = { id: id }
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: '/Admin/Department/DeleteById',
-            //         data: sil,
-            //         success: function () {
-            //             list();
-            //         }
-            //     })
-            // }
-
-
            
 
             // function updateDepartment(id) {
@@ -186,19 +155,44 @@
                 data: { departmentId: id },
                 success: function (data) {
                     Swal.fire({
-                                        icon: 'success',
-                                        title: 'Başarılı',
-                                        message: 'Departman Silindi',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
+                        icon: 'success',
+                        title: 'Başarılı',
+                        message: 'Departman Silindi',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     $("#tblListDepartment").DataTable().ajax.reload();
                 }
-            })
+            });
 
         }
-       
 
+        function updateDepartment(id, departmantname, appUserId) {
+            
+            $("#txtDepartment").val(departmantname);
+            $("#modalList").modal("show");
+
+            $("#modalTitleId").text("Departman  Güncelle");
+            $("#btnSave").text("Güncelle");
+            $("#btnSave").off();
+            $("#btnSave").click(function () {
+                var departmantname = $("#txtDepartment").val();
+               
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Department/Update',
+                    data: { id: id, departmentName: departmantname, appUserId: appUserId },
+                    success: function () {
+                        $("#modalList").modal("hide");
+                        $("#tblListDepartment").DataTable().ajax.reload();
+                    }
+                })
+            });
+        }
+               
+          
 
         // function deleteDestination(id) {
         //     $.ajax({
