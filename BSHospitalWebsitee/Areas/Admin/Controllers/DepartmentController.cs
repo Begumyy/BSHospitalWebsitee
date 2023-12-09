@@ -33,9 +33,9 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteById(int id)
+        public IActionResult DeleteById(int departmentId)
         {
-            _unitOfWork.Departments.DeleteById(id);
+            _unitOfWork.Departments.DeleteById(departmentId);
             _unitOfWork.Save();
             return Ok("Başarıyla silindi");
         }

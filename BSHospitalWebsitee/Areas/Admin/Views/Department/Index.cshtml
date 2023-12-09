@@ -43,7 +43,7 @@
 
 @section Scripts{
     <script type="text/javascript">
-
+       
 
         // $("#btnAdd").click(function () {
         //     $("#modalAddUpdate").modal('show')
@@ -98,6 +98,26 @@
                 $("input").val('');
                 $("#modalList").modal('show')
 
+                window.deleteDepartment = function (id) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("DeleteById","Department")',
+                        data: { departmentId: id },
+                        success: function (data) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Başarılı',
+                                message: 'Departman Silindi',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
+                            $("#tblListDepartment").DataTable().ajax.reload();
+
+                        }
+                    })
+
+                }
             });
             
             
@@ -107,8 +127,12 @@
                     columns: [
                         { data: 'id', title: 'ID', },
                         { data: "departmantName", title: 'Departman AD ' },
-                    ],
-
+                        {
+                            data:"id",
+                            render: function (data) {
+                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a>`;
+                            }
+                        }],
                     language: {
                         "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
                     }
@@ -116,7 +140,7 @@
             }
 
             $("#btnSave").off().click(function () {
-                    var department = $("#txtDepartment").val();
+                var department = $("#txtDepartment").val();
                 $.ajax({
                     type: 'POST',
                     url: '/Admin/Department/Add',
@@ -131,10 +155,48 @@
 
 
             });
-            
+
+            // function Sil(id) {
+            //     let sil = { id: id }
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/Admin/Department/DeleteById',
+            //         data: sil,
+            //         success: function () {
+            //             list();
+            //         }
+            //     })
+            // }
+
+
+           
+
+            // function updateDepartment(id) {
+            //     window.location.href = `@Url.Action("Update", "Department")?id=${id}`;
+            // }
 
 
         });
+
+        function deleteDepartment(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteById","Department")',
+                data: { departmentId: id },
+                success: function (data) {
+                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Başarılı',
+                                        message: 'Departman Silindi',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                    $("#tblListDepartment").DataTable().ajax.reload();
+                }
+            })
+
+        }
        
 
 
@@ -162,6 +224,6 @@
         // // }
 
 
-
+        
     </script>
 }
