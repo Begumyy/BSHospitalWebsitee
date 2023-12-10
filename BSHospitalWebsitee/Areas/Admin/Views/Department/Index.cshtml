@@ -100,6 +100,7 @@
             $("#btnAdd").click(function () {
                 $("input").val('');
                 $("#modalList").modal('show')
+                fillListDepartment();
             });
             
             
@@ -110,9 +111,10 @@
                         { data: 'id', title: 'ID', },
                         { data: "departmantName", title: 'Departman AD ' },
                         {
-                            data:"id",
-                            render: function (data,type,row) {
-                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a href="#" onclick="updateDepartment(${data}), ${type.departmantName}, ${data.appUserId}" class="btn btn-sm btn-primary">Güncelle</a>`;
+                            data: "id",
+                            type: "departmantName",
+                            render: function (data,type) {
+                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment(${data},'${type}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                             }
                         }],
                     language: {
@@ -121,22 +123,7 @@
                 });
             }
 
-            $("#btnSave").off().click(function () {
-                var department = $("#txtDepartment").val();
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/Department/Add',
-                     data: { departmantName: department },
-                    success: function () {
-                        $("#modalList").modal('hide');
-                        list();
-                    }
-                });
-              
-
-
-
-            });
+           
 
            
 
@@ -145,6 +132,18 @@
             // }
 
 
+        });
+        $("#btnSave").off().click(function () {
+            var department = $("#txtDepartment").val();
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Department/Add',
+                data: { departmantName: department },
+                success: function () {
+                    $("#modalList").modal('hide');
+                    list();
+                }
+            });
         });
 
         function deleteDepartment(id) {
@@ -167,57 +166,46 @@
 
         }
 
-        function updateDepartment(id, departmantname, appUserId) {
+        function updateDepartment(id, departmantName) {
+            fillListDepartment(departmantName)
             
-            $("#txtDepartment").val(departmantname);
+            $("#txtDepartment").val(departmantName);
+            
             $("#modalList").modal("show");
-
             $("#modalTitleId").text("Departman  Güncelle");
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
             $("#btnSave").click(function () {
-                var departmantname = $("#txtDepartment").val();
+                
                
 
 
                 $.ajax({
                     type: 'POST',
-                    url: '/Department/Update',
-                    data: { id: id, departmentName: departmantname, appUserId: appUserId },
+                    url: '/Admin/Department/Update',
+                    data: { id: id, departmentname: departmantName},
                     success: function () {
                         $("#modalList").modal("hide");
                         $("#tblListDepartment").DataTable().ajax.reload();
                     }
                 })
             });
+            function fillListDepartment(departmentName) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Department/GetAll',
+                    success: function (res) {
+                        $("#txtDepartment").empty();
+                        for (var item of res) {
+                            $("#txtDepartment").append(`<option value=">${item.departmentName}</option>`);
+                        }
+                    }
+                })
+
+            } 
+
         }
-               
-          
 
-        // function deleteDestination(id) {
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '@Url.Action("DeleteById","Destination")',
-        //         data: { destinationsId: id },
-        //         success: function (data) {
-        //             Swal.fire({
-        //                 icon: 'success',
-        //                 title: 'Başarılı',
-        //                 message: 'Tur Silindi',
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-        //             $("#tblDestinations").DataTable().ajax.reload();
-        //         }
-        //     })
-
-        // }
-
-        // // function updateDestination(id) {
-        // //     window.location.href = `@Url.Action("Update", "Destination")?id=${id}`;
-        // // }
-
-
-        
+                
     </script>
 }
