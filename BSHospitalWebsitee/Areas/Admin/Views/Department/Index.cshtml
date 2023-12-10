@@ -113,8 +113,8 @@
                         {
                             data: "id",
                             type: "departmantName",
-                            render: function (data,type) {
-                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${type}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                            render: function (data,type,row) {
+                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${row.departmantName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                             }
                         }],
                     language: {
@@ -192,13 +192,14 @@
                     });
 
                     function fillListDepartment(departmantName) {
+                         $("#txtDepartment").val(departmantName);
                         $.ajax({
                             type: 'GET',
                             url: '/Admin/Department/GetAll',
                             success: function (res) {
                                 $("#txtDepartment").empty();
                                 for (var item of res) {
-                            $("#txtDepartment").append(`<option value="${item.departmantName}">${item.departmantName}</option>`);
+                            $("#txtDepartment").append(`<option value="${item.id}">${item.departmantName}</option>`);
 
 
                                 }
