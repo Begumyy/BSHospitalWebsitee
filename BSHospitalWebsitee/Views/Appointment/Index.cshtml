@@ -311,7 +311,7 @@
                         }
                     }
                 })
-            }
+        }
             function fillListHospital(hospitalId){
                 $.ajax({
                     type:'GET',
@@ -335,7 +335,7 @@
                     }
                 }
             })
-         }
+        }
             function fillListPatient(patientName) {
             $.ajax({
                 type: 'GET',
@@ -343,12 +343,11 @@
                 success: function (res) {
                     $("#txtName").empty(); 
                     for (var item of res) {
-                        $("#txtName").append(`<option value="${item.tckn}">${item.patientName}</option>`);
+                        $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
+                        
+
                     }
                 }
             });
-      }
-           
-    
     </script>
 }

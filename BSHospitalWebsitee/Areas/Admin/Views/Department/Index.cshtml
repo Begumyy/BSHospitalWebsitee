@@ -114,7 +114,7 @@
                             data: "id",
                             type: "departmantName",
                             render: function (data,type) {
-                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment(${data},'${type}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${type}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                             }
                         }],
                     language: {
@@ -166,46 +166,50 @@
 
         }
 
-        function updateDepartment(id, departmantName) {
-            fillListDepartment(departmantName)
-            
-            $("#txtDepartment").val(departmantName);
-            
-            $("#modalList").modal("show");
-            $("#modalTitleId").text("Departman  Güncelle");
-            $("#btnSave").text("Güncelle");
-            $("#btnSave").off();
-            $("#btnSave").click(function () {
-                
-               
+                function updateDepartment(id, departmantName) {
+                    
+
+                    $("#txtDepartment").val(departmantName);
+                    fillListDepartment(departmantName);
+                    $("#modalList").modal("show");
+                    $("#modalTitleId").text("Departman  Güncelle");
+                    $("#btnSave").text("Güncelle");
+                    $("#btnSave").off();
+                    $("#btnSave").click(function () {
 
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/Department/Update',
-                    data: { id: id, departmentname: departmantName},
-                    success: function () {
-                        $("#modalList").modal("hide");
-                        $("#tblListDepartment").DataTable().ajax.reload();
+
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Department/Update',
+                            data: { id: id, departmantname: $("#txtDepartment").val() },
+                            success: function () {
+                                $("#modalList").modal("hide");
+                                $("#tblListDepartment").DataTable().ajax.reload();
+                            }
+                        })
+                    });
+
+                    function fillListDepartment(departmantName) {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Admin/Department/GetAll',
+                            success: function (res) {
+                                $("#txtDepartment").empty();
+                                for (var item of res) {
+                            $("#txtDepartment").append(`<option value="${item.departmantName}">${item.departmantName}</option>`);
+
+
+                                }
+
+                            }
+                        });
+
                     }
-                })
-            });
-            function fillListDepartment(departmentName) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Admin/Department/GetAll',
-                    success: function (res) {
-                        $("#txtDepartment").empty();
-                        for (var item of res) {
-                            $("#txtDepartment").append(`<option value=">${item.departmentName}</option>`);
-                        }
-                    }
-                })
 
-            } 
+                }
 
-        }
 
-                
     </script>
 }
