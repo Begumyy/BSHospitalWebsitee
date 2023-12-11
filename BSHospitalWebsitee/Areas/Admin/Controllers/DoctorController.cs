@@ -4,9 +4,9 @@ using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BSHospital.Websitee.Controllers
+namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
-    public class DoctorController : Controller
+    public class DoctorController : ControllerBase1
     {
         private readonly IUnitOfWork _unitOfWork;
         public DoctorController(IUnitOfWork unitOfWork)
