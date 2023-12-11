@@ -2,9 +2,9 @@
 using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BSHospital.Websitee.Controllers
+namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
-    public class HospitalController : Controller
+    public class HospitalController : ControllerBase1
     {
         private readonly IUnitOfWork _unitOfWork;
         public HospitalController(IUnitOfWork unitOfWork)
@@ -21,7 +21,8 @@ namespace BSHospital.Websitee.Controllers
         {
             _unitOfWork.Hospitals.Add(hospital);
             _unitOfWork.Save();
-            return View();
+            //return View();
+            return Json(new { success = true });
         }
 
         public IActionResult GetAll()

@@ -75,14 +75,16 @@
             }
         });
 
-        $("#btnSave").off().click(function () {
+        $("#btnSave").off().click(function (e) {
+            e.preventDefault();
             var doctor = $("#txtDoctor").val();
             $.ajax({
                 type: 'POST',
                 url: '/Admin/Doctor/Add',
-                data: { doctorName: doctor },
+                data: { doctor: { doctorName: doctor } },
                 success: function () {
                     $("#modalList").modal('hide');
+                    $("#txtDoctor").val('');
                     doktorListele();
                 }
             });
