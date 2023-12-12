@@ -44,7 +44,7 @@ namespace BSHospital.Data.Migrations
                 column: "HospitalId",
                 principalTable: "Hospitals",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
     }
 }
