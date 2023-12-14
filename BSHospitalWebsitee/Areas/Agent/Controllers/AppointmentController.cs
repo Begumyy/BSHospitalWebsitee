@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BSHospital.Websitee.Areas.Agent.Controllers
 {
-    public class AppointmentController : Controller
+    public class AppointmentController : ControllerBase2
     {
         private readonly IUnitOfWork _unitOfWork;
 
