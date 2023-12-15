@@ -54,12 +54,13 @@
                                 <select class="form-select" name="script" id="ddlDepartment"> </select>
                             </div>
                         </div>
-                        <div class="mb-3 row">
+
+                        @* <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Kullanıcı </label>
                             <div class="col-8">
                                 <select class="form-select" name="script" id="ddlUser"> </select>
                             </div>
-                        </div>
+                        </div> *@
 
                         @* <div class="mb-3 row">
                         <label for="inputName" class="col-4 col-form-label">Select Patient</label>
@@ -96,15 +97,6 @@
 @section Scripts{
     <script type="text/javascript">
 
-        // $(document).ready(function () {
-        //     $("#btnEkle").click(function () {
-        //         $("input").val('');
-        //         $("#modalId").modal('show')
-                
-        //     });
-        // });
-
-
         $(document).ready(function () {
             Listele();
             $("#btnEkle").click(function () {
@@ -113,14 +105,14 @@
                 fillListHospital();
                 fillListDoctor();
                 fillListDepartment();
-                fillListPatient();
-                fillListUser();
+                //fillListPatient();
+                //fillListUser();
             });
             $("#btnAppointment").off().click(function () {
 
                 $.ajax({
                     type: 'POST',
-                    url: '/Appointment/Add',
+                    url: '/Agent/Appointment/Add',
                     data: randevu1 = {
                         hospitalId: $("#ddlHospital").val(),
                         departmentId: $("#ddlDepartment").val(),
@@ -148,7 +140,7 @@
         function Listele() {//büyük harfle yazmıssın sen metodu ama guncelleme yapıldıktan sonra kucuk harfle cagirmissin, normalde javascript dunyasında metod isimleri camelCase dir yani kucuk harfle baslr bilgin olsun.
             $.ajax({
                 type: 'GET',
-                url: '/Appointment/GetAll',
+                url: '/Agent/Appointment/GetAll',
                 success: function (res) {
                     $("#divList").empty();
                     for (var item of res) {
@@ -187,7 +179,7 @@
             let deleteee = { id: id }
             $.ajax({
                 type: "POST",
-                url: "/Appointment/DeleteById",
+                url: "/Agent/Appointment/DeleteById",
                 data: deleteee,
                 success: function () {
                     Listele()
@@ -267,7 +259,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Appointment/Update",
+                    url: "/Agent/Appointment/Update",
                     data: {
                         id: id,
                         hospitalId: $("#ddlHospital").val(),
@@ -294,14 +286,10 @@
         }
 
 
-
-
-
-
         function fillListDoctor(doctorName) {
             $.ajax({
                 type: 'GET',
-                url: '/Doctor/GetAll',
+                url: '/Agent/Doctor/GetAll',
                 success: function (res) {
                     $("#ddlDoctor").empty();
                     for (var item of res) {
@@ -310,10 +298,11 @@
                 }
             })
         }
+
         function fillListDepartment(departmantId) {
             $.ajax({
                 type: 'GET',
-                url: '/Department/GetAll',
+                url: '/Agent/Department/GetAll',
                 success: function (res) {
                     $("#ddlDepartment").empty();
                     for (var item of res) {
@@ -322,10 +311,13 @@
                 }
             })
         }
+
+
+      
         function fillListHospital(hospitalId) {
             $.ajax({
                 type: 'GET',
-                url: '/Hospital/GetAll',
+                url: '/Agent/Hospital/GetAll',
                 success: function (res) {
                     $("#ddlHospital").empty();
                     for (var item of res) {
@@ -334,22 +326,22 @@
                 }
             })
         }
-        function fillListUser(userId) {
-            $.ajax({
-                type: 'GET',
-                url: '/Admin/User/GetAll',
-                success: function (res) {
-                    $("#ddlUser").empty();
-                    for (var item of res) {
-                        $("#ddlUser").append(new Option(item.email, item.id, false, item.id == userId));
-                    }
-                }
-            })
-        }
+        // function fillListUser(userId) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Admin/User/GetAll',
+        //         success: function (res) {
+        //             $("#ddlUser").empty();
+        //             for (var item of res) {
+        //                 $("#ddlUser").append(new Option(item.email, item.id, false, item.id == userId));
+        //             }
+        //         }
+        //     })
+        // }
         function fillListPatient(patientName) {
             $.ajax({
                 type: 'GET',
-                url: '/Patient/GetAll',
+                url: '/Agent/Patient/GetAll',
                 success: function (res) {
                     $("#txtName").empty();
                     for (var item of res) {

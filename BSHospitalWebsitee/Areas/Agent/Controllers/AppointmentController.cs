@@ -33,6 +33,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         {
             var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
             return Json(list);
+
         }
         [HttpPost]
         public IActionResult DeleteById(int id)
