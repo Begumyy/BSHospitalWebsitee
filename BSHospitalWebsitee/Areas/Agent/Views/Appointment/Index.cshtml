@@ -195,7 +195,7 @@
             let deleteee = { id: id }
             $.ajax({
                 type: "POST",
-                url: "/Agent/Appointment/AcceptById",
+                url: "/Agent/Appointment/Decline",
                 data: deleteee,
                 success: function () {
                     Listele()
