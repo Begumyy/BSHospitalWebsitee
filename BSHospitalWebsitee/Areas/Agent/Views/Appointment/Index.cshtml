@@ -177,7 +177,7 @@
                     {       
                         data: "id",
                         render: function (data, type, row) {
-                            return `<a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">Onaylandı</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                            return `<a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                         }
                     
                     },
@@ -195,7 +195,7 @@
             let deleteee = { id: id }
             $.ajax({
                 type: "POST",
-                url: "/Agent/Appointment/Decline",
+                url: "/Agent/Appointment/DeleteById",
                 data: deleteee,
                 success: function () {
                     Listele()
