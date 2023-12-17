@@ -1,0 +1,83 @@
+﻿@* @{
+    ViewData["Title"] = "IptalOlanlar";
+    Layout = "~/Views/Shared/_AgentLayout.cshtml";
+} *@
+
+<h1>IptalOlanlar</h1>
+
+<div class="row">
+    <div class="col-lg-12 ">
+        <div class="card border border-primary">
+            <div class="card-header bg-primary border-primary">
+                <h5 class="my-0 text-white"><i class="uil uil-message me-3"></i>İptal Olanlar</h5>
+            </div><!-- end card-header -->
+            <div class="card-body">
+                <table id="tblIptalOlanlar" class="table table-striped table-bordered">
+                </table>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            iptalOlanlarListele();
+        });
+
+        function iptalOlanlarListele() {
+            if ($.fn.DataTable.isDataTable('#tblIptalOlanlar')) {
+                $('#tblIptalOlanlar').DataTable().destroy();
+            }
+            var DataTable = $("#tblIptalOlanlar").DataTable({
+                ajax: { url: '/Agent/Appointment/GetIptalOlanlar', dataSrc: '' },
+                columns: [
+                    { data: 'id', title: 'ID' },
+                    { data: 'hospital.hospitalName', title: 'Hastane Adı' }, // HospitalName için bu satırı ekleyin
+                    { data: 'patient.patientName', title: 'Hasta Adı' },
+                    { data: 'patient.tckn', title: 'TCKN' },
+                    { data: 'patient.phone', title: 'Telefon' },
+                    { data: 'patient.address', title: 'Adres' },
+                    { data: 'patient.age', title: 'Yaş' },
+                    { data: 'department.departmantName', title: 'Bölüm Adı' },
+                    { data: 'doctor.doctorName', title: 'Doktor Adı' },
+
+                    { data: 'appointmentDate', title: 'Randevu Tarihi' },
+                    {
+                        data: "id",
+                        render: function (data, type, row) {
+                            return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                        }
+
+                    },
+                    // ... diğer sütunlar
+                    {
+                        data: "id",
+                        render: function (data, type, row) {
+                            if (row.IsDeclined) {
+                                return `<span class="text-danger">İptal Edildi</span>`;
+                            } else {
+                                return '';
+                            }
+                        }
+                    },
+                ],
+                order: [[9, 'asc']], // İptal olanlar kısmını randevu tarihine göre sırala
+            });
+        }
+
+        function Delete(id) {
+            let deleteee = { id: id }
+            $.ajax({
+                type: "POST",
+                url: "/Agent/Appointment/AcceptById",
+                data: deleteee,
+                success: function () {
+                    iptalOlanlarListele()
+                }
+            })
+        }
+
+    </script>
+}

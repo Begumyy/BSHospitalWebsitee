@@ -16,6 +16,7 @@ namespace BSHospital.Models
         public int? PatientId { get; set; }
         public int? AppUserId { get; set; }
         
+        
 
         public virtual Patient Patient { get; set; }
         public DateTime AppointmentDate { get; set; } = DateTime.Now;

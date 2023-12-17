@@ -3,6 +3,7 @@ using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BSHospital.Websitee.Areas.Agent.Controllers
 {
     public class AppointmentController : ControllerBase2
@@ -51,5 +52,69 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             _unitOfWork.Save();
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult AcceptById(int id)
+        {
+            //_unitOfWork.Appointments.AcceptById(id);
+            // _unitOfWork.Save();
+            // return Ok(id);
+
+            var appointment = _unitOfWork.Appointments.GetById(id);
+
+            if (appointment != null)
+            {
+                // Onaylanmadı işlemleri
+                appointment.IsDeclined = true;
+                _unitOfWork.Save();
+
+                return Ok(id);
+            }
+
+            return NotFound(id);
+        }
+
+        [HttpPost]
+        public IActionResult Decline(int id)
+        {
+            var appointment = _unitOfWork.Appointments.GetById(id);
+
+            if (appointment != null)
+            {
+                // İptal olanlar bölümüne eklemek için uygun işlemleri gerçekleştirin
+                appointment.IsCanceled = true;
+                _unitOfWork.Save();
+
+                return Ok(id);
+            }
+
+            return NotFound(id);
+        }
+
+        [HttpGet]
+        public IActionResult GetOnaylananlar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Onaylananlar()
+        {
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
+            return Json(list);
+
+
+
+        }
+
+        [HttpPost]
+        public IActionResult IptalOlanlar(int id)
+        {
+            _unitOfWork.Appointments.AcceptById(id);
+            _unitOfWork.Save();
+            return Ok(id);
+        }
+
+
     }
 }

@@ -4,6 +4,7 @@ using BSHospital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSHospital.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231216214123_IsAcceptedAdded")]
+    partial class IsAcceptedAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +52,6 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.Property<int?>("PatientId")
@@ -93,9 +93,6 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeclined")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
@@ -122,9 +119,6 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -159,9 +153,6 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeclined")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
@@ -194,9 +185,6 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.Property<string>("PatientName")
@@ -241,9 +229,6 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeclined")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -270,9 +255,6 @@ namespace BSHospital.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.Property<string>("TypeName")

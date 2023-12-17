@@ -14,7 +14,7 @@
 </div>
 
 
-<a class="btn btn-success" id="btnEkle">Randevu Ekle</a>
+<a class="btn btn-success" id="btnEkle">Yeni Randevu Ekle</a>
 <div id="divList" class="row"></div>
 <div id="divListPatinet" class="row"> </div>
 <form>
@@ -124,6 +124,7 @@
                 //fillListPatient();
                 //fillListUser();
             });
+
             $("#btnAppointment").off().click(function () {
 
                 $.ajax({
@@ -176,7 +177,7 @@
                     {       
                         data: "id",
                         render: function (data, type, row) {
-                            return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                            return `<a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">Onaylanmadı</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                         }
                     
                     },
@@ -190,11 +191,11 @@
 
 
 
-        function Delete(id) {
+        function Decline(id) {
             let deleteee = { id: id }
             $.ajax({
                 type: "POST",
-                url: "/Agent/Appointment/DeleteById",
+                url: "/Agent/Appointment/AcceptById",
                 data: deleteee,
                 success: function () {
                     Listele()
@@ -366,7 +367,7 @@
                     }
                 }
             });
+
         }
-       
     </script>
 }

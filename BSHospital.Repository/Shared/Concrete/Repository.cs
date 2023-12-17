@@ -40,6 +40,14 @@ namespace BSHospital.Repository.Shared.Concrete
             
         }
 
+        public void AcceptById(int id)
+        {
+            T entity = _dbSet.Find(id);
+            entity.IsAccepted = true;
+            _dbSet.Update(entity);
+
+        }
+
         public IQueryable<T>GetAll()
         {
             return _dbSet.Where(x => x.IsCanceled==false);

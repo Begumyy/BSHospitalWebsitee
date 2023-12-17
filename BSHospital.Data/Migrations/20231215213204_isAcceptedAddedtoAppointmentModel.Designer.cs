@@ -4,6 +4,7 @@ using BSHospital.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BSHospital.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231215213204_isAcceptedAddedtoAppointmentModel")]
+    partial class isAcceptedAddedtoAppointmentModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,9 +54,6 @@ namespace BSHospital.Data.Migrations
                     b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeclined")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
@@ -87,13 +87,7 @@ namespace BSHospital.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -118,13 +112,7 @@ namespace BSHospital.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -153,13 +141,7 @@ namespace BSHospital.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -190,13 +172,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.Property<string>("PatientName")
@@ -235,13 +211,7 @@ namespace BSHospital.Data.Migrations
                     b.Property<string>("Gsm")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
@@ -266,13 +236,7 @@ namespace BSHospital.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeclined")
                         .HasColumnType("bit");
 
                     b.Property<string>("TypeName")
