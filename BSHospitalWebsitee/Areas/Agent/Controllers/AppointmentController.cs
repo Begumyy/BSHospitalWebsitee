@@ -38,13 +38,17 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
 
 
         }
-        [HttpPost]
-        public IActionResult DeleteById(int id)
-        {
-            _unitOfWork.Appointments.DeleteById(id);
-            _unitOfWork.Save();
-            return Ok(id);
-        }
+
+        //[HttpPost]
+        //public IActionResult DeleteById(int id)
+        //{
+        //    _unitOfWork.Appointments.DeleteById(id);
+        //    _unitOfWork.Save();
+        //    return Ok(id);
+        //}
+
+       
+
         [HttpPost]
         public IActionResult Update(Appointment appointment)
         {
@@ -53,42 +57,25 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public IActionResult AcceptById(int id)
-        {
-            //_unitOfWork.Appointments.AcceptById(id);
-            // _unitOfWork.Save();
-            // return Ok(id);
+        //[HttpPost]
+        //public IActionResult AcceptById(int id)
+        //{
+        //    _unitOfWork.Appointments.AcceptById(id);
+        //    _unitOfWork.Save();
+        //    return Ok(id);
 
-            var appointment = _unitOfWork.Appointments.GetById(id);
-
-            if (appointment != null)
-            {
-                // Onaylanmadı işlemleri
-                appointment.IsDeclined = true;
-                _unitOfWork.Save();
-
-                return Ok(id);
-            }
-
-            return NotFound(id);
-        }
+        //}
 
         [HttpPost]
         public IActionResult Decline(int id)
         {
             var appointment = _unitOfWork.Appointments.GetById(id);
 
-            if (appointment != null)
-            {
-                // İptal olanlar bölümüne eklemek için uygun işlemleri gerçekleştirin
-                appointment.IsCanceled = true;
-                _unitOfWork.Save();
-
+            
+                appointment.IsAccepted = true;
+                appointment.IsCanceled = false;
                 return Ok(id);
-            }
-
-            return NotFound(id);
+      
         }
 
         [HttpGet]
@@ -97,23 +84,23 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Onaylananlar()
-        {
-            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
-            return Json(list);
+        //[HttpPost]
+        //public IActionResult Onaylananlar()
+        //{
+        //    var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(u=>u.IsCanceled==true).ToList();
+        //    return Json(list);
 
 
 
-        }
+        //}
 
-        [HttpPost]
-        public IActionResult IptalOlanlar(int id)
-        {
-            _unitOfWork.Appointments.AcceptById(id);
-            _unitOfWork.Save();
-            return Ok(id);
-        }
+        //[HttpPost]
+        //public IActionResult IptalOlanlar(int id)
+        //{
+        //    _unitOfWork.Appointments.AcceptById(id);
+        //    _unitOfWork.Save();
+        //    return Ok(id);
+        //}
 
 
     }
