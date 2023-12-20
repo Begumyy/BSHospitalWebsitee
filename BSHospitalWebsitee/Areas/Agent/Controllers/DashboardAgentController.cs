@@ -32,24 +32,19 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         }
         public IActionResult GetAll()
         {
-            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).ToList();
             return Json(list);
         }
         [HttpPost]
         public IActionResult DeleteById(int id)
         {
+            
             _unitOfWork.Appointments.DeleteById(id);
             _unitOfWork.Save();
             return Ok(id);
         }
-        [HttpPost]
-        public IActionResult AcceptById(int id)
-        {
-            
-            _unitOfWork.Appointments.AcceptById(id);
-            _unitOfWork.Save();
-            return Ok(id);
-        }
+
+       
         [HttpPost]
         public IActionResult Update(Appointment appointment)
         {
