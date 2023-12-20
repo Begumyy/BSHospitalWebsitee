@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using BSHospital.Repository.Shared.Concrete;
+using NuGet.Protocol.Core.Types;
 
 namespace BSHospital.Websitee.Areas.Agent.Controllers
 {
@@ -62,5 +64,54 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             }
             return Ok();
         }
+
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Register(LoginDto loginDto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // ... (kodlarınız)
+
+                    unitOfWork.Save();
+
+                    return RedirectToAction("Login");
+                }
+                catch (Exception ex)
+                {
+                    // Veritabanı kayıt hatası
+                    // ex.Message veya ex.InnerException.Message gibi hata mesajlarını loglayabilirsiniz.
+                    ModelState.AddModelError("", "Kayıt sırasında bir hata oluştu.");
+                    ViewBag.ErrorMessage = "Veritabanı Kayıt Hatası: " + ex.Message;
+
+                    return View(loginDto);
+                }
+            }
+            else
+            {
+                // ModelState geçerli değilse, hata mesajları ile birlikte kayıt sayfasını tekrar göster.
+                foreach (var key in ModelState.Keys)
+                {
+                    foreach (var error in ModelState[key].Errors)
+                    {
+                        Console.WriteLine($"{key}: {error.ErrorMessage}");
+                    }
+                }
+
+                return View(loginDto);
+            }
+        }
+
+
+
+        //[HttpPost]
+        //public IActionResult Add()
+        //{
+        //    unitOfWork.Users.Add();
+        //}
     }
 }

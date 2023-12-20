@@ -53,6 +53,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return Ok();
         }
 
+
         //[HttpPost]
         //public IActionResult AcceptById(int id)
         //{
@@ -67,11 +68,11 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         //{
         //    var appointment = _unitOfWork.Appointments.GetById(id);
 
-            
+
         //        appointment.IsAccepted = true;
         //        appointment.IsCanceled = false;
         //        return Ok(id);
-      
+
         //}
 
         [HttpGet]

@@ -24,6 +24,7 @@ namespace BSHospital.Repository.Shared.Concrete
         public IRepository<Patient> Patients { get; private set; }
         public IRepository<AppUser> Users { get; private set; }
         public IRepository<UserType> UserTypes { get; private set; }
+        public IRepository<Onaylananlar> Onaylananlars { get; private set; }
 
         
 
@@ -38,6 +39,7 @@ namespace BSHospital.Repository.Shared.Concrete
             Patients = new Repository<Patient>(_context);
             Users = new Repository<AppUser>(_context);
             UserTypes = new Repository<UserType>(_context);
+            Onaylananlars = new Repository<Onaylananlar>(_context);
            
         }
         public void Save()

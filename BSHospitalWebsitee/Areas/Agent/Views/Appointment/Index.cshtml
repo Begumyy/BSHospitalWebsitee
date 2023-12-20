@@ -188,9 +188,23 @@
         }
 
 
+        //DENEME İÇİN
+        // function Accept(id) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/Agent/Appointment/Update",
+        //         data: { id: id, isAccepted: true },
+        //         success: function (response) {
+        //             alert("Randevu Onaylandı");
+        //             aranacakListele();
+        //         },
+        //         error: function (err) {
+        //             alert("Randevu bulunamadı veya bir hata oluştu");
+        //         }
+        //     });
+        // }
 
-
-
+        
         function Decline(id) {
             let deleteee = { id: id }
             $.ajax({
@@ -202,6 +216,9 @@
                 }
             })
         }
+
+
+
         // function Update(id, hospitalName, departmantName, doctorName, appointmentDate, patientName, tckn, address, phone, age) {
 
         //     Listele(id);

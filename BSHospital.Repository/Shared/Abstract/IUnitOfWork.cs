@@ -17,6 +17,7 @@ namespace BSHospital.Repository.Shared.Abstract
         IRepository<Patient> Patients { get; }
         IRepository<AppUser> Users { get; }
         IRepository<UserType> UserTypes { get; }
+        IRepository<Onaylananlar> Onaylananlars { get; }
         
 
         void Save();
