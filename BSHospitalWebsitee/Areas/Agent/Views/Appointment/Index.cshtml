@@ -1,4 +1,4 @@
-﻿<div class="row">
+﻿@* @* @* <div class="row">
     <div class="col-lg-12 ">
         <div class="card border border-primary">
             <div class="card-header bg-primary border-primary">
@@ -85,7 +85,7 @@
                         </div>
                         </div> *@
 
-                        <div class="mb-3 row">
+                        @* <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
                             <div class="col-8">
                                 <select class="form-select" name="script" id="ddlDoctor"> </select>
@@ -106,102 +106,113 @@
             </div>
         </div>
     </div>
-</form>
+</form *@>
 
 
 
 @section Scripts{
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            Listele();
-            $("#btnEkle").click(function () {
-                $("input").val('');
-                $("#modalId").modal('show')
-                fillListHospital();
-                fillListDoctor();
-                fillListDepartment();
-                //fillListPatient();
-                //fillListUser();
-            });
+        // $(document).ready(function () {
+        //     Listele();
+        //     $("#btnEkle").click(function () {
+        //         $("input").val('');
+        //         $("#modalId").modal('show')
+        //         fillListHospital();
+        //         fillListDoctor();
+        //         fillListDepartment();
+        //         //fillListPatient();
+        //         //fillListUser();
+        //     });
 
-            $("#btnAppointment").off().click(function () {
+        //     $("#btnAppointment").off().click(function () {
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Agent/Appointment/Add',
-                    data: randevu1 = {
-                        hospitalId: $("#ddlHospital").val(),
-                        departmentId: $("#ddlDepartment").val(),
-                        doctorId: $("#ddlDoctor").val(),
-                        appointmentDate: $("#txtAppointment").val(),
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: '/Agent/Appointment/Add',
+        //             data: randevu1 = {
+        //                 hospitalId: $("#ddlHospital").val(),
+        //                 departmentId: $("#ddlDepartment").val(),
+        //                 doctorId: $("#ddlDoctor").val(),
+        //                 appointmentDate: $("#txtAppointment").val(),
 
-                        patient: {
-                            patientName: $("#txtName").val(),
-                            tckn: $("#txtTCKN").val(),
-                            address: $("#txtAdres").val(),
-                            Phone: $("#txtPhone").val(),
-                            age: $("#txtYas").val(),
-                            departmentId: $("#ddlDepartment").val(),
-                            userId: $("#ddlUser").val()
+        //                 patient: {
+        //                     patientName: $("#txtName").val(),
+        //                     tckn: $("#txtTCKN").val(),
+        //                     address: $("#txtAdres").val(),
+        //                     Phone: $("#txtPhone").val(),
+        //                     age: $("#txtYas").val(),
+        //                     departmentId: $("#ddlDepartment").val(),
+        //                     userId: $("#ddlUser").val()
 
-                        }
-                    },
-                    success: function () {
-                        $("#modalId").modal('hide');
-                        Listele();
-                    }
-                });
-            })
-        })
+        //                 }
+        //             },
+        //             success: function () {
+        //                 $("#modalId").modal('hide');
+        //                 Listele();
+        //             }
+        //         });
+        //     })
+        // })
        
 
-        function Listele() {
-            if ($.fn.DataTable.isDataTable('#tblListAppointment')) {
-                $('#tblListAppointment').DataTable().destroy();
-            }
-            var DataTable = $("#tblListAppointment").DataTable({
-                ajax: { url: '/Agent/Appointment/GetAll', dataSrc: '' },
-                columns: [
-                    { data: 'id', title: 'ID' },
-                    { data: 'hospital.hospitalName', title: 'Hastane Adı' }, // HospitalName için bu satırı ekleyin
-                    { data: 'patient.patientName', title: 'Hasta Adı' },
-                    { data: 'patient.tckn', title: 'TCKN' },
-                    { data: 'patient.phone', title: 'Telefon' },
-                    { data: 'patient.address', title: 'Adres' },
-                    { data: 'patient.age', title: 'Yaş' },
-                    { data: 'department.departmantName', title: 'Bölüm Adı' },
-                    { data: 'doctor.doctorName', title: 'Doktor Adı' },
+        // function Listele() {
+        //     if ($.fn.DataTable.isDataTable('#tblListAppointment')) {
+        //         $('#tblListAppointment').DataTable().destroy();
+        //     }
+        //     var DataTable = $("#tblListAppointment").DataTable({
+        //         ajax: { url: '/Agent/Appointment/GetAll', dataSrc: '' },
+        //         columns: [
+        //             { data: 'id', title: 'ID' },
+        //             { data: 'hospital.hospitalName', title: 'Hastane Adı' }, // HospitalName için bu satırı ekleyin
+        //             { data: 'patient.patientName', title: 'Hasta Adı' },
+        //             { data: 'patient.tckn', title: 'TCKN' },
+        //             { data: 'patient.phone', title: 'Telefon' },
+        //             { data: 'patient.address', title: 'Adres' },
+        //             { data: 'patient.age', title: 'Yaş' },
+        //             { data: 'department.departmantName', title: 'Bölüm Adı' },
+        //             { data: 'doctor.doctorName', title: 'Doktor Adı' },
                     
-                    { data: 'appointmentDate', title: 'Randevu Tarihi' },
-                    {       
-                        data: "id",
-                        render: function (data, type, row) {
-                            return `<a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
-                        }
+        //             { data: 'appointmentDate', title: 'Randevu Tarihi' },
+        //             {       
+        //                 data: "id",
+        //                 render: function (data, type, row) {
+        //                     return `<a href="#" onclick="Onayla(${data})" class="btn btn-sm btn-danger">sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a> <a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">Onayla</a>`;
+        //                 }
                     
-                    },
+        //             },
                     
                     
-                ]
-            });
-        }
+        //         ]
+        //     });
+        // }
+        // function Onayla(id) {
+
+        //     let onayla = {id:id}
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/Agent/Appointment/AcceptById",
+        //         data: onayla,
+        //         success: function () {
+        //             Listele()
+        //         }
+        //     })
+        // }
 
 
 
 
-
-        function Decline(id) {
-            let deleteee = { id: id }
-            $.ajax({
-                type: "POST",
-                url: "/Agent/Appointment/DeleteById",
-                data: deleteee,
-                success: function () {
-                    Listele()
-                }
-            })
-        }
+        // function Decline(id) {
+        //     let deleteee = { id: id }
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/Agent/Appointment/DeleteById",
+        //         data: deleteee,
+        //         success: function () {
+        //             Listele()
+        //         }
+        //     })
+        // }
         // function Update(id, hospitalName, departmantName, doctorName, appointmentDate, patientName, tckn, address, phone, age) {
 
         //     Listele(id);
@@ -248,100 +259,100 @@
 
         //  }
 
-        function Update(id, hospitalId, patientName, tckn, age, address, phone, departmantId, doctorId, appointmentDate) {
-            // $("input").val("");
+        // function Update(id, hospitalId, patientName, tckn, age, address, phone, departmantId, doctorId, appointmentDate) {
+        //     // $("input").val("");
 
-            fillListHospital(hospitalId);
-            $("#ddlHospital").val(hospitalId);
-            fillListDepartment(departmantId);
-            $("#ddlDepartment").val(departmantId);
-            fillListDoctor(doctorId);
-            $("#ddlDoctor").val(doctorId);
-            $("#txtAppointment").val(appointmentDate);
+        //     fillListHospital(hospitalId);
+        //     $("#ddlHospital").val(hospitalId);
+        //     fillListDepartment(departmantId);
+        //     $("#ddlDepartment").val(departmantId);
+        //     fillListDoctor(doctorId);
+        //     $("#ddlDoctor").val(doctorId);
+        //     $("#txtAppointment").val(appointmentDate);
 
-            $("#txtName").val(patientName);
-            $("#txtTCKN").val(tckn);
-            $("#txtAdres").val(address);
-            $("#txtPhone").val(phone);
-            $("#txtYas").val(age);
-            $("#modalId").modal("show");
-            $("#modalTitleId").text("Randevu Güncelle ");
-            $("#btnAppointment").text("Guncelle");
+        //     $("#txtName").val(patientName);
+        //     $("#txtTCKN").val(tckn);
+        //     $("#txtAdres").val(address);
+        //     $("#txtPhone").val(phone);
+        //     $("#txtYas").val(age);
+        //     $("#modalId").modal("show");
+        //     $("#modalTitleId").text("Randevu Güncelle ");
+        //     $("#btnAppointment").text("Guncelle");
 
-            $("#btnAppointment").off();
-
-
-            $("#btnAppointment").click(function () {
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Agent/Appointment/Update",
-                    data: {
-                        id: id,
-                        hospitalId: $("#ddlHospital").val(),
-                        departmentId: $("#ddlDepartment").val(),
-                        doctorId: $("#ddlDoctor").val(),
-                        appointmentDate: $("#txtAppointment").val(),
-
-                        patient: {
-                            patientName: $("#txtName").val(),
-                            tckn: $("#txtTCKN").val(),
-                            address: $("#txtAdres").val(),
-                            Phone: $("#txtPhone").val(),
-                            age: $("#txtYas").val(),
-                            departmentId: $("#ddlDepartment").val(),
-                        }
-                    },
-                    success: function () {
-                        alert("Güncelleme Yapıldı");
-                        $("#modalId").modal("hide");
-                        Listele();
-                    }
-                })
-            })
-        }
+        //     $("#btnAppointment").off();
 
 
-        function fillListDoctor(doctorName) {
-            $.ajax({
-                type: 'GET',
-                url: '/Agent/Doctor/GetAll',
-                success: function (res) {
-                    $("#ddlDoctor").empty();
-                    for (var item of res) {
-                        $("#ddlDoctor").append(new Option(item.doctorName, item.id, false));
-                    }
-                }
-            })
-        }
+        //     $("#btnAppointment").click(function () {
 
-        function fillListDepartment(departmantId) {
-            $.ajax({
-                type: 'GET',
-                url: '/Agent/Department/GetAll',
-                success: function (res) {
-                    $("#ddlDepartment").empty();
-                    for (var item of res) {
-                        $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
-                    }
-                }
-            })
-        }
+        //         $.ajax({
+        //             type: "POST",
+        //             url: "/Agent/Appointment/Update",
+        //             data: {
+        //                 id: id,
+        //                 hospitalId: $("#ddlHospital").val(),
+        //                 departmentId: $("#ddlDepartment").val(),
+        //                 doctorId: $("#ddlDoctor").val(),
+        //                 appointmentDate: $("#txtAppointment").val(),
+
+        //                 patient: {
+        //                     patientName: $("#txtName").val(),
+        //                     tckn: $("#txtTCKN").val(),
+        //                     address: $("#txtAdres").val(),
+        //                     Phone: $("#txtPhone").val(),
+        //                     age: $("#txtYas").val(),
+        //                     departmentId: $("#ddlDepartment").val(),
+        //                 }
+        //             },
+        //             success: function () {
+        //                 alert("Güncelleme Yapıldı");
+        //                 $("#modalId").modal("hide");
+        //                 Listele();
+        //             }
+        //         })
+        //     })
+        // }
+
+
+        // function fillListDoctor(doctorName) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Agent/Doctor/GetAll',
+        //         success: function (res) {
+        //             $("#ddlDoctor").empty();
+        //             for (var item of res) {
+        //                 $("#ddlDoctor").append(new Option(item.doctorName, item.id, false));
+        //             }
+        //         }
+        //     })
+        // }
+
+        // function fillListDepartment(departmantId) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Agent/Department/GetAll',
+        //         success: function (res) {
+        //             $("#ddlDepartment").empty();
+        //             for (var item of res) {
+        //                 $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
+        //             }
+        //         }
+        //     })
+        // }
 
 
       
-        function fillListHospital(hospitalId) {
-            $.ajax({
-                type: 'GET',
-                url: '/Agent/Hospital/GetAll',
-                success: function (res) {
-                    $("#ddlHospital").empty();
-                    for (var item of res) {
-                        $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
-                    }
-                }
-            })
-        }
+        // function fillListHospital(hospitalId) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Agent/Hospital/GetAll',
+        //         success: function (res) {
+        //             $("#ddlHospital").empty();
+        //             for (var item of res) {
+        //                 $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
+        //             }
+        //         }
+        //     })
+        // }
         // function fillListUser(userId) {
         //     $.ajax({
         //         type: 'GET',
@@ -354,20 +365,20 @@
         //         }
         //     })
         // }
-        function fillListPatient(patientName) {
-            $.ajax({
-                type: 'GET',
-                url: '/Agent/Patient/GetAll',
-                success: function (res) {
-                    $("#txtName").empty();
-                    for (var item of res) {
-                        $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
+        // function fillListPatient(patientName) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Agent/Patient/GetAll',
+        //         success: function (res) {
+        //             $("#txtName").empty();
+        //             for (var item of res) {
+        //                 $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
 
 
-                    }
-                }
-            });
+        //             }
+        //         }
+        //     });
 
-        }
+        // }
     </script>
-}
+} 

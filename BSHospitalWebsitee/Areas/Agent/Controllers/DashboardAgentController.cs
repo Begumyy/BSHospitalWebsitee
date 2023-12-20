@@ -34,14 +34,19 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         {
             var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
             return Json(list);
-
-
-
         }
         [HttpPost]
         public IActionResult DeleteById(int id)
         {
             _unitOfWork.Appointments.DeleteById(id);
+            _unitOfWork.Save();
+            return Ok(id);
+        }
+        [HttpPost]
+        public IActionResult AcceptById(int id)
+        {
+            
+            _unitOfWork.Appointments.AcceptById(id);
             _unitOfWork.Save();
             return Ok(id);
         }

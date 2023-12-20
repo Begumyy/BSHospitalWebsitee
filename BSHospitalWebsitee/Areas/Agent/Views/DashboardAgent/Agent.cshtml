@@ -30,10 +30,10 @@
                 $('#tblListAppointment').DataTable().destroy();
             }
             var DataTable = $("#tblListAppointment").DataTable({
-                ajax: { url: '/Agent/Appointment/GetAll', dataSrc: '' },
+                ajax: { url: '/Agent/DashboardAgent/GetAll', dataSrc: '' },
                 columns: [
                     { data: 'id', title: 'ID' },
-                    { data: 'hospital.hospitalName', title: 'Hastane Adı' }, // HospitalName için bu satırı ekleyin
+                    { data: 'hospital.hospitalName', title: 'Hastane Adı' }, 
                     { data: 'patient.patientName', title: 'Hasta Adı' },
                     { data: 'patient.tckn', title: 'TCKN' },
                     { data: 'patient.phone', title: 'Telefon' },
@@ -46,7 +46,7 @@
                     {
                         data: "id",
                         render: function (data, type, row) {
-                            return `<a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">Onaylanmadı</a> <a onclick="Accept('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Onaylandı</a>`;
+                            return `<a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">sil</a><a href="#" onclick="Onaylandi(${data})" class="btn btn-sm btn-danger">Onaylandı</a> <a onclick="Accept('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Onaylanmadı</a>`;
                         }
 
                     },
@@ -124,13 +124,28 @@
 
 
 
-        function Accept(id) {
+        // function Accept(id) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/Agent/Appointment/Accept",
+        //         data: { id: id },
+        //         success: function (response) {
+        //             alert("Randevu Onaylandı");
+        //             aranacakListele();
+        //         },
+        //         error: function (err) {
+        //             alert("Randevu bulunamadı veya bir hata oluştu");
+        //         }
+        //     });
+        // }
+
+        function Decline(id) {
             $.ajax({
                 type: "POST",
-                url: "/Agent/Appointment/Accept",
+                url: "/Agent/DashboardAgent/DeleteById",
                 data: { id: id },
                 success: function (response) {
-                    alert("Randevu Onaylandı");
+                    alert("Randevu İptal Edildi");
                     aranacakListele();
                 },
                 error: function (err) {
@@ -138,14 +153,13 @@
                 }
             });
         }
-
-        function Decline(id) {
+        function Onaylandi(id) {
             $.ajax({
                 type: "POST",
-                url: "/Agent/Appointment/Decline",
+                url: "/Agent/DashboardAgent/AcceptById",
                 data: { id: id },
                 success: function (response) {
-                    alert("Randevu İptal Edildi");
+                    alert("Randevu Onaylandi");
                     aranacakListele();
                 },
                 error: function (err) {
