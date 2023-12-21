@@ -187,7 +187,7 @@
                     }
                     $.ajax({
                         type: 'POST',
-                        url: '/Admin/User/Add',
+                        url: '/Agent/UserAgent/Login', //burası değişecek büyük ihtimalle >>> /Agent/UserAgent/Login böyle olabilir.  bu olmazsa controller yeni bir hesap oluştur methodu eklenebilir.
                         data: data,
                         success: function () {
                             $("#modalAdd").modal('hide');
@@ -206,8 +206,7 @@
 
 
 
-
-        const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
+        const myModal = new bootstrap.Modal(document.getElementById('modalId'),options);
 
 
     </script>
