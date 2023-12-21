@@ -24,6 +24,8 @@ namespace BSHospital.Repository.Shared.Abstract
 
         void AcceptById(int id);
 
+        void DeclineById(int id);
+
         void Update(T entity);
 
         //DB set'e bağlanıyor ve ID çekim işlemi yapıyor 

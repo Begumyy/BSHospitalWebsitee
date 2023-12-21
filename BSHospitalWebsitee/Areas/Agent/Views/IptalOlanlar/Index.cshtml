@@ -31,7 +31,7 @@
                 $('#tblIptalOlanlar').DataTable().destroy();
             }
             var DataTable = $("#tblIptalOlanlar").DataTable({
-                ajax: { url: '/Agent/Appointment/GetIptalOlanlar', dataSrc: '' },
+                ajax: { url: '/Agent/IptalOlanlar/GetAll', dataSrc: '' },
                 columns: [
                     { data: 'id', title: 'ID' },
                     { data: 'hospital.hospitalName', title: 'Hastane Adı' }, // HospitalName için bu satırı ekleyin
@@ -44,6 +44,7 @@
                     { data: 'doctor.doctorName', title: 'Doktor Adı' },
 
                     { data: 'appointmentDate', title: 'Randevu Tarihi' },
+
                     {
                         data: "id",
                         render: function (data, type, row) {
@@ -51,6 +52,7 @@
                         }
 
                     },
+
                     // ... diğer sütunlar
                     {
                         data: "id",
@@ -67,17 +69,16 @@
             });
         }
 
-        function Delete(id) {
-            let deleteee = { id: id }
-            $.ajax({
-                type: "POST",
-                url: "/Agent/Appointment/AcceptById",
-                data: deleteee,
-                success: function () {
-                    iptalOlanlarListele()
-                }
-            })
-        }
-
+        // function Delete(id) {
+        //     let deleteee = { id: id }
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/Agent/Appointment/AcceptById",
+        //         data: deleteee,
+        //         success: function () {
+        //             iptalOlanlarListele()
+        //         }
+        //     })
+        // }
     </script>
 }
