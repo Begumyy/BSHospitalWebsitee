@@ -5,7 +5,7 @@
                 <h5 class="my-0 text-white"><i class="uil uil-message me-3"></i>Departmanlar</h5>
             </div><!-- end card-header -->
             <div class="card-body">
-                <a href="#" id="btnAdd" class="btn btn-primary">Yeni Departman Ekle</a>
+                <a class="btn btn-primary" id="btnAdd" >Yeni Departman Ekle</a>
                 <table id="tblListDepartment" class="table table-striped table-bordered">
                 </table>
             </div><!-- end card-body -->
@@ -27,7 +27,7 @@
                          <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Departman Adı </label>
                             <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtDepartment" placeholder="Lütfen Departman Giriniz" />
+                                <input type="text" class="form-control needs-validation" id="txtDepartment"  placeholder="Lütfen Departman Giriniz" required />
                             </div>
                          </div>
 
@@ -47,109 +47,179 @@
 @section Scripts{
     <script type="text/javascript">
        
-
-        // $("#btnAdd").click(function () {
-        //     $("#modalAddUpdate").modal('show')
-        //     $("#btnSave").click(function () {
-        //         event.preventDefault();
-        //         if ($("#frmAddDestination").parsley().isValid() == false) {
-        //             $("#frmAddDestination").parsley().validate();
-        //             $("#frmAddDestination").addClass("was-validated");
-        //         }
-        //         else {
-        //             var formData = new FormData();
-        //             var selectedGuides = $("#selectGuide").val();
-        //             for (var i = 0; i < selectedGuides.length; i++) {
-        //                 formData.append("SelectedGuides", selectedGuides[i]);
-        //             }
-        //             formData.append("file", $("#fileProfilePicture")[0].files[0]);
-        //             formData.append("file2", $("#fileProfilePicture2")[0].files[0]);
-        //             formData.append("file3", $("#fileProfilePicture3")[0].files[0]);
-        //             formData.append("city", $("#txtCity").val());
-        //             formData.append("price", $("#txtPrice").val());
-        //             formData.append("description", $("#txtDescription").val());
-        //             formData.append("description1", $("#txtDescription2").val());
-        //             formData.append("description2", $("#txtDescription3").val());
-        //             formData.append("capacity", $("#txtCapacity").val());
-        //             formData.append("day", $("#txtDay").val());
-        //             formData.append("night", $("#txtNight").val());
-        //             formData.append("eatinganddrinking", $("#txtEati").val());
-        //             formData.append("importantinformations", $("#txtOnem").val());
-        //             //formData.append("Guides", selectedGuides.join(','));
-        //             $.ajax({
-        //                 type: 'POST',
-        //                 url: '/Admin/Destination/Add',
-        //                 data: formData,
-        //                 contentType: false,
-        //                 processData: false,
-        //                 success: function (data) {
-        //                     $("#tblDestinations").DataTable().ajax.reload().val();
-        //                 }
-        //             })
-
-        //         }
-        //         $("#modalAddUpdate").modal('hide');
-        //     })
-        // })
-
+        // $(document).ready(function () {
+        //     list();
+        //     $("#btnAdd").click(function () {
+        //         $("input").val('');
+        //         $("#modalList").modal('show')
+        //         fillListDepartment();
+        //     });
         
+            
+            
+        //     function list() {
+        //         $("#tblListDepartment").DataTable({
+        //             ajax: { url: '/Admin/Department/GetAll', dataSrc: '' },
+        //             columns: [
+        //                 { data: 'id', title: 'ID', },
+        //                 { data: "departmantName", title: 'Departman AD ' },
+        //                 {
+        //                     data: "id",
+        //                     type: "departmantName",
+        //                     render: function (data,type,row) {
+        //                         return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${row.departmantName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+        //                     }
+        //                 }],
+        //             language: {
+        //                 "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+        //             }
+        //         });
+        //     }
+
            
+
+           
+
+        //     // function updateDepartment(id) {
+        //     //     window.location.href = `@Url.Action("Update", "Department")?id=${id}`;
+        //     // }
+
+
+        // });
+
+        // $("#btnSave").off().click(function () {
+        //     var department = $("#txtDepartment").val();
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '/Admin/Department/Add',
+        //         data: { departmantName: department },
+        //         success: function () {
+        //             $("#modalList").modal('hide');
+        //             list();
+        //         }
+        //     });
+        // });
+
+        // function deleteDepartment(id) {
+
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '@Url.Action("DeleteById","Department")',
+        //         data: { departmentId: id },
+        //         success: function (data) {
+        //             Swal.fire({
+        //                 icon: 'success',
+        //                 title: 'Başarılı',
+        //                 message: 'Departman Silindi',
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             });
+        //             $("#tblListDepartment").DataTable().ajax.reload();
+        //         }
+        //     });
+
+        // }
+
+        // function updateDepartment(id, departmantName) {
+        //     $("#txtDepartment").val(departmantName);
+        //     fillListDepartment(departmantName);
+        //     $("#modalList").modal("show");
+        //     $("#modalTitleId").text("Departman  Güncelle");
+        //     $("#btnSave").text("Güncelle");
+        //     $("#btnSave").off();
+        //     $("#btnSave").click(function () {
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: '/Admin/Department/Update',
+        //             data: { id: id, departmantname: $("#txtDepartment").val() },
+        //             success: function () {
+        //                 $("#modalList").modal("hide");
+        //                 $("#tblListDepartment").DataTable().ajax.reload();
+        //             }
+        //         })
+        //     });
+        // }
+
+
+        //             function fillListDepartment(departmantName) {
+        //                 $.ajax({
+        //                     type: 'GET',
+        //                     url: '/Admin/Department/GetAll',
+        //                     success: function (res) {
+        //                         $("#txtDepartment").empty();
+        //                         for (var item of res) {
+        //                     $("#txtDepartment").append(`<option value="${item.departmantName}">${item.departmantName}</option>`);
+
+
+        //                         }
+
+        //                     }
+        //                 });
+
+        //             }
+
+        //         }
+
+
+
 
         $(document).ready(function () {
             list();
-            $("#btnAdd").click(function () {
-                $("input").val('');
+            $("#btnAdd").off().click(function () {
+                //$("input").val('');
+                $("input.form-control").val('')
                 $("#modalList").modal('show')
                 fillListDepartment();
             });
-        
-            
-            
-            function list() {
-                $("#tblListDepartment").DataTable({
-                    ajax: { url: '/Admin/Department/GetAll', dataSrc: '' },
-                    columns: [
-                        { data: 'id', title: 'ID', },
-                        { data: "departmantName", title: 'Departman AD ' },
-                        {
-                            data: "id",
-                            type: "departmantName",
-                            render: function (data,type,row) {
-                                return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${row.departmantName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
-                            }
-                        }],
-                    language: {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
-                    }
-                });
-            }
-
-           
-
-           
-
-            // function updateDepartment(id) {
-            //     window.location.href = `@Url.Action("Update", "Department")?id=${id}`;
-            // }
 
 
-        });
+            $("#btnSave").off().click(function () {
+                var form = document.getElementById('frmAddDestination');
+                if (form.checkValidity()) {
 
-        $("#btnSave").off().click(function () {
-            var department = $("#txtDepartment").val();
-            $.ajax({
-                type: 'POST',
-                url: '/Admin/Department/Add',
-                data: { departmantName: department },
-                success: function () {
-                    $("#modalList").modal('hide');
-                    list();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/Department/Add',
+                        data: { departmantName: $("#txtDepartment").val() },
+                        success: function () {
+                            $("#modalList").modal('hide');
+                            $("#tblListDepartment").DataTable().ajax.reload();
+                        }
+                    });
+                } else {
+                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                    form.classList.add('was-validated');
                 }
             });
+
+
         });
 
-        function deleteDepartment(id) {
 
+        
+
+        function list() {
+            $("#tblListDepartment").DataTable({
+                ajax: { url: '/Admin/Department/GetAll', dataSrc: '' },
+                columns: [
+                    { data: 'id', title: 'ID', },
+                    { data: "departmantName", title: 'Departman AD ' },
+                    {
+                        data: "id",
+                        type: "departmantName",
+                        render: function (data, type, row) {
+                            return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${row.departmantName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                        }
+                    }],
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+                }
+
+            });
+        }
+
+     
+        function deleteDepartment(id) {
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("DeleteById","Department")',
@@ -165,53 +235,78 @@
                     $("#tblListDepartment").DataTable().ajax.reload();
                 }
             });
-
         }
 
-                function updateDepartment(id, departmantName) {
-                    
 
-                    $("#txtDepartment").val(departmantName);
-                    fillListDepartment(departmantName);
-                    $("#modalList").modal("show");
-                    $("#modalTitleId").text("Departman  Güncelle");
-                    $("#btnSave").text("Güncelle");
-                    $("#btnSave").off();
-                    $("#btnSave").click(function () {
+        // function updateDepartment(id, departmantName) {
 
+        //     $("#txtDepartment").val(departmantName);
+        //     fillListDepartment(departmantName);
+        //     $("#modalList").modal("show");
+        //     $("#modalTitleId").text("Departman  Güncelle");
+        //     $("#btnSave").text("Güncelle");
+        //     $("#btnSave").off().click(function () {
+        //         var form = document.getElementById('frmAddDestination');
+        //         if (form.checkValidity()) {
+        //             $.ajax({
+        //                   type: 'POST',
+        //                   url: '/Admin/Department/Update',
+        //                   data: { id: id, departmantname: $("#txtDepartment").val() },
+        //                   success: function () {
+        //                   $("#modalList").modal("hide");
+        //                   $("#tblListDepartment").DataTable().ajax.reload();
+        //                   }
+        //             })
 
+        //         }
+        //         else {
+        //             // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+        //             form.classList.add('was-validated');
+        //         }
+        //     });
 
+        function fillListDepartment(departmantName) {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Department/GetAll',
+                success: function (res) {
+                    $("#txtDepartment").empty();
+                    for (var item of res) {
+                        $("#txtDepartment").append(`<option value="${item.departmantId}">${item.departmantName}</option>`);
+                    }
+                }
+            });
+        }
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Admin/Department/Update',
-                            data: { id: id, departmantname: $("#txtDepartment").val() },
-                            success: function () {
-                                $("#modalList").modal("hide");
-                                $("#tblListDepartment").DataTable().ajax.reload();
-                            }
-                        })
+        function updateDepartment(id, departmantName) {
+            fillListDepartment(departmantName);
+            $("#txtDepartment").val(departmantName);
+            
+            $("#modalList").modal("show");
+            $("#modalTitleId").text("Departman  Güncelle");
+            $("#btnSave").text("Güncelle");
+            //$("#btnSave").unbind("click");
+            $("#btnSave").off();
+            $("#btnSave").click(function () {
+                var form = document.getElementById('frmAddDestination');
+                if (form.checkValidity()) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/Department/Update',
+                        data: { id: id, departmantname: $("#txtDepartment").val() },
+                        success: function () {
+                            $("#modalList").modal("hide");
+                            $("#tblListDepartment").DataTable().ajax.reload();
+                        }
                     });
 
-                    function fillListDepartment(departmantName) {
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Admin/Department/GetAll',
-                            success: function (res) {
-                                $("#txtDepartment").empty();
-                                for (var item of res) {
-                            $("#txtDepartment").append(`<option value="${item.departmantName}">${item.departmantName}</option>`);
-
-
-                                }
-
-                            }
-                        });
-
-                    }
-
                 }
-
+                else {
+                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                    form.classList.add('was-validated');
+                }
+            });
+        }
 
     </script>
 }
