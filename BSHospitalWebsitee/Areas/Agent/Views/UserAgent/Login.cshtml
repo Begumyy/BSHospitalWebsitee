@@ -12,7 +12,8 @@
     <title>BSHospital | Giriş sayfası</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="AcunMedya Akademi bitirme projesi için gelistirilmiş .NetCore tabanlı Mvc uygulaması" name="description" />
-    <meta content="savas" name="author" />
+    <meta content="Begüm & Savaş" name="author" />
+
     <!-- App favicon -->
     <link rel="shortcut icon" href="~/assets/images/logo-sm.png">
 
@@ -187,7 +188,7 @@
                     }
                     $.ajax({
                         type: 'POST',
-                        url: '/Admin/User/Add',
+                        url: '/Admin/User/Add',//bu metodu bulamıyor o yuzden hata veriyor aslında. olmayan bir action'a post ediyorsunuz sorun orda. tamam hocam ona bi bakayım ben sonra.
                         data: data,
                         success: function () {
                             $("#modalAdd").modal('hide');
@@ -207,7 +208,7 @@
 
 
 
-        const myModal = new bootstrap.Modal(document.getElementById('modalId'), options )
+      //  const myModal = new bootstrap.Modal(document.getElementById('modalId'), options )
 
 
     </script>

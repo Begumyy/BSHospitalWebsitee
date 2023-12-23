@@ -29,6 +29,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         {
             return View();
         }
+        //belki buraya yazmışsınızdır dedim ama burda da Add diye bir metod yok.
 
         [AllowAnonymous]
         [HttpPost]

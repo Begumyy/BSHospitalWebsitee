@@ -5,7 +5,7 @@
                 <h5 class="my-0 text-white"><i class="uil uil-message me-3"></i>Departmanlar</h5>
             </div><!-- end card-header -->
             <div class="card-body">
-                <a class="btn btn-primary" id="btnAdd" >Yeni Departman Ekle</a>
+                <a class="btn btn-primary" id="btnAdd">Yeni Departman Ekle</a>
                 <table id="tblListDepartment" class="table table-striped table-bordered">
                 </table>
             </div><!-- end card-body -->
@@ -167,30 +167,38 @@
             list();
             $("#btnAdd").off().click(function () {
                 //$("input").val('');
-                $("input.form-control").val('')
-                $("#modalList").modal('show')
+                $("input.form-control").val('');
+                //btn Add'e tıklandıgında, btnSave buttonunun clickini orrda tanımlaman lazım tek modalla çalışırken bunlara dikkat etmek gerek.
+                $("#btnSave").off().click(function () {
+                    var form = $("#frmAddDestination").val();
+                    if (form.checkValidity()) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Department/Add',
+                            data: { departmantName: $("#txtDepartment").val() },
+                            success: function () {
+                                $("#modalList").modal('hide');
+                                $("#tblListDepartment").DataTable().ajax.reload();
+                            }
+                        });
+                    } else {
+                        // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                        form.classList.add('was-validated');
+                    }
+                });
+                $("#btnSave").text("Kaydet");
+                $("#modalTitleId").text("Departman Ekle");
+                //sanırım oldu istedğin ? evet hocam dün o kadar baltım bir türlü görememiştim :/ En büyük gaflet şu ; modal kapanınca sanki herşeyy eskisine geri dönyor gibi düşünüyoruz, ama malesef dönmüypr, eskisine dönmesi için sayfanın refresh olması lazım cunku. biz sayfayı refresh etmediğimiz için, her duruma göre, buttonun eventini, modalın baslıgını buttonun textini eski haline kendimiz getirmemiz gerekiyor. evet hocam aynen dediğiniz gibi oluyordu refresh atınca eski hline dönüyordu ama refresh atmadan eski olmuyordu . işte bunla ugrasmak istemeyenler sayfaya 2 tane modal koyuyor biri sadece update biri sadece insert için çağrılıyor ama boylesi daha prof. tek modal mı? evet, tek modalı yonetmek daha çok detay istiyor gordugun gibi, daha ince görmek gerekiyor. bunu da görmü olduk hocam artık unutmam :) ben kaçıyorum varmı baska birşey ? hocam şimdilik yok olursa yine yazarım size telrar çok teşekkür ederim. :) savaşta da aynı hata var mı ? evet hocam o da bulamadı ikizmide çok baktık ama bulamamıştık. hadi bakalım, şimdi savaşa sen anlatırsan bunu, bi daha hiç unutmazsın :) evet hocam anlatıcam artık unutmam dediğiniz gibi . hocam birşey daha sorabirli miyi son olarak? sor bakalım.
+                $("#modalList").modal('show');// modalList'i mi yanlış yazmışım hocam 
                 fillListDepartment();
             });
 
 
-            $("#btnSave").off().click(function () {
-                var form = document.getElementById('frmAddDestination');
-                if (form.checkValidity()) {
+            //hocam ilk önce projyi çalıştırayım göstreryimm istersehiz nasıl oluyor diye? bi dk cocugu giydiriyorum tamam hocam.
+            //sorun ne şimdi bana onu soyle once çalışınca neye bakacagımızı bilelim hocam şöyle. adminsayfasın agiriş yaptıktan sonra departmanlara departman ekle diye tıklayınca tek sferliğine departman ekle butonu çıkıyor sonr amesela bi güncelleme yapayım diyınce evet onu da güncelliyor ama sonra tekrar birşey kaydetmek istediğimizde  hep güncelle geliyor modal geliyor snaki id'si takılı kalıyor gibi. güncllenin böyle oluyor hcam
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Admin/Department/Add',
-                        data: { departmantName: $("#txtDepartment").val() },
-                        success: function () {
-                            $("#modalList").modal('hide');
-                            $("#tblListDepartment").DataTable().ajax.reload();
-                        }
-                    });
-                } else {
-                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                    form.classList.add('was-validated');
-                }
-            });
+            
 
 
         });
@@ -284,7 +292,7 @@
             
             $("#modalList").modal("show");
             $("#modalTitleId").text("Departman  Güncelle");
-            $("#btnSave").text("Güncelle");
+            $("#btnSave").text("Güncelle");//update metodu calıstıgında btnsave in ismini guncelle olarak değiştiriyorsun, sonra da ona guncelleme ile alakalı click metodunu baglıyorsun ve öylece kalıyor. sonra sen aynı modali save buttonu uzerinden cağırdıgında sonn hali neyse o kalıyor. o zaman btnAdd mi dmemeiz gerekecek üstteki id gibi, yoksa güncelle mi, hayır, ekleme için modalı açtırırken de bu btnsave'in adını kayydet olarak değiştirip click eventini ayarlaman gerekecek
             //$("#btnSave").unbind("click");
             $("#btnSave").off();
             $("#btnSave").click(function () {
