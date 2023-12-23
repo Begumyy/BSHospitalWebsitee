@@ -162,17 +162,15 @@
 
 
 
-
         $(document).ready(function () {
             list();
-            $("#btnAdd").off().click(function () {
+            $("#btnAdd").click(function () {
                 //$("input").val('');
                 $("input.form-control").val('');
                 //btn Add'e tıklandıgında, btnSave buttonunun clickini orrda tanımlaman lazım tek modalla çalışırken bunlara dikkat etmek gerek.
                 $("#btnSave").off().click(function () {
-                    var form = $("#frmAddDestination").val();
+                    var form = document.getElementById('frmAddDestination');
                     if (form.checkValidity()) {
-
                         $.ajax({
                             type: 'POST',
                             url: '/Admin/Department/Add',
@@ -246,32 +244,6 @@
         }
 
 
-        // function updateDepartment(id, departmantName) {
-
-        //     $("#txtDepartment").val(departmantName);
-        //     fillListDepartment(departmantName);
-        //     $("#modalList").modal("show");
-        //     $("#modalTitleId").text("Departman  Güncelle");
-        //     $("#btnSave").text("Güncelle");
-        //     $("#btnSave").off().click(function () {
-        //         var form = document.getElementById('frmAddDestination');
-        //         if (form.checkValidity()) {
-        //             $.ajax({
-        //                   type: 'POST',
-        //                   url: '/Admin/Department/Update',
-        //                   data: { id: id, departmantname: $("#txtDepartment").val() },
-        //                   success: function () {
-        //                   $("#modalList").modal("hide");
-        //                   $("#tblListDepartment").DataTable().ajax.reload();
-        //                   }
-        //             })
-
-        //         }
-        //         else {
-        //             // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-        //             form.classList.add('was-validated');
-        //         }
-        //     });
 
         function fillListDepartment(departmantName) {
             $.ajax({
@@ -280,11 +252,12 @@
                 success: function (res) {
                     $("#txtDepartment").empty();
                     for (var item of res) {
-                        $("#txtDepartment").append(`<option value="${item.departmantId}">${item.departmantName}</option>`);
+                        $("#txtDepartment").append(`<option value="${item.departmantName}">${item.departmantName}</option>`);
                     }
                 }
             });
         }
+
 
         function updateDepartment(id, departmantName) {
             fillListDepartment(departmantName);
@@ -315,6 +288,5 @@
                 }
             });
         }
-
     </script>
 }

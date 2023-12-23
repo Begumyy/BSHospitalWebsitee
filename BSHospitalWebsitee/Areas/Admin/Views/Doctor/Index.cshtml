@@ -5,7 +5,7 @@
                 <h5 class="my-0 text-white"><i class="uil uil-message me-3"></i>Doktorlar</h5>
             </div><!-- end card-header -->
             <div class="card-body">
-                <a href="#" id="btnAdd" class="btn btn-primary">Yeni Doktor Ekle</a>
+                <a id="btnAdd" class="btn btn-primary">Yeni Doktor Ekle</a>
                 <table id="tblListDoctor" class="table table-striped table-bordered">
                 </table>
             </div><!-- end card-body -->
@@ -27,7 +27,7 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Doktor Adı </label>
                             <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtDoctor" placeholder="Lütfen Doktor Giriniz" />
+                                <input type="text" class="form-control needs-validation" required id="txtDoctor" placeholder="Lütfen Doktor Giriniz" />
                             </div>
                         </div>
 
@@ -50,9 +50,30 @@
         $(document).ready(function () {
             doktorListele();
             $("#btnAdd").click(function () {
-                $("input").val('');
+                //$("input").val('');
+                $("input.form-control").val('');
+                $("#btnSave").off().click(function () {
+                    var form = document.getElementById('frmAddDestination');
+                    if (form.checkValidity()) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Doctor/Add',
+                            data: { doctorName: $("#txtDoctor").val() },
+                            success: function () {
+                                $("#modalList").modal('hide');
+                                $("#tblListDoctor").DataTable().ajax.reload();
+                            }
+                        });
+                    } else {
+                        // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                        form.classList.add('was-validated');
+                    }
+                });
+                $("#btnSave").text("Kaydet");
+                $("#modalTitleId").text("Doktor Ekle");
                 $("#modalList").modal('show')
                 fillListDoctor();
+                
             });
 
             function doktorListele() {
@@ -75,20 +96,7 @@
             }
         });
 
-        $("#btnSave").off().click(function (e) {
-            e.preventDefault();
-            var doctor = $("#txtDoctor").val();
-            $.ajax({
-                type: 'POST',
-                url: '/Admin/Doctor/Add',
-                data: { doctor: { doctorName: doctor } },
-                success: function () {
-                    $("#modalList").modal('hide');
-                    $("#txtDoctor").val('');
-                    doktorListele();
-                }
-            });
-        });
+      
 
         function deleteDoctor(id) {
 
@@ -111,8 +119,6 @@
         }
 
         function updateDoctor(id, doctorName) {
-
-
             $("#txtDoctor").val(doctorName);
             fillListDoctor(doctorName);
             $("#modalList").modal("show");
@@ -120,19 +126,21 @@
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
             $("#btnSave").click(function () {
-
-
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/Doctor/Update',
-                    data: { id: id, doctorname: $("#txtDoctor").val() },
-                    success: function () {
-                        $("#modalList").modal("hide");
-                        $("#tblListDoctor").DataTable().ajax.reload();
-                    }
-                })
+                var form = document.getElementById('frmAddDestination');
+                if (form.checkValidity()) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/Doctor/Update',
+                        data: { id: id, doctorname: $("#txtDoctor").val() },
+                        success: function () {
+                            $("#modalList").modal("hide");
+                            $("#tblListDoctor").DataTable().ajax.reload();
+                        }
+                    });
+                } else {
+                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                    form.classList.add('was-validated');
+                }
             });
 
             function fillListDoctor(doctorName) {
@@ -153,7 +161,6 @@
             }
 
         }
-        
-    
+
     </script>
 }

@@ -27,14 +27,14 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Hastane Adı </label>
                             <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtHospital" placeholder="Lütfen Hastane Giriniz" />
+                                <input type="text" class="form-control needs-validation" required id="txtHospital" placeholder="Lütfen Hastane Giriniz" />
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Adres </label>
                             <div class="col-8">
-                                <input type="text" data-parsley-required-message="Lütfen fiyat giriniz" class="form-control needs-validation" required id="txtAddress" placeholder="Lütfen Adres Giriniz" />
+                                <input type="text"  class="form-control needs-validation" required id="txtAddress" placeholder="Lütfen Adres Giriniz" />
                             </div>
                         </div>
 
@@ -57,7 +57,27 @@
        $(document).ready(function () {
             hospitalListele();
             $("#btnAdd").click(function () {
-                $("input").val('');
+                //$("input").val('');
+                $("input.form-control").val('');
+                $("#btnSave").off().click(function () {
+                    var form = document.getElementById('frmAddDestination');
+                    if (form.checkValidity()) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Hospital/Add',
+                            data: { hospitalName: $("#txtHospital").val(), address: $("#txtAddress").val(), },
+                            success: function () {
+                                $("#modalList").modal('hide');
+                                $("#tblListHospital").DataTable().ajax.reload();
+                            }
+                        });
+                    } else {
+                        // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                        form.classList.add('was-validated');
+                    }
+                });
+                $("#btnSave").text("Kaydet");
+                $("#modalTitleId").text("Hastane Ekle");
                 $("#modalList").modal('show')
                 fillListHospital();
                 fillAddress();
@@ -85,22 +105,22 @@
 
         });
 
-        $("#btnSave").off().click(function () {
-            var hospital = $("#txtHospital").val();
-            var address = $("#txtAddress").val();
-            $.ajax({
-                type: 'POST',
-                url: '/Admin/Hospital/Add',
-                data: hastane = {
-                    hospitalName: $("#txtHospital").val(),
-                    address: $("#txtAddress").val()
-                },
-                success: function () {
-                    $("#modalList").modal('hide');
-                    hospitalListele();
-                }
-            });
-        })
+        // $("#btnSave").off().click(function () {
+        //     var hospital = $("#txtHospital").val();
+        //     var address = $("#txtAddress").val();
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '/Admin/Hospital/Add',
+        //         data: hastane = {
+        //             hospitalName: $("#txtHospital").val(),
+        //             address: $("#txtAddress").val()
+        //         },
+        //         success: function () {
+        //             $("#modalList").modal('hide');
+        //             hospitalListele();
+        //         }
+        //     });
+        // })
 
         function deleteHospital(id) {
 
@@ -124,8 +144,6 @@
 
 
         function updateHospital(id, hospitalName, address) {
-
-
             $("#txtHospital").val(hospitalName);
             fillListHospital(hospitalName);
             $("#txtAddress").val(address);
@@ -135,23 +153,21 @@
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
             $("#btnSave").click(function () {
-
-
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/Admin/Hospital/Update',
-                    data: { 
-                        id: id,
-                        hospitalname: $("#txtHospital").val(),
-                        address: $("#txtAddress").val()
-                    },
-                    success: function () {
-                        $("#modalList").modal("hide");
-                        $("#tblListHospital").DataTable().ajax.reload();
-                    }
-                })
+                var form = document.getElementById('frmAddDestination');
+                if (form.checkValidity()) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/Hospital/Update',
+                        data: { id: id, hospitalname: $("#txtHospital").val(), address:$("#txtAddress").val() },
+                        success: function () {
+                            $("#modalList").modal("hide");
+                            $("#tblListHospital").DataTable().ajax.reload();
+                        }
+                    });
+                } else {
+                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+                    form.classList.add('was-validated');
+                }
             });
 
             function fillListHospital(hospitalName) {
