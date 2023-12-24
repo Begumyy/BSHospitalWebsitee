@@ -20,7 +20,7 @@ namespace BSHospitalWebsitee
 
             });
 
-
+            
 
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -51,6 +51,9 @@ namespace BSHospitalWebsitee
                  name: "areas",
                  pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=DashboardAgent}/{action=Agent}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",

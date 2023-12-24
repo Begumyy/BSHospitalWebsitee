@@ -14,6 +14,13 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+        [Authorize(Roles = "Agent")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Agent")]
         public IActionResult Agent()
         {

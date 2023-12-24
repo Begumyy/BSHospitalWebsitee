@@ -36,8 +36,20 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             return Json(unitOfWork.Users.GetAll().ToList());
         }
 
+
+
         //Admin/User/Add diye bi yere post ediyorsun, ama burası Admin/User işte, ADD diye bir metot göremiyorum. anladım hocam tamam dmeekki ona bakmaklazım.
 
+        [HttpPost]
+        public IActionResult Add(AppUser user)
+        {
+            unitOfWork.Users.Add(user);
+            unitOfWork.Save();
+            //return View();
+            return Ok();
+        }
+
+       
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginDto LoginDto)

@@ -162,28 +162,30 @@
 
 
 
+
         $(document).ready(function () {
+
+            var dataTable = null;
             list();
             $("#btnAdd").click(function () {
-                //$("input").val('');
-                $("input.form-control").val('');
+                $("input").val('');
+                //$("input.form-control").val('');
                 //btn Add'e tıklandıgında, btnSave buttonunun clickini orrda tanımlaman lazım tek modalla çalışırken bunlara dikkat etmek gerek.
                 $("#btnSave").off().click(function () {
-                    var form = document.getElementById('frmAddDestination');
-                    if (form.checkValidity()) {
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Admin/Department/Add',
-                            data: { departmantName: $("#txtDepartment").val() },
-                            success: function () {
-                                $("#modalList").modal('hide');
-                                $("#tblListDepartment").DataTable().ajax.reload();
-                            }
-                        });
-                    } else {
-                        // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                        form.classList.add('was-validated');
-                    }
+                    var department = $("#txtDepartment").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/Department/Add',
+                        data: { departmantName: department },
+                        success: function () {
+                            $("#modalList").modal('hide');
+                            $("#tblListDepartment").DataTable().ajax.reload();
+                            refreshDataTable();
+
+                        }
+                    });
+
                 });
                 $("#btnSave").text("Kaydet");
                 $("#modalTitleId").text("Departman Ekle");
@@ -191,28 +193,36 @@
                 $("#modalList").modal('show');// modalList'i mi yanlış yazmışım hocam 
                 fillListDepartment();
             });
+        });
 
 
             //hocam ilk önce projyi çalıştırayım göstreryimm istersehiz nasıl oluyor diye? bi dk cocugu giydiriyorum tamam hocam.
             //sorun ne şimdi bana onu soyle once çalışınca neye bakacagımızı bilelim hocam şöyle. adminsayfasın agiriş yaptıktan sonra departmanlara departman ekle diye tıklayınca tek sferliğine departman ekle butonu çıkıyor sonr amesela bi güncelleme yapayım diyınce evet onu da güncelliyor ama sonra tekrar birşey kaydetmek istediğimizde  hep güncelle geliyor modal geliyor snaki id'si takılı kalıyor gibi. güncllenin böyle oluyor hcam
 
             
+       
 
 
-        });
+        // function refreshDataTable() {
+        //     if (dataTable !== null) {
+        //         dataTable.destroy(); // Mevcut DataTable örneğini yok et
+        //     }
+        //     list(); // DataTable'ı tekrar oluştur
+        // }
 
-
-        
 
         function list() {
-            $("#tblListDepartment").DataTable({
+            function refreshDataTable() {
+
+
+            }
+            dataTable = $("#tblListDepartment").DataTable({
                 ajax: { url: '/Admin/Department/GetAll', dataSrc: '' },
                 columns: [
                     { data: 'id', title: 'ID', },
                     { data: "departmantName", title: 'Departman AD ' },
                     {
                         data: "id",
-                        type: "departmantName",
                         render: function (data, type, row) {
                             return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${row.departmantName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                         }
@@ -220,9 +230,31 @@
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
                 }
-
             });
+
         }
+
+        // function list() {
+        //     function refreshDataTable() { }
+        //     dataTable=$("#tblListDepartment").DataTable({
+        //             ajax: { url: '/Admin/Department/GetAll', dataSrc: '' },
+        //             columns: [
+        //                 { data: 'id', title: 'ID', },
+        //                 { data: "departmantName", title: 'Departman AD ' },
+        //                 {
+        //                     data: "id",
+        //                     type: "departmantName",
+        //                     render: function (data, type, row) {
+        //                         return `<a href="#" onclick="deleteDepartment(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateDepartment('${data}','${row.departmantName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+        //                     }
+        //                 }],
+        //             language: {
+        //                 "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+        //             }
+
+        //         });
+           
+        // }
 
      
         function deleteDepartment(id) {
@@ -245,7 +277,7 @@
 
 
 
-        function fillListDepartment(departmantName) {
+        function fillListDepartment(id, departmantName) {
             $.ajax({
                 type: 'GET',
                 url: '/Admin/Department/GetAll',
@@ -259,34 +291,58 @@
         }
 
 
-        function updateDepartment(id, departmantName) {
-            fillListDepartment(departmantName);
-            $("#txtDepartment").val(departmantName);
-            
-            $("#modalList").modal("show");
-            $("#modalTitleId").text("Departman  Güncelle");
-            $("#btnSave").text("Güncelle");//update metodu calıstıgında btnsave in ismini guncelle olarak değiştiriyorsun, sonra da ona guncelleme ile alakalı click metodunu baglıyorsun ve öylece kalıyor. sonra sen aynı modali save buttonu uzerinden cağırdıgında sonn hali neyse o kalıyor. o zaman btnAdd mi dmemeiz gerekecek üstteki id gibi, yoksa güncelle mi, hayır, ekleme için modalı açtırırken de bu btnsave'in adını kayydet olarak değiştirip click eventini ayarlaman gerekecek
-            //$("#btnSave").unbind("click");
-            $("#btnSave").off();
-            $("#btnSave").click(function () {
-                var form = document.getElementById('frmAddDestination');
-                if (form.checkValidity()) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Admin/Department/Update',
-                        data: { id: id, departmantname: $("#txtDepartment").val() },
-                        success: function () {
-                            $("#modalList").modal("hide");
-                            $("#tblListDepartment").DataTable().ajax.reload();
-                        }
+                function updateDepartment(id, departmantName) {
+                    $("#txtDepartment").val(departmantName);
+                    fillListDepartment(id, departmantName);
+                    $("#modalList").modal("show");
+                    $("#modalTitleId").text("Departman  Güncelle");
+                    $("#btnSave").text("Güncelle");
+                    $("#btnSave").off();
+                    $("#btnSave").click(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Department/Update',
+                            data: { id: id, departmantname: $("#txtDepartment").val() },
+                            success: function () {
+                                $("#modalList").modal("hide");
+                                $("#tblListDepartment").DataTable().ajax.reload();
+                        refreshDataTable();
+                            }
+                        })
                     });
+                }
 
-                }
-                else {
-                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                    form.classList.add('was-validated');
-                }
-            });
-        }
+
+        // function updateDepartment(id, departmantName) {
+        //     fillListDepartment(id, departmantName);
+        //     $("#txtDepartment").val(departmantName);
+            
+        //     $("#modalList").modal("show");
+        //     $("#modalTitleId").text("Departman  Güncelle");
+        //     $("#btnSave").text("Güncelle");//update metodu calıstıgında btnsave in ismini guncelle olarak değiştiriyorsun, sonra da ona guncelleme ile alakalı click metodunu baglıyorsun ve öylece kalıyor. sonra sen aynı modali save buttonu uzerinden cağırdıgında sonn hali neyse o kalıyor. o zaman btnAdd mi dmemeiz gerekecek üstteki id gibi, yoksa güncelle mi, hayır, ekleme için modalı açtırırken de bu btnsave'in adını kayydet olarak değiştirip click eventini ayarlaman gerekecek
+        //     //$("#btnSave").unbind("click");
+        //     $("#btnSave").off();
+        //     $("#btnSave").click(function () {
+        //         var form = document.getElementById('frmAddDestination');
+        //         if (form.checkValidity()) {
+        //             $.ajax({
+        //                 type: 'POST',
+        //                 url: '/Admin/Department/Update',
+        //                 data: { id: id, departmantname: $("#txtDepartment").val() },
+        //                 success: function () {
+        //                     $("#modalList").modal("hide");
+        //                     $("#tblListDepartment").DataTable().ajax.reload();
+        //                     refreshDataTable();
+
+        //                 }
+        //             });
+
+        //         }
+        //         else {
+        //             // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
+        //             form.classList.add('was-validated');
+        //         }
+        //     });
+        // }
     </script>
 }

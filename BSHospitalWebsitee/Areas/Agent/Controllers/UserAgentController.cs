@@ -30,6 +30,16 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return View();
         }
         //belki buraya yazmışsınızdır dedim ama burda da Add diye bir metod yok.
+        
+        
+        [HttpPost]
+        public IActionResult Add(AppUser user)
+        {
+            unitOfWork.Users.Add(user);
+            unitOfWork.Save();
+            //return View();
+            return Ok();
+        }
 
         [AllowAnonymous]
         [HttpPost]

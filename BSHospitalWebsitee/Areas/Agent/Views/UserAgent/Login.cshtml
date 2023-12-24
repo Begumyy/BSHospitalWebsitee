@@ -184,11 +184,12 @@
                         email: $("#txtEmail").val(),
                         gsm: $("#txtGsm").val(),
                         password: $("#password").val(),
-                        userTypeId: 7
+                        userTypeId: 9,
+                        role: "Agent"
                     }
                     $.ajax({
                         type: 'POST',
-                        url: '/Admin/User/Add',//bu metodu bulamıyor o yuzden hata veriyor aslında. olmayan bir action'a post ediyorsunuz sorun orda. tamam hocam ona bi bakayım ben sonra.
+                        url: '/Agent/UserAgent/Add',//bu metodu bulamıyor o yuzden hata veriyor aslında. olmayan bir action'a post ediyorsunuz sorun orda. tamam hocam ona bi bakayım ben sonra.
                         data: data,
                         success: function () {
                             $("#modalAdd").modal('hide');

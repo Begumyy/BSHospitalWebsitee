@@ -24,7 +24,16 @@ namespace CineScore.Models
         public virtual ICollection< Appointment>? Appointments { get; set; }
 
         public virtual ICollection<Patient> Patients { get; set; }=new List<Patient>();
-        
-      
+
+        public bool IsUserTypeIdValid
+        {
+            get
+            {
+                // Eğer UserTypeId 0'dan büyükse ve UserType propertysine bir referans atanmışsa true döner.
+                return UserTypeId > 0 && UserType != null;
+            }
+        }
+
+
     }
 }
