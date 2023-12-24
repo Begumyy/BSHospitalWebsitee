@@ -15,8 +15,6 @@ namespace BSHospital.Models
         public string Address { get; set; }
         public string TCKN { get; set; }
         public int Age { get; set; }
-
-
         public int DepartmentId { get; set; }
         public int? AppUserId { get; set; }
       

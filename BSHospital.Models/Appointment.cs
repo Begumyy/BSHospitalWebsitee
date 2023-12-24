@@ -15,11 +15,10 @@ namespace BSHospital.Models
         public int? DoctorId { get; set; }
         public int? PatientId { get; set; }
         public int? AppUserId { get; set; }
-        
-        
+        public DateTime AppointmentDate { get; set; } = DateTime.Now;
+
 
         public virtual Patient Patient { get; set; }
-        public DateTime AppointmentDate { get; set; } = DateTime.Now;
         public virtual Hospital Hospital { get; set; }
         public virtual Department Department { get; set; }
         public virtual Doctor Doctor { get; set; }

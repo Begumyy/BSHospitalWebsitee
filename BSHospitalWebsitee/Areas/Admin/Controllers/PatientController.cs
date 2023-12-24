@@ -24,12 +24,43 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Patient patient)
+        public IActionResult Add([FromBody] Patient patient)
         {
-            _unitOfWork.Patients.Add(patient);
-            _unitOfWork.Save();
-            return Ok(patient.Id);
-            //return Json(new { success = true });
+            //patient.DepartmentId = 1;
+            //_unitOfWork.Patients.Add(patient);
+            //_unitOfWork.Save();
+            ////return Ok(patient.Id);
+            ////return Ok(patient.Depatment.Id);
+            ////return Ok(patient.departmentId);
+            ////return Json(new { success = true });
+            //return Ok(patient);
+
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+                // Hata mesajlarını loglayabilir veya hata durumu döndürebilirsiniz
+                return BadRequest(errors);
+            }
+
+            // "Department" nesnesini alın
+            Department department = _unitOfWork.Departments.GetById(patient.DepartmentId);
+
+            // Eğer "Department" nesnesi null değilse, ilişkilendirme yapın
+            if (department != null)
+            {
+                patient.Department = department;
+                _unitOfWork.Patients.Add(patient);
+                _unitOfWork.Save();
+                return Ok(patient);
+            }
+            else
+            {
+                // Hata durumu, uygun "DepartmentId" bulunamadı
+                return BadRequest("Geçerli bir departman seçilmelidir.");
+            }
         }
 
         public IActionResult GetAll()
