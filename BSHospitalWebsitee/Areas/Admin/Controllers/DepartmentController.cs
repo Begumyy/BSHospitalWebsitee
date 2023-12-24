@@ -24,7 +24,7 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         {
             _unitOfWork.Departments.Add(department);
             _unitOfWork.Save();
-            return View();
+            return Json(new { success = true });
         }
 
         public IActionResult GetAll()

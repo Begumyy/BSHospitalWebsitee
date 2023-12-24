@@ -1,0 +1,270 @@
+﻿<div class="row">
+    <div class="col-lg-12 ">
+        <div class="card border border-primary">
+            <div class="card-header bg-primary border-primary">
+                <h5 class="my-0 text-white"><i class="uil uil-message me-3"></i>Hastalar</h5>
+            </div><!-- end card-header -->
+            <div class="card-body">
+                <a href="#" id="btnAdd" class="btn btn-primary">Yeni Hasta Ekle</a>
+                <table id="tblListPatient" class="table table-striped table-bordered">
+                </table>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div>
+</div>
+
+<div class="modal fade" id="modalList" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Yeni Hasta Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#modalList" aria-label="Close"></button>
+            </div>
+            <form id="frmAddDestination" class="needs-validation">
+                <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+                    <div class="container">
+
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Hasta Adı </label>
+                            <div class="col-8">
+                                <input type="text" class="form-control needs-validation" required id="txtPatient" placeholder="Lütfen Hasta Giriniz" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Adres </label>
+                            <div class="col-8">
+                                <input type="text" class="form-control needs-validation" required id="txtAddress" placeholder="Lütfen Adres Giriniz" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Telefon </label>
+                            <div class="col-8">
+                                <input type="text" class="form-control needs-validation" required id="txtPhone" placeholder="Lütfen Telefon Numarası Giriniz" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">TCKN </label>
+                            <div class="col-8">
+                                <input type="text" class="form-control needs-validation" required id="txtTckn" placeholder="Lütfen T.C. Kimlik Numarası Giriniz" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Yaş </label>
+                            <div class="col-8">
+                                <input type="text" class="form-control needs-validation" required id="txtYas" placeholder="Lütfen Yaş Giriniz" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#modalList">Kapat</button>
+                    <a id="btnSave" class="btn btn-primary">Kaydet</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            patientListele();
+            $("#btnAdd").click(function () {
+                $("input").val('');
+                $("#btnSave").off().click(function () {
+                    var patient = $("#txtPatient").val();
+                    var address = $("#txtAddress").val();
+                    var phone = $("#txtPhone").val();
+                    var tckn = $("#txtTckn").val();
+                    var yas = $("#Yas").val();
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Admin/Patient/Add',
+                        data: { patientName: patient, address: address, phone: phone, tckn: tckn, yas: yas },
+                            success: function () {
+                                $("#modalList").modal('hide');
+                            $("#tblListPatient").DataTable().ajax.reload();
+                            }
+                        });
+                });
+                $("#btnSave").text("Kaydet");
+                $("#modalTitleId").text("Hasta Ekle");
+                $("#modalList").modal('show')
+                fillListPatient();
+                fillAddress();
+                fillPhone();
+                fillTckn();
+                fillYas();
+            });
+
+            function patientListele() {
+                $("#tblListPatient").DataTable({
+                    ajax: { url: '/Admin/Patient/GetAll', dataSrc: '' },
+                    columns: [
+                        { data: 'id', title: 'ID', },
+                        { data: "patientName", title: 'Hasta AD ' },
+                        { data: "address", title: 'Adres ' },
+                        { data: "phone", title: 'Telefon ' },
+                        { data: "tckn", title: 'T.C. Kimlik No. ' },
+                        { data: "yas", title: 'Yaş ' },
+                        {
+                            data: "id",
+                            type: "patientName",
+                            render: function (data, type, row) {
+                                return `<a href="#" onclick="deletePatient(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updatePatient('${data}','${row.hospitalName}','${row.address}','${row.phone}','${row.tckn}','${row.yas}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                            }
+                        }],
+                    language: {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+                    }
+                });
+            }
+
+        });
+
+
+        function deletePatient(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteById","Patient")',
+                data: { id: id },
+                success: function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Başarılı',
+                        message: 'Hasta Silindi',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $("#tblListPatient").DataTable().ajax.reload();
+                }
+            });
+
+        }
+
+
+        function updatePatient(id, patientName, address, phone,tckn, yas) {
+            $("#txtPatient").val(patientName);
+            fillListPatient(patientName);
+            $("#txtAddress").val(address);
+            fillAddress(address);
+            $("#txtPhone").val(phone);
+            fillPhone(phone);
+            $("#txtTckn").val(tckn);
+            fillTckn(tckn);
+            $("#txtYas").val(yas);
+            fillTckn(tckn);
+            $("#modalList").modal("show");
+            $("#modalTitleId").text("Hasta Güncelle");
+            $("#btnSave").text("Güncelle");
+            $("#btnSave").off();
+            $("#btnSave").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/Patient/Update',
+                    data: { id: id, patientname: $("#txtPatient").val(), address: $("#txtAddress").val(), phone: $("#txtPhone").val(), tckn: $("#txtTckn").val(), yas: $("#txtYas").val() },
+                    success: function () {
+                        $("#modalList").modal("hide");
+                        $("#tblListPatient").DataTable().ajax.reload();
+                    }
+                });
+            });
+
+            function fillListPatient(patientName) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Patient/GetAll',
+                    success: function (res) {
+                        $("#txtPatient").empty();
+                        for (var item of res) {
+                            $("#txtPatient").append(`<option value="${item.patientName}">${item.patientName}</option>`);
+                        }
+
+                    }
+                });
+
+            }
+
+            function fillAddress(address) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Patient/GetAll',
+                    success: function (res) {
+                        $("#txtAddress").empty();
+                        for (var item of res) {
+                            $("#txtAddress").append(`<option value="${item.address}">${item.address}</option>`);
+                        }
+                    }
+                });
+            }
+
+            function fillPhone(phone) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Patient/GetAll',
+                    success: function (res) {
+                        $("#txtPhone").empty();
+                        for (var item of res) {
+                            $("#txtPhone").append(`<option value="${item.phone}">${item.phone}</option>`);
+                        }
+                    }
+                });
+            }
+
+            function fillTckn(tckn) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Patient/GetAll',
+                    success: function (res) {
+                        $("#txtTckn").empty();
+                        for (var item of res) {
+                            $("#txtTckn").append(`<option value="${item.tckn}">${item.tckn}</option>`);
+                        }
+                    }
+                });
+            }
+
+            function fillYas(yas) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Admin/Patient/GetAll',
+                    success: function (res) {
+                        $("#txtYas").empty();
+                        for (var item of res) {
+                            $("#txtYas").append(`<option value="${item.yas}">${item.yas}</option>`);
+                        }
+                    }
+                });
+            }
+
+        }
+
+                  //ESKİ
+                 // $("#btnSave").off().click(function () {
+                //     var hospital = $("#txtHospital").val();
+                //     var address = $("#txtAddress").val();
+                //     $.ajax({
+                //         type: 'POST',
+                //         url: '/Admin/Hospital/Add',
+                //         data: hastane = {
+                //             hospitalName: $("#txtHospital").val(),
+                //             address: $("#txtAddress").val()
+                //         },
+                //         success: function () {
+                //             $("#modalList").modal('hide');
+                //             hospitalListele();
+                //         }
+                //     });
+                // })
+
+    </script>
+}

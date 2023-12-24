@@ -23,7 +23,7 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         {
             _unitOfWork.Doctors.Add(doctor);
             _unitOfWork.Save();
-            return View();
+            return Json(new { success = true });
         }
 
         public IActionResult GetAll()

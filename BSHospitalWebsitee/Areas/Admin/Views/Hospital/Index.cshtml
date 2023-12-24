@@ -57,24 +57,19 @@
        $(document).ready(function () {
             hospitalListele();
             $("#btnAdd").click(function () {
-                //$("input").val('');
-                $("input.form-control").val('');
+                $("input").val('');
                 $("#btnSave").off().click(function () {
-                    var form = document.getElementById('frmAddDestination');
-                    if (form.checkValidity()) {
+                    var hospital = $("#txtHospital").val();
+                    var address = $("#txtAddress").val();
                         $.ajax({
                             type: 'POST',
                             url: '/Admin/Hospital/Add',
-                            data: { hospitalName: $("#txtHospital").val(), address: $("#txtAddress").val(), },
+                            data: { hospitalName: hospital, address: address },
                             success: function () {
                                 $("#modalList").modal('hide');
                                 $("#tblListHospital").DataTable().ajax.reload();
                             }
                         });
-                    } else {
-                        // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                        form.classList.add('was-validated');
-                    }
                 });
                 $("#btnSave").text("Kaydet");
                 $("#modalTitleId").text("Hastane Ekle");
@@ -105,22 +100,6 @@
 
         });
 
-        // $("#btnSave").off().click(function () {
-        //     var hospital = $("#txtHospital").val();
-        //     var address = $("#txtAddress").val();
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '/Admin/Hospital/Add',
-        //         data: hastane = {
-        //             hospitalName: $("#txtHospital").val(),
-        //             address: $("#txtAddress").val()
-        //         },
-        //         success: function () {
-        //             $("#modalList").modal('hide');
-        //             hospitalListele();
-        //         }
-        //     });
-        // })
 
         function deleteHospital(id) {
 
@@ -153,22 +132,17 @@
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
             $("#btnSave").click(function () {
-                var form = document.getElementById('frmAddDestination');
-                if (form.checkValidity()) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Admin/Hospital/Update',
-                        data: { id: id, hospitalname: $("#txtHospital").val(), address:$("#txtAddress").val() },
-                        success: function () {
-                            $("#modalList").modal("hide");
-                            $("#tblListHospital").DataTable().ajax.reload();
-                        }
-                    });
-                } else {
-                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                    form.classList.add('was-validated');
-                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/Hospital/Update',
+                    data: { id: id, hospitalname: $("#txtHospital").val(), address: $("#txtAddress").val() },
+                    success: function () {
+                        $("#modalList").modal("hide");
+                        $("#tblListHospital").DataTable().ajax.reload();
+                    }
+                })
             });
+        }
 
             function fillListHospital(hospitalName) {
                 $.ajax({
@@ -197,8 +171,5 @@
                     }
                 });
             }
-
-        }
-
   </script>
 }

@@ -50,24 +50,18 @@
         $(document).ready(function () {
             doktorListele();
             $("#btnAdd").click(function () {
-                //$("input").val('');
-                $("input.form-control").val('');
+                $("input").val('');
                 $("#btnSave").off().click(function () {
-                    var form = document.getElementById('frmAddDestination');
-                    if (form.checkValidity()) {
+                    var doctor = $("#txtDoctor").val();
                         $.ajax({
                             type: 'POST',
                             url: '/Admin/Doctor/Add',
-                            data: { doctorName: $("#txtDoctor").val() },
+                            data: { doctorName: doctor},
                             success: function () {
                                 $("#modalList").modal('hide');
                                 $("#tblListDoctor").DataTable().ajax.reload();
                             }
                         });
-                    } else {
-                        // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                        form.classList.add('was-validated');
-                    }
                 });
                 $("#btnSave").text("Kaydet");
                 $("#modalTitleId").text("Doktor Ekle");
@@ -126,22 +120,18 @@
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
             $("#btnSave").click(function () {
-                var form = document.getElementById('frmAddDestination');
-                if (form.checkValidity()) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Admin/Doctor/Update',
-                        data: { id: id, doctorname: $("#txtDoctor").val() },
-                        success: function () {
-                            $("#modalList").modal("hide");
-                            $("#tblListDoctor").DataTable().ajax.reload();
-                        }
-                    });
-                } else {
-                    // Bootstrap'un hata mesajlarını göstermesi için gerekli sınıfı ekleyin
-                    form.classList.add('was-validated');
-                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/Doctor/Update',
+                    data: { id: id, doctorname: $("#txtDoctor").val() },
+                    success: function () {
+                        $("#modalList").modal("hide");
+                        $("#tblListDoctor").DataTable().ajax.reload();
+                    }
+                })
             });
+                
+        }
 
             function fillListDoctor(doctorName) {
                 $.ajax({
@@ -159,8 +149,5 @@
                 });
 
             }
-
-        }
-
     </script>
 }

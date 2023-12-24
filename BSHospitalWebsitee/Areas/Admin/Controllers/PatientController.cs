@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Exchange.WebServices.Data;
 using Appointment = BSHospital.Models.Appointment;
 
-namespace BSHospital.Websitee.Controllers
+namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
-    public class PatientController : Controller
+    public class PatientController : ControllerBase1
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -29,6 +29,7 @@ namespace BSHospital.Websitee.Controllers
             _unitOfWork.Patients.Add(patient);
             _unitOfWork.Save();
             return Ok(patient.Id);
+            //return Json(new { success = true });
         }
 
         public IActionResult GetAll()
