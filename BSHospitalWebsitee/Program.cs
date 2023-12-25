@@ -49,7 +49,7 @@ namespace BSHospitalWebsitee
 
             app.MapControllerRoute(
                  name: "areas",
-                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+                 pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "areas",

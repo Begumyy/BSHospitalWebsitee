@@ -184,8 +184,8 @@
                         email: $("#txtEmail").val(),
                         gsm: $("#txtGsm").val(),
                         password: $("#password").val(),
-                        userTypeId: 9,
-                        role: "Agent"
+                        userTypeId: 8,
+                       
                     }
                     $.ajax({
                         type: 'POST',
@@ -206,11 +206,14 @@
             });
         }
 
+        const options = {
+            backdrop: 'static',
+            keyboard: false
+        };
 
 
-
-      //  const myModal = new bootstrap.Modal(document.getElementById('modalId'), options )
-
+        const myModal = new bootstrap.Modal(document.getElementById('modalAdd'), options)
+        
 
     </script>
 

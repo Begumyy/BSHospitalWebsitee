@@ -19,7 +19,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        [AllowAnonymous]
+      
         [HttpGet]
         public IActionResult Login()
         {
