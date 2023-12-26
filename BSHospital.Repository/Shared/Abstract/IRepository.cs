@@ -32,7 +32,7 @@ namespace BSHospital.Repository.Shared.Abstract
         T GetById(int id);
 
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-
+        
     }
 }
      

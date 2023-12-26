@@ -1,6 +1,8 @@
 ﻿using BSHospital.Repository.Shared.Abstract;
+using CineScore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
@@ -25,10 +27,21 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "Agent")]
-        //public IActionResult Agent()
+        [Authorize(Roles = "Admin")]
+        public IActionResult Agent()
+        {
+            return View();
+        }
+
+        
+        
+
+        //[HttpPost]
+        //public IActionResult DeleteById(int id)
         //{
-        //    return View();
+        //    _unitOfWork.Hospitals.DeleteById(id);
+        //    _unitOfWork.Save();
+        //    return Ok("Başarıyla silindi");
         //}
     }
 }

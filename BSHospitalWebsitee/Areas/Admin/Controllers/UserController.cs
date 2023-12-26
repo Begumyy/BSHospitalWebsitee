@@ -40,13 +40,14 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
 
         //Admin/User/Add diye bi yere post ediyorsun, ama burası Admin/User işte, ADD diye bir metot göremiyorum. anladım hocam tamam dmeekki ona bakmaklazım.
 
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public IActionResult Add(AppUser user)
         {
             unitOfWork.Users.Add(user);
             unitOfWork.Save();
-            return View();
-            //return Ok();
+            //return View();
+            return Ok();
         }
 
         //[HttpPost]
