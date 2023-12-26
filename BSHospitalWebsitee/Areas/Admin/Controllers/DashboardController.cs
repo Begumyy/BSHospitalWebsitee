@@ -25,10 +25,10 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "Agent")]
-        //public IActionResult Agent()
-        //{
-        //    return View();
-        //}
+        [Authorize(Roles = "Admin")]
+        public IActionResult Agent()
+        {
+            return View();
+        }
     }
 }
