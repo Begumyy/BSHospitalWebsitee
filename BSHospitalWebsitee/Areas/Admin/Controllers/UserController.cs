@@ -45,11 +45,19 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         {
             unitOfWork.Users.Add(user);
             unitOfWork.Save();
-            //return View();
-            return Ok();
+            return View();
+            //return Ok();
         }
 
-       
+        //[HttpPost]
+        //public IActionResult Update(AppUser user)
+        //{
+        //    unitOfWork.Users.Update(user);
+        //    unitOfWork.Save();
+        //    return Ok();
+        //}
+
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginDto LoginDto)

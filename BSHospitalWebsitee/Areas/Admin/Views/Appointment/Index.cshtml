@@ -22,10 +22,7 @@
         });
 
         function randevularListele() {
-            if ($.fn.DataTable.isDataTable('#tblRandevular')) {
-                $('#tblOnaylananlar').DataTable().destroy();
-            }
-            var DataTable = $("#tblRandevular").DataTable({
+            $("#tblListAppointment").DataTable({
                 ajax: { url: '/Admin/Appointment/GetAll', dataSrc: '' },
                 columns: [
                     { data: 'id', title: 'ID' },
@@ -33,12 +30,10 @@
                     { data: 'department.departmentId', title: 'Bölüm Id' },
                     { data: 'doctor.doctorId', title: 'Doktor Id' },
                     { data: 'patient.patientId', title: 'Patient Id' },
-                    
-
                     {
                         data: "id",
                         render: function (data, type, row) {
-                            return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                           return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="Update('${data}','${data.hospital.hospitalId}','${data.department.departmentId}','${data.doctor.doctorId}','${data.patient.patientId}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                         }
 
                     },

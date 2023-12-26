@@ -1,6 +1,7 @@
 ﻿using BSHospital.Models;
 using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BSHospital.Websitee.Areas.Admin.Controllers
 {
@@ -27,7 +28,7 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
 
         public IActionResult GetAll()
         {
-            return Json(_unitOfWork.Appointments.GetAll().ToList());
+            return Json(_unitOfWork.Appointments.GetAll().Include(b=>b.IsAccepted==false && b.IsCanceled==false && b.IsDeclined==false).ToList());
         }
 
         [HttpPost]
