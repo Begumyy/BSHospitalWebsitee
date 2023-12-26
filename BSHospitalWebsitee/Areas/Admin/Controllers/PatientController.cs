@@ -26,49 +26,24 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] Patient patient)
-        {   //DENEME1
-            //patient.DepartmentId = 1;
+        public IActionResult Add( Patient patient)
+        {   
             _unitOfWork.Patients.Add(patient);
             _unitOfWork.Save();
-            //return Ok(patient.Id);
-            //return Ok(patient.Depatment.Id);
-            //return Ok(patient.departmentId);
-            //return Json(new { success = true });
+            
             return Ok(patient);
 
 
-            //DENEME2
-            //if (!ModelState.IsValid)
-            //{
-            //    var errors = ModelState.Values.SelectMany(v => v.Errors)
-            //                                  .Select(e => e.ErrorMessage)
-            //                                  .ToList();
-            //    // Hata mesajlarını loglayabilir veya hata durumu döndürebilirsiniz
-            //    return BadRequest(errors);
-            //}
-
-            //// "Department" nesnesini alın
-            //Department department = _unitOfWork.Departments.GetById(patient.DepartmentId);
-
-            //// Eğer "Department" nesnesi null değilse, ilişkilendirme yapın
-            //if (department != null)
-            //{
-            //    patient.Department = department;
-            //    _unitOfWork.Patients.Add(patient);
-            //    _unitOfWork.Save();
-            //    return Ok(patient);
-            //}
-            //else
-            //{
-            //    // Hata durumu, uygun "DepartmentId" bulunamadı
-            //    return BadRequest("Geçerli bir departman seçilmelidir.");
-            //}
+            
         }
 
         public IActionResult GetAll()
         {
             return Json(_unitOfWork.Patients.GetAll().ToList());
+        }
+        public IActionResult GetAllDepartment()
+        {
+            return Json(_unitOfWork.Departments.GetAll().ToList());
         }
 
         [HttpPost]

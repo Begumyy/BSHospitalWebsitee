@@ -336,18 +336,19 @@
                 }
             })
         }
-            function fillListPatient(patientName) {
+        function fillListPatient(patientName) {
             $.ajax({
                 type: 'GET',
                 url: '/Patient/GetAll',
                 success: function (res) {
-                    $("#txtName").empty(); 
+                    $("#txtName").empty();
                     for (var item of res) {
                         $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
-                        
+
 
                     }
                 }
             });
+        }
     </script>
 }

@@ -24,12 +24,12 @@
                 <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
                     <div class="container">
 
-                        <div class="mb-3 row">
+                        @* <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Agent Adı </label>
                             <div class="col-8">
                                 <input type="text" class="form-control needs-validation" required id="txtAgent" placeholder="Lütfen Agent Adı Giriniz" />
                             </div>
-                        </div>
+                        </div> *@
 
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Mail Adresi</label>
@@ -41,7 +41,13 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Password</label>
                             <div class="col-8">
-                                <input type="password" class="form-control needs-validation" required id="txtPassword" placeholder="Lütfen Şifre Belirleyiniz" />
+                                <input type="text" class="form-control needs-validation" required id="txtPassword" placeholder="Lütfen Şifre Belirleyiniz" />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="inputName" class="col-4 col-form-label">Telefon numarası</label>
+                            <div class="col-8">
+                                <input type="tel" class="form-control input-mask" required id="txtGsm" data-inputmask="'mask': '(999)-9999999'" placeholder="Gsm Numarası giriniz" maxlength="14">
                             </div>
                         </div>
 
@@ -75,17 +81,18 @@
             $("#btnAdd").click(function () {
                 $("input").val('');
                 $("#btnSave").off().click(function () {
-
-                    var agent = $("#txtAgent").val();
-                    var email = $("#txtMail").val();
-                    var password = $("#txtPassword").val();
-                    var userType = $("#ddlRol").val();
-                    userTypeId = 13
-
                     $.ajax({
                         type: 'POST',
                         url: '/Admin/Agent/Add',
-                        data: { agentName: agent, email: email, password: password, userType: userType },
+                        data: randevu1 = {
+                            email: $("#txtMail").val(),
+                            password : $("#txtPassword").val(),
+                            gsm: $("#txtGsm").val(),
+                            userType: {
+                                typeName: $("#ddlRol").val()
+                            }
+                        },
+
                         success: function () {
                             $("#modalList").modal('hide');
                             $("#tblListAgent").DataTable().ajax.reload();
@@ -106,12 +113,13 @@
 
                         { data: "email", title: 'E-mail ' },
                         { data: "password", title: 'Şifre ' },
+                        { data: "gsm", title: 'Telefon Number ' },
                         { data: "userType.typeName", title: 'Kullanıcı Tipi ' },
                         {
                             data: "id",
                             type: "agentName",
                             render: function (data, type, row) {
-                                return `<a href="#" onclick="deleteHospital(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateHospital('${data}','${row.email}','${row.password}','${row.userType.typeName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+                                return `<a href="#" onclick="deleteAgentl(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="updateAgent('${data}','${row.email}','${row.password}','${row.gsm}','${row.userType.typeName}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                             }
                         }],
                     language: {
@@ -123,44 +131,56 @@
         });
 
 
-        function deleteHospital(id) {
+        function deleteAgentl(id) {
 
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("DeleteById","Hospital")',
+                url: '@Url.Action("DeleteById","Agent")',
                 data: { id: id },
                 success: function (data) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Başarılı',
-                        message: 'Hastane Silindi',
+                        message: 'Agent Silindi',
                         showConfirmButton: false,
                         timer: 1500
                     });
-                    $("#tblListHospital").DataTable().ajax.reload();
+                    $("#tblListAgent").DataTable().ajax.reload();
                 }
             });
 
         }
 
 
-        function updateHospital(id, hospitalName, address) {
-            $("#txtHospital").val(hospitalName);
-            fillListHospital(hospitalName);
-            $("#txtAddress").val(address);
-            fillAddress(address);
+        function updateAgent(id, email,password,gsm,userType) {
+           // $("#txtAgent").val(agent);
+            $("#txtMail").val(email);
+            $("#txtPassword").val(password);
+            $("#txtGsm").val(gsm);
+            $("#ddlRol").val(userType);
+
             $("#modalList").modal("show");
-            $("#modalTitleId").text("Hastane  Güncelle");
+
+            $("#modalTitleId").text("Agent  Güncelle");
+
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
             $("#btnSave").click(function () {
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/Hospital/Update',
-                    data: { id: id, hospitalname: $("#txtHospital").val(), address: $("#txtAddress").val() },
+                    url: '/Admin/Agent/Update',
+                    data: randevu = {
+                        id:id,
+                        email: $("#txtMail").val(),
+                        password: $("#txtPassword").val(),
+                        gsm: $("#txtGsm").val(),
+                        userType: {
+                            typeName: $("#ddlRol").val()
+                        }
+                    },
                     success: function () {
                         $("#modalList").modal("hide");
-                        $("#tblListHospital").DataTable().ajax.reload();
+                        $("#tblListAgent").DataTable().ajax.reload();
                     }
                 })
             });
@@ -179,21 +199,38 @@
         //     })
         // }
 
-        function fillRol() {
-            $.ajax({
-                type: 'GET',
-                url: '/Admin/Agent/GetAllRoles',
-                success: function (res) {
-                    // Dropdown listesini temizleme
-                    var ddlRol = $("#ddlRol");
-                    ddlRol.empty();
+        // function fillRol() {
+            
+            
 
-                    // Yeni seçenekleri ekleme
-                    for (var item of res) {
-                        ddlRol.append(new Option(item.typeName, item.typeName));
-                    }
-                }
-            });
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Admin/Agent/GetAllRoles',
+        //         success: function (res) {
+        //             // Dropdown listesini temizleme
+        //             var ddlRol = $("#ddlRol");
+        //             ddlRol.empty();
+
+        //             // Yeni seçenekleri ekleme
+        //             for (var item of res) {
+        //                 ddlRol.append(new Option(item.typeName, item.typeName));
+        //             }
+        //         }
+        //     });
+        // }
+        function fillRol() {
+            var roles = [
+                { typeName: "Admin" },
+                { typeName: "Agent" },
+                // Add more roles as needed
+            ];
+
+            var ddlRol = $("#ddlRol");
+            ddlRol.empty();
+
+            for (var item of roles) {
+                ddlRol.append(new Option(item.typeName, item.typeName));
+            }
         }
 
 
