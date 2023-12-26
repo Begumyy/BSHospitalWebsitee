@@ -144,7 +144,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-                            <button href="#" id="btnSave" type="submit" class="btn btn-primary">Üye ol</button>
+                            <a id="btnSave" type="submit" class="btn btn-primary">Üye ol</a>
                         </div>
                 </form>
             </div>
@@ -183,7 +183,9 @@
                         email: $("#txtEmail").val(),
                         gsm: $("#txtGsm").val(),
                         password: $("#password").val(),
-                        userTypeId: 7
+                        Role: "Admin",
+                        userTypeId: 7,
+                        
                     }
                     $.ajax({
                         type: 'POST',
@@ -192,7 +194,7 @@
                         success: function () {
                             $("#modalAdd").modal('hide');
                             toastr.success("BAŞARILI", "Üyelik başarıyla oluşturulmuştur.");
-                            // DataTable.ajax.reload();
+                            DataTable.ajax.reload();
                         },
                         error: function (res) {
                             toastr.error("HATA", res.responseText);
@@ -205,9 +207,9 @@
         }
 
 
+        
 
-
-        const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
+        const myModal = new bootstrap.Modal(document.getElementById('frmAddUser'));
 
 
     </script>

@@ -35,6 +35,15 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         {
             return Json(unitOfWork.Users.GetAll().ToList());
         }
+        
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Add(AppUser user)
+        {
+            unitOfWork.Users.Add(user);
+            unitOfWork.Save();
+            return Ok();
+        }
 
 
         [AllowAnonymous]
@@ -48,7 +57,7 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
                 claims.Add(new Claim(ClaimTypes.Name, user.Email));
 
                 claims.Add(new Claim(ClaimTypes.Role,user.UserType.TypeName));
-                //claims.Add(new Claim(ClaimTypes.Role, "Agent"));
+                //claims.Add(new Claim(ClaimTypes.Role, "Admin"));
                 //claims.Add(new Claim(ClaimTypes.Role, "User"));
                 //claims.Add(new Claim(ClaimTypes.Actor, user.Email));
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Dashboard");
