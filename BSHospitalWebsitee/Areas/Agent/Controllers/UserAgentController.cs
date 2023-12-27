@@ -40,6 +40,12 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             //return View();
             return Ok();
         }
+        [Authorize] // Sadece oturumu olan kullanıcılar bu action'a erişebilir
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // Oturumu sonlandır
+            return RedirectToAction("Login", "UserAgent"); // Çıkış yapıldığında login sayfasına yönlendir
+        }
 
         [AllowAnonymous]
         [HttpPost]

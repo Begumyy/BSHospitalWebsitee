@@ -50,13 +50,12 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             return Ok();
         }
 
-        //[HttpPost]
-        //public IActionResult Update(AppUser user)
-        //{
-        //    unitOfWork.Users.Update(user);
-        //    unitOfWork.Save();
-        //    return Ok();
-        //}
+        [Authorize] // Sadece oturumu olan kullanıcılar bu action'a erişebilir
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // Oturumu sonlandır
+            return RedirectToAction("Login", "User"); // Çıkış yapıldığında login sayfasına yönlendir
+        }
 
 
         [AllowAnonymous]
