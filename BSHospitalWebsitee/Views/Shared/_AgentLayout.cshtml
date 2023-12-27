@@ -92,8 +92,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-
-                            <a class="dropdown-item" asp-controller="UserAgent" asp-action="Logout"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Çıkış</span></a>
+                            <a class="dropdown-item" asp-controller="Login" asp-action="Logout" asp-area=""><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Çıkış</span></a>
                         </div>
                     </div>
 
@@ -139,11 +138,19 @@
                         <li class="menu-title">Agent Panel</li>
 
                         <li>
+                            <a asp-action="Index" asp-controller="Appointment">
+                                <i class="uil-home-alt"></i>
+                                <span>Randevu Oluştur</span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a asp-action="Agent" asp-controller="DashboardAgent">
                                 <i class="uil-home-alt"></i>
                                 <span>Aranacaklar</span>
                             </a>
                         </li>
+                        
 
 
                         <li>

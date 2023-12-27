@@ -14,9 +14,9 @@ namespace BSHospitalWebsitee
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-                options.LoginPath = "/Admin/User/Login";
-                options.LogoutPath = "/Admin/User/Logout";
-                options.AccessDeniedPath = "/Admin/Login/AccessDenied";
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Login";
+                options.AccessDeniedPath = "/Login";
 
             });
 

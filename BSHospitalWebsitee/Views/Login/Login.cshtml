@@ -1,8 +1,8 @@
 ﻿@using CineScore.Models.DTOs
 @model LoginDto
-@{
+@* @{
     Layout = "";
-}
+} *@
 <!doctype html>
 <html lang="tr">
 
@@ -187,7 +187,7 @@
                     }
                     $.ajax({
                         type: 'POST',
-                        url: '/Agent/UserAgent/Login', //burası değişecek büyük ihtimalle >>> /Agent/UserAgent/Login böyle olabilir.  bu olmazsa controller yeni bir hesap oluştur methodu eklenebilir.
+                        url: '/Admin/User/Add',
                         data: data,
                         success: function () {
                             $("#modalAdd").modal('hide');
@@ -206,7 +206,8 @@
 
 
 
-       // const myModal = new bootstrap.Modal(document.getElementById('modalId'),options); // burda b,z heap oluştur yaparkan options kısmında hata alıyoruz nereye bakmam erekiyo  unu için? böyle dene bakalım. hatayı bu sayfa vermiyor ki, Login.cshtml veriyor. bu sayfayı hiç çağırmıyorsun sen. login.cshtml'den bakamma gerekecek o zaman evet bak urlye UserAgent/Login  burası UserAgent.cshtml yanlıs yerdeyiz bu sayfa kullanılmıyor bence.
+
+        const myModal = new bootstrap.Modal(document.getElementById('frmAddUser'));
 
 
     </script>
