@@ -41,6 +41,12 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return Ok();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // Oturumu sonlandır
+            return RedirectToAction("Login", "UserAgent"); // Çıkış yapıldığında login sayfasına yönlendir
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginDto LoginDto)

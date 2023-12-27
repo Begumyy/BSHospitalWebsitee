@@ -39,12 +39,12 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
 
         public IActionResult GetAll()
         {
-            return Json(_unitOfWork.Patients.GetAll().ToList());
+            return Json(_unitOfWork.Patients.GetAll().Include(p=>p.Department).Include(p => p.Doctors).Include(p => p.Hospitals).Include(p => p.AppUser).ToList());
         }
-        public IActionResult GetAllDepartment()
-        {
-            return Json(_unitOfWork.Departments.GetAll().ToList());
-        }
+        //public IActionResult GetAllDepartment()
+        //{
+        //    return Json(_unitOfWork.Departments.GetAll().ToList());
+        //}
 
         [HttpPost]
         public IActionResult DeleteById(int id)

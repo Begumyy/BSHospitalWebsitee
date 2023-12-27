@@ -99,42 +99,48 @@
                                 <input type="text" class="form-control" id="txtName" placeholder="Kullanıcı Adınız ">
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">TCKN</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" id="txtTCKN" placeholder="TC Number ">
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Yas</label>
                             <div class="col-8">
                                 <input type="number" class="form-control" id="txtYas" placeholder="Yas ">
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Adres</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" id="txtAdres" placeholder="Adress">
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Phone</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" id="txtPhone" placeholder="Telefon">
                             </div>
                         </div>
+
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Departman</label>
                             <div class="col-8">
                                 <select class="form-select" name="script" id="ddlDepartment"> </select>
                             </div>
                         </div>
-                        <div class="mb-3 row">
+
+                       @*  <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Kullanıcı </label>
                             <div class="col-8">
                                 <select class="form-select" name="script" id="ddlUser"> </select>
                             </div>
-                        </div>
+                        </div> *@
 
                         @* <div class="mb-3 row">
                         <label for="inputName" class="col-4 col-form-label">Select Patient</label>
@@ -172,7 +178,10 @@
 
         $(document).ready(function () {
             patientListele();
-            fillListDepartment();
+            fillListDepartment(); 
+            fillListHospital();
+            fillListUser();
+            fillListDoctor();
             $("#btnAdd").click(function () {
                 $("input").val('');
                 $("#btnSave").off().click(function () {
@@ -181,9 +190,10 @@
                             type: 'POST',
                             url: '/Admin/Patient/Add',
 
-                        data: randevu1 = {
+                        data: {
                             hospitalId: $("#ddlHospital").val(),
                             departmentId: $("#ddlDepartment").val(),
+                            userId: $("#ddlUser").val(),
                             doctorId: $("#ddlDoctor").val(),
                             appointmentDate: $("#txtAppointment").val(),
 
@@ -208,6 +218,9 @@
                 $("#modalTitleId").text("Hasta Ekle");
                 $("#modalId").modal('show');
                 fillListDepartment();
+                fillListHospital();
+                fillListUser();
+                fillListDoctor();
                 
             });
 
@@ -290,7 +303,7 @@
         function fillListDoctor(doctorName) {
             $.ajax({
                 type: 'GET',
-                url: '/Doctor/GetAll',
+                url: '/Admin/Doctor/GetAll',
                 success: function (res) {
                     $("#ddlDoctor").empty();
                     for (var item of res) {
@@ -302,26 +315,37 @@
         function fillListDepartment(departmantId) {
             $.ajax({
                 type: 'GET',
-                url: 'Admin/Patient/GetAllDepartment',
+                url: '/Admin/Department/GetAll',
                 success: function (res) {
                     $("#ddlDepartment").empty();
-                    for (var item of res) {
-                        $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
-                    }
+                    //     for (var item of res) {
+                    //         $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
+                    //     }
 
-                    // Veriler yüklendikten sonra, modal içindeki select elementine değerleri ekleyin
-                    $("#ddlDepartment").val(departmantId); // Önceki seçili olanı belirtmek için departman ID'sini kullanın
+                    //     // Veriler yüklendikten sonra, modal içindeki select elementine değerleri ekleyin
+                    //     $("#ddlDepartment").val(departmantId); // Önceki seçili olanı belirtmek için departman ID'sini kullanın
+                    // }
+                    for (var item of res) {
+                        var option = new Option(item.departmantName, item.id, false, item.id == departmantId);
+                        $("#ddlDepartment").append(option);
+                    }
                 }
-            });
+            })
+                     
         }
         function fillListHospital(hospitalId) {
             $.ajax({
                 type: 'GET',
-                url: '/Hospital/GetAll',
+                url: '/Admin/Hospital/GetAll',
                 success: function (res) {
                     $("#ddlHospital").empty();
+                    // for (var item of res) {
+                    //     $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
+                    // }
+                    // $("#ddlHospital").val(hospitalId);
                     for (var item of res) {
-                        $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
+                        var option = new Option(item.hospitalName, item.id, false, item.id == hospitalId);
+                        $("#ddlHospital").append(option);
                     }
                 }
             })
@@ -332,26 +356,31 @@
                 url: '/Admin/User/GetAll',
                 success: function (res) {
                     $("#ddlUser").empty();
+                    // for (var item of res) {
+                    //     $("#ddlUser").append(new Option(item.email, item.id, false, item.id == userId));
+                    // }
+                    // $("#ddlUser").val(userId);
                     for (var item of res) {
-                        $("#ddlUser").append(new Option(item.email, item.id, false, item.id == userId));
+                        var option = new Option(item.userName, item.id, false, item.id == userId);
+                        $("#ddlUser").append(option);
                     }
                 }
             })
         }
-        function fillListPatient(patientName) {
-            $.ajax({
-                type: 'GET',
-                url: '/Patient/GetAll',
-                success: function (res) {
-                    $("#txtName").empty();
-                    for (var item of res) {
-                        $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
+        // function fillListPatient(patientName) {
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/Admin/Patient/GetAll',
+        //         success: function (res) {
+        //             $("#tblListPatient").empty();
+        //             for (var item of res) {
+        //                 $("#tblListPatient").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
 
 
-                    }
-                }
-            });
-        }
+        //             }
+        //         }
+        //     })
+        // }
                 
 
     </script>
