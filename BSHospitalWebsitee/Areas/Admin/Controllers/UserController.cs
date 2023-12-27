@@ -106,7 +106,9 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
             return Ok();
         }
 
-
-     
+        public IActionResult GetAll()
+        {
+            return Json(unitOfWork.Patients.GetAll().ToList());
+        }
     }
 }

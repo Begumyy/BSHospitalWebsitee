@@ -203,8 +203,8 @@
                                 address: $("#txtAdres").val(),
                                 Phone: $("#txtPhone").val(),
                                 age: $("#txtYas").val(),
-                                departmentId: $("#ddlDepartment").val(),
-                                userId: $("#ddlUser").val()
+                                departmentId: $("#ddlDepartment").val()
+                                //userId: $("#ddlUser").val()
 
                             }
                         },
@@ -224,8 +224,42 @@
                 
             });
 
+
+            $("#btnAppointment").off().click(function () {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Appointment/Add',
+                    data: randevu1 = {
+                        hospitalId: $("#ddlHospital").val(),
+                        departmentId: $("#ddlDepartment").val(),
+                        doctorId: $("#ddlDoctor").val(),
+                        appointmentDate: $("#txtAppointment").val(),
+
+                        patient: {
+                            patientName: $("#txtName").val(),
+                            tckn: $("#txtTCKN").val(),
+                            address: $("#txtAdres").val(),
+                            Phone: $("#txtPhone").val(),
+                            age: $("#txtYas").val(),
+                            departmentId: $("#ddlDepartment").val(),
+                            userId: $("#ddlUser").val()
+
+                        }
+                    },
+                    success: function () {
+                        $("#modalId").modal('hide');
+                        patientListele();
+                    }
+                });
+            })
+
             function patientListele() {
-                $("#tblListPatient").DataTable({
+                if ($.fn.DataTable.isDataTable('#tblListPatient')) {
+                    $("#tblListPatient").DataTable().destroy();
+                    
+                }
+                var DataTable = $("#tblListPatient").DataTable({
                     ajax: { url: '/Admin/Patient/GetAll', dataSrc: '' },
                     columns: [
                         { data: 'id', title: 'ID', },
@@ -282,7 +316,7 @@
             fillTckn(tckn);
             $("#txtAge").val(age);
             fillAge(age);
-            $("#modalList").modal("show");
+            $("#modalId").modal("show");
             $("#modalTitleId").text("Hasta Güncelle");
             $("#btnSave").text("Güncelle");
             $("#btnSave").off();
@@ -292,10 +326,10 @@
                     url: '/Admin/Patient/Update',
                     data: { id: id, patientname: $("#txtPatient").val(), address: $("#txtAddress").val(), phone: $("#txtPhone").val(), tckn: $("#txtTckn").val(), age: $("#txtAge").val() },
                     success: function () {
-                        $("#modalList").modal("hide");
+                        $("#modalId").modal("hide");
                         $("#tblListPatient").DataTable().ajax.reload();
                     }
-                });
+                })
             });
 
   
@@ -367,20 +401,20 @@
                 }
             })
         }
-        // function fillListPatient(patientName) {
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/Admin/Patient/GetAll',
-        //         success: function (res) {
-        //             $("#tblListPatient").empty();
-        //             for (var item of res) {
-        //                 $("#tblListPatient").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
+        function fillListPatient(patientName) {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Patient/GetAll',
+                success: function (res) {
+                    $("#tblListPatient").empty();
+                    for (var item of res) {
+                        $("#tblListPatient").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
 
 
-        //             }
-        //         }
-        //     })
-        // }
+                    }
+                }
+            })
+        }
                 
 
     </script>
