@@ -6,7 +6,7 @@
                 
             </div><!-- end card-header -->
             <div class="card-body">
-                <a class="btn btn-success" id="btnEkle">Yeni Randevu Ekle</a>
+                <a class="btn btn-success" id="btnEkle">Yeni Randevu Eklee</a>
                 <table id="tblListAppointment" class="table table-striped table-bordered">
                 </table>
             </div><!-- end card-body -->
@@ -157,8 +157,9 @@
                 $("#modalId").modal('show');
                 fillListDepartment();
                 fillListHospital();
-                fillListUser();
+                
                 fillListDoctor();
+                 fillListPatient();
              });
         });
         
@@ -236,24 +237,29 @@
                 }
             })
         }
-        
 
-        function Update(id, hospitalId, patientName, tckn, age, address, phone, departmantId, doctorId, appointmentDate) {
+
+        function Update(id, departmantId, hospitalId, doctorId, patientName, tckn, phone, address, age, appointmentDate) {
              $("input").val("");
 
             fillListHospital(hospitalId);
             $("#ddlHospital").val(hospitalId);
+            fillListPatient(patientName);
+            $("#txtName").val(patientName);
+            $("#txtTCKN").val(tckn);
+            $("#txtPhone").val(phone);
+            $("#txtYas").val(age);
+            $("#txtAdres").val(address);
             fillListDepartment(departmantId);
             $("#ddlDepartment").val(departmantId);
             fillListDoctor(doctorId);
             $("#ddlDoctor").val(doctorId);
             $("#txtAppointment").val(appointmentDate);
-
-            $("#txtName").val(patientName);
-            $("#txtTCKN").val(tckn);
-            $("#txtAdres").val(address);
-            $("#txtPhone").val(phone);
-            $("#txtYas").val(age);
+            debugger;
+           
+           
+            
+           
             $("#modalId").modal("show");
             $("#modalTitleId").text("Randevu Güncelle ");
             $("#btnAppointment").text("Guncelle");
@@ -319,11 +325,11 @@
         }
 
 
-      
+
         function fillListHospital(hospitalId) {
             $.ajax({
                 type: 'GET',
-                url: '/Agent/Hospital/GetAll',
+                url: 'Appointment/GetAll',
                 success: function (res) {
                     $("#ddlHospital").empty();
                     for (var item of res) {
@@ -331,6 +337,20 @@
                     }
                 }
             })
+        }
+        function fillListPatient(patientName) {
+            $.ajax({
+                type: 'GET',
+                url: 'Appointment/GetAll',
+                success: function (res) {
+                    $("#txtName").empty();
+                    for (var item of res) {
+                        $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
+
+
+                    }
+                }
+            });
         }
         
        

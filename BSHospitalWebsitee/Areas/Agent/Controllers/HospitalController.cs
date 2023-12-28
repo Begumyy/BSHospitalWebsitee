@@ -20,7 +20,8 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
 
         public IActionResult GetAll()
         {
-            return Json(_unitOfWork.Hospitals.GetAll().ToList());
+            var list =_unitOfWork.Hospitals.GetAll().ToList();
+            return Json(list);
         }
     }
 }
