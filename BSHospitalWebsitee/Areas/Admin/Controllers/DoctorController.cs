@@ -28,8 +28,6 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
 
         public IActionResult GetAll()
         {
-
-
             return Json(_unitOfWork.Doctors.GetAll().ToList());
         }
 

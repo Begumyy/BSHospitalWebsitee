@@ -18,11 +18,11 @@ namespace BSHospital.Websitee.Controllers
             return View();
         }
 
-        public IActionResult GetAll()
-        {
-            //var list=_unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.AppointmentDate).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
-            var list = _unitOfWork.Appointments.GetAll().ToList();
-            return Json(list);
-        }
+        //public IActionResult GetAll()
+        //{
+        //    //var list=_unitOfWork.Appointments.GetAll(a=>a.IsCanceled==false).Include(a=>a.AppointmentDate).Include(a=>a.Department).Include(a=>a.Hospital).ToList();
+        //    var list = _unitOfWork.Appointments.GetAll().ToList();
+        //    return Json(list);
+        //}
     }
 }

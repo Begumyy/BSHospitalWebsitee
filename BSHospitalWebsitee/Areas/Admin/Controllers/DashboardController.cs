@@ -32,16 +32,5 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         {
             return View();
         }
-
-        
-        
-
-        //[HttpPost]
-        //public IActionResult DeleteById(int id)
-        //{
-        //    _unitOfWork.Hospitals.DeleteById(id);
-        //    _unitOfWork.Save();
-        //    return Ok("Başarıyla silindi");
-        //}
     }
 }

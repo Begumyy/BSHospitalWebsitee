@@ -21,37 +21,31 @@
             randevularListele();
         });
 
-        function randevularListele() {
-            $("#tblListAppointment").DataTable({
-                ajax: { url: '/Admin/Appointment/GetAll', dataSrc: '' },
-                columns: [
-                    { data: 'id', title: 'ID' },
-                    { data: 'hospital.hospitalId', title: 'Hastane Id' },
-                    { data: 'department.departmentId', title: 'Bölüm Id' },
-                    { data: 'doctor.doctorId', title: 'Doktor Id' },
-                    { data: 'patient.patientId', title: 'Patient Id' },
-                    {
-                        data: "id",
-                        render: function (data, type, row) {
-                           return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="Update('${data}','${data.hospital.hospitalId}','${data.department.departmentId}','${data.doctor.doctorId}','${data.patient.patientId}')" class="btn btn-sm btn-primary">Güncelle</a>`;
-                        }
-
+            function randevularListele() {
+                if ($.fn.DataTable.isDataTable('#tblRandevular')) {
+                    $('#tblRandevular').DataTable().destroy();
+                }
+                var DataTable = $("#tblRandevular").DataTable({
+                    ajax: {
+                        url: '/Admin/Appointment/GetAll', dataSrc: ''
                     },
+                    columns: [
+                        { data: 'id', title: 'ID' },
+                        { data: 'hospital.hospitalName', title: 'Hastane Adı' },
+                        { data: 'patient.patientName', title: 'Hasta Adı' },
+                        { data: 'patient.tckn', title: 'TCKN' },
+                        { data: 'patient.phone', title: 'Telefon' },
+                        { data: 'patient.address', title: 'Adres' },
+                        { data: 'patient.age', title: 'Yaş' },
+                        { data: 'department.departmantName', title: 'Bölüm Adı' },
+                        { data: 'doctor.doctorName', title: 'Doktor Adı' },
+                        { data: 'appointmentDate', title: 'Randevu Tarihi' },
+                    ],
+                    order: [[9, 'asc']],
+                });
 
-                    {
-                        data: "id",
-                        render: function (data, type, row) {
-                            if (row.IsAccepted) {
-                                return `<span class="text-success">Onaylandı</span>`;
-                            } else {
-                                return '';
-                            }
-                        }
-                    },
-                ],
-                order: [[9, 'asc']],
-            });
-        }
-
+            }
+       
+       
     </script>
 }
