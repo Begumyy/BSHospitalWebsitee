@@ -184,7 +184,7 @@
                     {       
                         data: "id",
                         render: function (data, type, row) {
-                            return `<a href="#" onclick="deleteAppointment(${data})" class="btn btn-sm btn-danger">sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a> <a href="#" onclick="Decline(${data})" class="btn btn-sm btn-danger">Onayla</a>`;
+                            return `<a href="#" onclick="deleteAppointment(${data})" class="btn btn-sm btn-danger">sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
                         }
                     
                     },
@@ -236,24 +236,29 @@
                 }
             })
         }
-        
 
-        function Update(id, hospitalId, patientName, tckn, age, address, phone, departmantId, doctorId, appointmentDate) {
-             $("input").val("");
+
+        function Update(id, departmantId, hospitalId, doctorId, patientName, tckn, phone, address, age, appointmentDate) {
+            $("input").val("");
 
             fillListHospital(hospitalId);
             $("#ddlHospital").val(hospitalId);
+            fillListPatient(patientName);
+            $("#txtName").val(patientName);
+            $("#txtTCKN").val(tckn);
+            $("#txtPhone").val(phone);
+            $("#txtYas").val(age);
+            $("#txtAdres").val(address);
             fillListDepartment(departmantId);
             $("#ddlDepartment").val(departmantId);
             fillListDoctor(doctorId);
             $("#ddlDoctor").val(doctorId);
             $("#txtAppointment").val(appointmentDate);
+            
 
-            $("#txtName").val(patientName);
-            $("#txtTCKN").val(tckn);
-            $("#txtAdres").val(address);
-            $("#txtPhone").val(phone);
-            $("#txtYas").val(age);
+
+
+
             $("#modalId").modal("show");
             $("#modalTitleId").text("Randevu Güncelle ");
             $("#btnAppointment").text("Guncelle");
@@ -319,7 +324,7 @@
         }
 
 
-      
+
         function fillListHospital(hospitalId) {
             $.ajax({
                 type: 'GET',
@@ -331,6 +336,22 @@
                     }
                 }
             })
+        }
+
+
+        function fillListPatient(patientName) {
+            $.ajax({
+                type: 'GET',
+                url: 'Appointment/GetAll',
+                success: function (res) {
+                    $("#txtName").empty();
+                    for (var item of res) {
+                        $("#txtName").append(`<option value="<${item.tckn}">${item.patientName}</option>`);
+
+
+                    }
+                }
+            });
         }
         
        

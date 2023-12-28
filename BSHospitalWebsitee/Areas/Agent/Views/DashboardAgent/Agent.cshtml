@@ -46,7 +46,7 @@
                     {
                         data: "id",
                         render: function (data, type, row) {
-                            return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">sil</a><a href="#" onclick="Onaylandi(${data})" class="btn btn-sm btn-danger">Onaylandı</a> <a href="#" onclick="Decline('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Onaylanmadı</a>`;
+                            return `<a href="#" onclick="Onaylandi(${data})" class="btn btn-sm btn-danger">Onaylandı</a> <a href="#" onclick="Decline('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Onaylanmadı</a>`;
                         }
 
                     },

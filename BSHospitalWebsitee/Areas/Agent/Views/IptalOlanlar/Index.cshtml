@@ -45,25 +45,7 @@
 
                     { data: 'appointmentDate', title: 'Randevu Tarihi' },
 
-                    {
-                        data: "id",
-                        render: function (data, type, row) {
-                            return `<a href="#" onclick="Delete(${data})" class="btn btn-sm btn-danger">Sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
-                        }
-
-                    },
-
-                    // ... diğer sütunlar
-                    {
-                        data: "id",
-                        render: function (data, type, row) {
-                            if (row.IsDeclined) {
-                                return `<span class="text-danger">İptal Edildi</span>`;
-                            } else {
-                                return '';
-                            }
-                        }
-                    },
+                    
                 ],
                 order: [[9, 'asc']], // İptal olanlar kısmını randevu tarihine göre sırala
             });

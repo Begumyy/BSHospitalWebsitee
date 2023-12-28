@@ -34,5 +34,22 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             _unitOfWork.Save();
             return Ok(id);
         }
+
+
+        [HttpPost]
+        public IActionResult Update(Appointment appointment)
+        {
+            _unitOfWork.Appointments.Update(appointment);
+            _unitOfWork.Save();
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteById(int id)
+        {
+            _unitOfWork.Appointments.DeleteById(id);
+            _unitOfWork.Save();
+            return Ok("Başarıyla silindi");
+        }
     }
 }
