@@ -123,10 +123,10 @@
         
         $(document).ready(function () {
             onaylananlarListele();
-            fillListHospital();
-            fillListDoctor();
-            fillListDepartment();
-        });
+            // fillListHospital();
+            // fillListDoctor();
+            // fillListDepartment();
+        })
 
         function onaylananlarListele() {
             if ($.fn.DataTable.isDataTable('#tblOnaylananlar')) {
@@ -173,19 +173,20 @@
             let deleteee = { id: id }
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("DeleteById","Onaylananlar")',
+                url: '/Agent/IptalOlanlar/DeclineById',
                 data: deleteee,
                 success: function () {
                     Swal.fire({
                         icon: 'success',
                         title: 'Başarılı',
-                        message: 'Onaylanan Randevu Silindi',
+                        message: 'Onaylanan Randevu İptal Edildi',
                         showConfirmButton: false,
                         timer: 1500
+                       
                     });
                     $("#tblOnaylananlar").DataTable().ajax.reload();
                 }
-            })
+            });
         }
 
 

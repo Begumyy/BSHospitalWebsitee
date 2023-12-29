@@ -19,7 +19,9 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
 
         public IActionResult GetAll()
         {
-            return Json(_unitOfWork.Appointments.GetAll().ToList());
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
+            return Json(list);
+            //return Json(_unitOfWork.Appointments.GetAll().ToList());
         }
     }
 }
