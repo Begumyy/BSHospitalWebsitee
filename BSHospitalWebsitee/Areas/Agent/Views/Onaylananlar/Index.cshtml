@@ -184,7 +184,10 @@
                         timer: 1500
                        
                     });
-                    $("#tblOnaylananlar").DataTable().ajax.reload();
+                    //$("#tblOnaylananlar").DataTable().ajax.reload();
+                    var DataTable = $("#tblOnaylananlar").DataTable();
+                    var rowIndex = DataTable.row($('#tblOnaylananlar tr[data-id="' + id + '"]')).index();
+                    DataTable.row(rowIndex).remove().draw(false);
                 }
             });
         }
