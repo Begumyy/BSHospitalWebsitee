@@ -80,5 +80,10 @@ namespace BSHospital.Repository.Shared.Concrete
             
             _dbSet.Update(entity);
         }
+
+        public bool Any(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

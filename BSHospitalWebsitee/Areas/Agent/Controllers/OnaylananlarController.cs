@@ -23,8 +23,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
 
         public IActionResult GetAll()
         {
-                var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(u => u.IsAccepted==true).ToList();
-            //Where(u => u.IsCanceled == true)  >>>> bunu kaldırdık where'in yanından.
+                var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(u => u.IsAccepted==true).Where(u=>u.IsDeclined==false).ToList();
                 return Json(list);
         }
         [HttpPost]
