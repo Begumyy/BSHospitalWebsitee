@@ -39,7 +39,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         }
         public IActionResult GetAll()
         {
-            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).Where(a => a.IsDeclined == false).Where(u=>u.User.Email=="g").ToList();
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).Where(a => a.IsDeclined == false).Where(u=>u.AppUserId==27).ToList();
             return Json(list);
         }
         [HttpPost]
