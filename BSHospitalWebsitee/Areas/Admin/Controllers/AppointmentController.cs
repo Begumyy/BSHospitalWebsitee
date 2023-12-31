@@ -1,4 +1,6 @@
-﻿using BSHospital.Repository.Shared.Abstract;
+﻿using BSHospital.Models;
+using BSHospital.Repository.Shared.Abstract;
+using CineScore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

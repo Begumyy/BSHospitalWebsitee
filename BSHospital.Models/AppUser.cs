@@ -35,6 +35,9 @@ namespace CineScore.Models
             }
         }
 
-
+        public bool IsInRole(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

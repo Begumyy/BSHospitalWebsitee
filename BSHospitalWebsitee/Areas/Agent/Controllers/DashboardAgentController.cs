@@ -60,6 +60,5 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return Ok();
         }
 
-       
     }
 }

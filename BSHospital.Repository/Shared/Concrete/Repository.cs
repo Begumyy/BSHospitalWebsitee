@@ -40,6 +40,14 @@ namespace BSHospital.Repository.Shared.Concrete
             
         }
 
+        public void UpdateById(int id)
+        {
+            T entity = _dbSet.Find(id);
+            entity.IsCanceled = false;
+            _dbSet.Update(entity);
+
+        }
+
         public void AcceptById(int id)
         {
             T entity = _dbSet.Find(id);
@@ -81,9 +89,6 @@ namespace BSHospital.Repository.Shared.Concrete
             _dbSet.Update(entity);
         }
 
-        public bool Any(Func<object, bool> value)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

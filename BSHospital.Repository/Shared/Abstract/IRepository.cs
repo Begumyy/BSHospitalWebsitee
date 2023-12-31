@@ -21,6 +21,7 @@ namespace BSHospital.Repository.Shared.Abstract
         void Delete(T entity);
 
         void DeleteById(int id);
+        void UpdateById(int id);
 
         void AcceptById(int id);
 
@@ -30,9 +31,10 @@ namespace BSHospital.Repository.Shared.Abstract
 
         //DB set'e bağlanıyor ve ID çekim işlemi yapıyor 
         T GetById(int id);
+       
 
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-        bool Any(Func<object, bool> value);
+      
     }
 }
      
