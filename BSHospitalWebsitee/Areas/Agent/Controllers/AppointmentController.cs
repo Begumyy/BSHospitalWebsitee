@@ -93,6 +93,41 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return Json(list);
         }
 
+        [HttpPost]
+        public ActionResult CreateRandevu(Appointment appointment)
+        {
+            // Agent ID'sini al
+            int agentId;
+            if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "AppUserId")?.Value, out agentId))
+            {
+                // Agent ID'sini kullanarak randevu oluştur
+                // ... (Randevu oluşturma işlemleri)
 
+                // Başarılı bir şekilde oluşturulduktan sonra, randevuları listeleyen bir sorgu yap
+                var randevular = _unitOfWork.Appointments.GetFirstOrDefault(x => x.AppUserId == agentId);
+
+                // JSON formatında randevu listesini döndür
+                return Json(randevular);
+            }
+
+            return Json(new { ErrorMessage = "AppUserId geçerli bir sayı değil." });
+        }
+
+        [HttpGet]
+        public ActionResult ListRandevular()
+        {
+            // Agent ID'sini al
+            int agentId;
+            if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "AppUserId")?.Value, out agentId))
+            {
+                // Agent ID'sini kullanarak randevuları listeleyen bir sorgu yap
+                var randevular = _unitOfWork.Appointments.GetFirstOrDefault(x => x.AppUserId == agentId);
+
+                // JSON formatında randevu listesini döndür
+                return Json(randevular);
+            }
+
+            return Json(new { ErrorMessage = "AgentId geçerli bir sayı değil." });
+        }
     }
 }
