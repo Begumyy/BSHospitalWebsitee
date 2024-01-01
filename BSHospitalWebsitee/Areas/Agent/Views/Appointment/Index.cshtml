@@ -18,7 +18,7 @@
 
 <div id="divList" class="row"></div>
 <div id="divListPatinet" class="row"> </div>
-<form>
+<form id="createRandevuForm">
     <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -204,12 +204,12 @@
                     // Her randevu için bir satır ekleyin
                     $.each(data, function (index, randevu) {
                         $("#randevuTable tbody").append(`
-                                            <tr>
-                                                <td>${randevu.id}</td>
-                                                <td>${randevu.appointmentDate}</td>
-                                                <!-- Diğer sütunlar -->
-                                            </tr>
-                                        `);
+                                                    <tr>
+                                                        <td>${randevu.id}</td>
+                                                        <td>${randevu.appointmentDate}</td>
+                                                        <!-- Diğer sütunlar -->
+                                                    </tr>
+                                                `);
                     });
                 },
                 error: function (error) {
@@ -217,6 +217,7 @@
                 }
 
             });
+        }
 
             function Listele() {
                 if ($.fn.DataTable.isDataTable('#tblListAppointment')) {
@@ -408,8 +409,6 @@
                         }
                     }
                 });
-            }
-        }
-       
+            }  
     </script>
 } 

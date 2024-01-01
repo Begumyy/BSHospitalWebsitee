@@ -24,44 +24,13 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         [HttpPost]
         public IActionResult Add(Appointment appointment)
         {
-            //_unitOfWork.Appointments.Add(appointment);
-            //_unitOfWork.Save();
-            //return Ok(appointment);
 
-             Patient patient = new Patient();
-            if (patient.TCKN != null)
-            {
-                // Hasta TCKN'si null değilse, belirli bir randevuyu güncelle
-                var existingAppointment = _unitOfWork.Appointments.GetFirstOrDefault(a => a.Patient.TCKN == patient.TCKN);
 
-                if (existingAppointment != null)
-                {
-                    // İlgili randevu bulundu
-                    // İşlemlerinizi gerçekleştirin, örneğin iscancalled'ı false yapın
-                    existingAppointment.IsCanceled = false;
-
-                    _unitOfWork.Appointments.Update(existingAppointment);
-                    _unitOfWork.Save();
-
-                    return Ok("Hasta için randevu başarıyla güncellendi.");
-                }
-                else
-                {
-                    return BadRequest("Belirtilen TCKN'ye sahip randevu bulunamadı.");
-                }
-            }
-            else
-            {
-                // Hasta TCKN'si null ise, yeni bir randevu oluştur
-                Appointment newAppointment = new Appointment();
-
-                // Yeni randevu özelliklerini ayarlayın...
-
-                _unitOfWork.Appointments.Add(newAppointment);
+            
+                _unitOfWork.Appointments.Add(appointment);
                 _unitOfWork.Save();
-
-                return Ok("Hasta için yeni randevu başarıyla oluşturuldu.");
-            }
+                return Ok(appointment);
+            
 
         }
         public IActionResult GetAll()
@@ -101,10 +70,11 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "AppUserId")?.Value, out agentId))
             {
                 // Agent ID'sini kullanarak randevu oluştur
+                appointment.AppUserId = agentId;
                 // ... (Randevu oluşturma işlemleri)
 
                 // Başarılı bir şekilde oluşturulduktan sonra, randevuları listeleyen bir sorgu yap
-                var randevular = _unitOfWork.Appointments.GetFirstOrDefault(x => x.AppUserId == agentId);
+                var randevular = _unitOfWork.Appointments.GetAll(x => x.AppUserId == agentId);  //GetFirstOrDefault fonksiyonu, birinci öncelikle "first" öğesini getirir. Eğer her ajanın birden fazla randevusu varsa, sadece ilkini getirecektir. Eğer bir ajanın birden fazla randevusu olabilirse, GetFirstOrDefault yerine GetAll gibi bir fonksiyon kullanarak filtreleme yapmanız gerekebilir.
 
                 // JSON formatında randevu listesini döndür
                 return Json(randevular);
@@ -114,20 +84,23 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListRandevular()
+        public IActionResult ListRandevular()
         {
+            //_unitOfWork.Appointments.GetAll().Where(x => x.AppUserId == User.Claims.FirstOrDefault(c => c.Type == "AppUserId").Value, out agentId));
+
+
             // Agent ID'sini al
             int agentId;
             if (int.TryParse(User.Claims.FirstOrDefault(c => c.Type == "AppUserId")?.Value, out agentId))
             {
                 // Agent ID'sini kullanarak randevuları listeleyen bir sorgu yap
-                var randevular = _unitOfWork.Appointments.GetFirstOrDefault(x => x.AppUserId == agentId);
+                var randevular = _unitOfWork.Appointments.GetAll(x => x.AppUserId == agentId).ToList();  //GetFirstOrDefault fonksiyonu, birinci öncelikle "first" öğesini getirir. Eğer her ajanın birden fazla randevusu varsa, sadece ilkini getirecektir. Eğer bir ajanın birden fazla randevusu olabilirse, GetFirstOrDefault yerine GetAll gibi bir fonksiyon kullanarak filtreleme yapmanız gerekebilir.
 
                 // JSON formatında randevu listesini döndür
                 return Json(randevular);
             }
 
-            return Json(new { ErrorMessage = "AgentId geçerli bir sayı değil." });
+            return Json(new { ErrorMessage = "AppUserId geçerli bir sayı değil." });
         }
     }
 }
