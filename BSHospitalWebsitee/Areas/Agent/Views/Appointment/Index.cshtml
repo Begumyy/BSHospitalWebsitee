@@ -95,7 +95,7 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Appointment</label>
                             <div class="col-8">
-                                <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Entry Days ">
+                                <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Entry Days" onchange="validateDateTime()">
                             </div>
                         </div>
                     </div>
@@ -409,6 +409,19 @@
                         }
                     }
                 });
-            }  
+            }
+
+        function validateDateTime() {
+            var inputDate = new Date(document.getElementById("txtAppointment").value);
+            var dayOfWeek = inputDate.getDay(); // 0: Pazar, 1: Pazartesi, ..., 6: Cumartesi
+            var hour = inputDate.getHours();
+
+            // Kontrolü burada yapabilir ve istenmeyen gün ve saatleri engelleyebilirsiniz
+            if ((dayOfWeek == 0 || dayOfWeek == 6) || (hour < 9 || hour >= 17)) {
+                alert("Lütfen geçerli bir gün ve saat seçin. Pazartesi-Cuma günleri arasında, 09:00-17:00 saatleri arasında randevu alabilirsiniz.");
+                document.getElementById("txtAppointment").value = ""; // Geçersiz seçimi temizle
+            }
+        }
+
     </script>
 } 
