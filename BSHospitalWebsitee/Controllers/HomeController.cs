@@ -10,5 +10,20 @@ namespace BSHospitalWebsitee.Controllers
             return View();
         }
 
+        public IActionResult Department()
+        {
+            return View();
+        }
+
+        public IActionResult Doctor()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
     }
 }
