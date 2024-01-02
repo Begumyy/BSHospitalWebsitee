@@ -1,5 +1,6 @@
 ﻿using BSHospital.Models;
 using BSHospital.Repository.Shared.Abstract;
+using CineScore.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,8 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         }
         public IActionResult GetAll()
         {
-            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).Where(a => a.IsDeclined == false).Where(u=>u.AppUserId==27).ToList();
+            var goruntule = _unitOfWork.Users.GetAll().Where(u=>u.UserTypeId==27);
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).Where(a => a.IsDeclined == false).ToList();
             return Json(list);
         }
         [HttpPost]

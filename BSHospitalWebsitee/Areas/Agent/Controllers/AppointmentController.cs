@@ -1,5 +1,7 @@
 ﻿using BSHospital.Models;
 using BSHospital.Repository.Shared.Abstract;
+using BSHospital.Websitee.Controllers;
+using CineScore.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +30,8 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         }
         public IActionResult GetAll()
         {
+           // var temsilciId = _unitOfWork.Users.GetFirstOrDefault(x=>x.UserTypeId == 1);
+
             var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a => a.IsAccepted == false).Where(a => a.IsDeclined == false).ToList();
             return Json(list);
         }
