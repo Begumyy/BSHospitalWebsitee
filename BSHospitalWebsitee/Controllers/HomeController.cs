@@ -29,5 +29,12 @@ namespace BSHospitalWebsitee.Controllers
             return View();
         }
 
+        //public IActionResult GetRandevu()
+        //{
+        //    // Partial view'i yükle
+        //    return View("randevuForm");
+        //}
+
+        
     }
 }

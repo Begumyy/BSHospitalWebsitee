@@ -34,7 +34,6 @@ namespace BSHospital.Repository.Shared.Abstract
        
 
         T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-      
     }
 }
      

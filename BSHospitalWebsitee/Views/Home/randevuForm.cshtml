@@ -1,0 +1,19 @@
+﻿@section Scripts {
+    <script type="text/javascript">
+        // $(document).ready(function () {
+        //     $("#btnRandevuAl").click(function () {
+        //         $.get("/Home/FormGetir", function (data) {
+        //             $("#randevuFormContainer").html(data);
+        //         }).fail(function () {
+        //             alert("Randevu formu yüklenirken bir hata oluştu.");
+        //         });
+        //     });
+        // });
+
+        $(document).ready(function () {
+            $("#btnRandevuAl").on("click", function () {
+                $("#randevuForm").load("/Home/randevuForm");
+            });
+        });
+    </script>
+}

@@ -76,5 +76,18 @@ namespace BSHospital.Websitee.Controllers
             _unitOfWork.Save();
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult AddRandevu(Appointment appointment)
+        {
+            // Burada gerekli işlemleri yapın (örneğin, veritabanına ekleme)
+            // isim, telefon, hastane, sube, departman, mesaj parametreleri ile gelen değerleri kullanabilirsiniz
+
+            // Başarılı bir şekilde eklendiğini varsayalım
+            _unitOfWork.Appointments.Add(appointment);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Randevu başarıyla eklendi." });
+        }
     }
 }

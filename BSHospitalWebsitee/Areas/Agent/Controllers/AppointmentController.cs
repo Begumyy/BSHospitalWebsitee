@@ -3,6 +3,8 @@ using BSHospital.Models;
 using BSHospital.Repository.Shared.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Exchange.WebServices.Data;
+using Appointment = BSHospital.Models.Appointment;
 using Patient = BSHospital.Models.Patient;
 
 namespace BSHospital.Websitee.Areas.Agent.Controllers
@@ -24,14 +26,9 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         [HttpPost]
         public IActionResult Add(Appointment appointment)
         {
-
-
-            
                 _unitOfWork.Appointments.Add(appointment);
                 _unitOfWork.Save();
                 return Ok(appointment);
-            
-
         }
         public IActionResult GetAll()
         {

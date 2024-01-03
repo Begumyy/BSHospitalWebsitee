@@ -1,0 +1,385 @@
+﻿
+@{
+    ViewData["Title"] = "AddRandevu";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>AddRandevu</h1>
+
+<body>
+    <!-- Banner Area Starts -->
+    <section class="banner-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <h4>Daha iyi bir yaşam için her zaman yanınızdayız...</h4>
+                    <h1>Sağlığınız bizim önceliğimiz</h1>
+                    <p>HEMEN RANDEVU ALIN!</p>
+                    <a href="#btnGetRandevu" class="template-btn mt-3">Randevu Al</a>
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Banner Area End -->
+    <!-- Feature Area Starts -->
+    <section class="feature-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-feature text-center item-padding">
+                        <img src="~/_layout/assets/images/feature1.png" alt="">
+                        <h3>Gelişmiş Teknoloji</h3>
+                        <p class="pt-3">"Modern tıbbi teknolojilerle donatılmış hastanemiz, hastalarımıza en güncel ve etkili sağlık hizmetlerini sunmaktadır."</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-feature text-center item-padding mt-4 mt-md-0">
+                        <img src="~/_layout/assets/images/feature2.png" alt="">
+                        <h3>Hasta Memnuniyeti</h3>
+                        <p class="pt-3">"Hasta odaklı yaklaşımımız ve kaliteli hizmet anlayışımızla, hastalarımızın memnuniyetini en üst düzeye çıkarmayı hedefliyoruz."</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-feature text-center item-padding mt-4 mt-lg-0">
+                        <img src="~/_layout/assets/images/feature3.png" alt="">
+                        <h3>Kaliteli Ekipman</h3>
+                        <p class="pt-3">"Hastanemiz, son teknolojiye sahip kaliteli ekipmanlarla donatılmış, hasta bakımında üst düzey güvenlik ve etkinliği sağlamaktadır."</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-feature text-center item-padding mt-4 mt-lg-0">
+                        <img src="~/_layout/assets/images/feature4.png" alt="">
+                        <h3>Uzman Kadro</h3>
+                        <p class="pt-3">"Deneyimli ve uzman kadromuz, hastalarımıza en iyi sağlık hizmetini sunmak için bilgi ve tecrübelerini birleştirerek çalışmaktadır."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Feature Area End -->
+    <!-- Welcome Area Starts -->
+    <section class="welcome-area section-padding3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 align-self-center">
+                    <div class="welcome-img">
+                        <img src="~/_layout/assets/images/welcomedoctor.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="welcome-text mt-5 mt-lg-0">
+                        <h2>BS Hospital Sağlık Grubu'na Hoşgeldiniz</h2>
+                        <p class="pt-3">
+                            Son teknoloji cihazlar ve uzman kadromuzla, size en iyi sağlık hizmetini sunmak için buradayız. Her gün daha iyi bir yaşamı hedefliyoruz ve moden tıbbın imkanlarını sizin için bir araya getiriyoruz. Sağlığınıza dair ihtiyaçlarınızı karşılamak için buradayız. Sizleri sağlıklı bir geleceğe taşımak için her zaman yanınızdayız. Sağlığınız bizim önceliğimiz...
+                            <a href="/Home/About" class="template-btn mt-3">Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Welcome Area End -->
+    <!-- Patient Area Starts -->
+    <section class="patient-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                </div>
+                <div class="col-lg-5 offset-lg-1 align-self-center">
+                    <div class="appointment-form text-center mt-5 mt-lg-0" id="randevuForm">
+                        <h3 class="mb-5">Hemen Randevu Alın</h3>
+                        <form>
+                           @*  <div class="form-group">
+                                <input type="text" placeholder="İsminiz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'İsminiz'" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" maxlength="11" placeholder="Telefonunuz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Telefonunuz'" required>
+                            </div> *@
+
+                            <div class="mb-3 row">
+                                <label for="txtName" class="col-4 col-form-label">İsminiz</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="txtName" name="txtName" placeholder="İsminiz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'İsminiz'" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="txtPhone" class="col-4 col-form-label">Telefonunuz</label>
+                                <div class="col-8">
+                                    <input type="tel" class="form-control" id="txtPhone" name="txtPhone" maxlength="11" placeholder="Telefonunuz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Telefonunuz'" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="ddlHospital" class="col-4 col-form-label">Hastane Seçiniz</label>
+                                <div class="col-8">
+                                    <select class="form-select" name="ddlHospital" id="ddlHospital" required>
+                                        <!-- Hospital options will be dynamically populated through JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="ddlBranch" class="col-4 col-form-label">Şube Seçiniz</label>
+                                <div class="col-8">
+                                    <select class="form-select" name="ddlBranch" id="ddlBranch" required>
+                                        <!-- Branch options will be dynamically populated through JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="ddlDepartment" class="col-4 col-form-label">Departman Seçiniz</label>
+                                <div class="col-8">
+                                    <select class="form-select" name="ddlDepartment" id="ddlDepartment" required>
+                                        <!-- Department options will be dynamically populated through JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            @* <div class="form-group">
+                                <input type="text" placeholder="Hastane Seçiniz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Hastane Seçiniz'" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" placeholder="Şube Seçiniz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Şube Seçiniz'" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Departman Seçiniz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Departman Seçiniz'" required>
+                            </div> *@
+                            @* <div class="form-group">
+                            <textarea name="message" cols="20" rows="7" placeholder="Mesajınız" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mesajınız'" required></textarea>
+                            </div> *@
+
+                            <div class="form-group">
+                                <textarea name="message" id="txtMessage" cols="20" rows="7" placeholder="Mesajınız (En fazla 150 karakter)" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mesajınız'" oninput="
+                                          var maxLength=150;
+                                          var messageTextarea=document.getElementById('message');
+                                          var charCountMessage=document.getElementById('charCount');
+                                          var currentLength=messageTextarea.value.length;
+                                          var remaining=maxLength - currentLength;
+                                          if (remaining>= 0) {
+            charCountMessage.innerHTML = remaining + ' karakter kaldı.';
+        } else {
+            charCountMessage.innerHTML = 'Maksimum karakter sayısına ulaşıldı! Fazla karakterleri silin.';
+            // Maksimum uzunluğa ulaşıldığında aşağıdaki satırı kullanarak fazla karakterleri otomatik olarak kesebilirsiniz
+            // messageTextarea.value = messageTextarea.value.slice(0, maxLength);
+        }
+    " required></textarea>
+                                <p id="charCount">150 karakter kaldı.</p>
+                            </div>
+
+                            <a href="#" id="btnGetRandevu" class="template-btn">Randevu Al</a>
+
+                            @* <!-- JavaScript veya jQuery ile Form İşlemleri -->
+                            <script>
+                            // Sayfa yüklendiğinde çalışacak kod
+                            document.addEventListener('DOMContentLoaded', function () {
+                            // Randevu Al butonuna tıklanma olayını dinle
+                            document.getElementById('btnGetRandevu').addEventListener('click', function () {
+                            // Form verilerini al
+                            var message = document.getElementsByName('message')[0].value;
+
+                            // Form verilerini kullanarak bir işlem yap (örneğin, AJAX ile sunucuya gönderme)
+                            // Bu kısmı kendi ihtiyaçlarınıza göre uyarlayabilirsiniz
+
+                            // Örnek olarak bir alert mesajı gösterelim
+                            alert('Randevunuz alındı!');
+
+                            // Formun sunucuya gönderilmesi gibi bir işlem yapılacaksa, bu kısmı AJAX ile gerçekleştirebilirsiniz.
+                            });
+                            });
+                            </script> *@
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Patient Area Starts -->
+    <!-- Hotline Area Starts -->
+    <section class="hotline-area text-center section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Acil Durum Çağrı Merkezi</h2>
+                    <span>(+01) – 234 567 890</span>
+                    <p class="pt-3">
+                        7/24 hasta destek hizmeti sunmaktayız. Acil durumlarda lütfen bizimle <br>iletişime geçin.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hotline Area End -->
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#randevuForm").click(function () {
+                // var name = $("input[placeholder='İsminiz']").val();
+                // var phone = $("input[placeholder='Telefonunuz']").val();
+                // var hospital = $("input[placeholder='Hastane Seçiniz']").val();
+                // var branch = $("input[placeholder='Şube Seçiniz']").val();
+                // var department = $("input[placeholder='Departman Seçiniz']").val();
+
+                var name = $("#txtName").val();
+                var phone = $("#txtPhone").val();
+                var hospital = $("#ddlHospital").val();
+                var branch = $("#ddlBranch").val();
+                var department = $("#ddlDepartment").val();
+                var message = $("#txtMessage")
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Appointment/AddRandevu',
+                    //contentType: 'application/json',
+                    data: {
+                        name: $("#txtName").val(),
+                        phone: $("#txtPhone").val(),
+                        hospital: $("#ddlHospital").val(),
+                        branch: $("#ddlBranch").val(),
+                        department: $("#ddlDepartment").val(),
+                        message: $("#txtMessage").val()
+                    },
+                    success: function (data) {
+                        alert('Randevunuz alındı!');
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+
+
+            function fillListDepartment(departmantId) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/AddRandevu',
+                    success: function (res) {
+                        $("#ddlDepartment").empty();
+                        for (var item of res) {
+                            $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
+                        }
+                    }
+                })
+            }
+
+
+
+            function fillListHospital(hospitalId) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/AddRandevu',
+                    success: function (res) {
+                        $("#ddlHospital").empty();
+                        for (var item of res) {
+                            $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
+                        }
+                    }
+                })
+            }
+
+            function fillListBranch(branchId) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Appointment/AddRandevu',
+                    success: function (res) {
+                        $("#ddlBranch").empty();
+                        for (var item of res) {
+                            $("#ddlBranch").append(new Option(item.branchName, item.id, false, item.id == branchId));
+                        }
+                    }
+                })
+            }
+
+    </script>
+}
+
+
+    @* <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btnGetRandevu').addEventListener('click', function () {
+                var name = document.getElementsByName('message')[0].value;
+                var phone = document.getElementsByName('message')[1].value;
+                var hospital = document.getElementsByName('message')[2].value;
+                var branch = document.getElementsByName('message')[3].value;
+                var department = document.getElementsByName('message')[4].value;
+
+                // Perform your AJAX request with the obtained values
+                // Example: You can use the fetch API to send a POST request to the server
+                $.ajax({
+                    url: '/Appointment/AddRandevu',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        hospital: hospital,
+                        branch: branch,
+                        department: department,
+                    }),
+                    success: function (data) {
+                        // Handle the success response from the server
+                        alert('Randevunuz alındı!');
+                    },
+                    error: function (error) {
+                        // Handle errors
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script> *@
+
+
+
+    @* <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btnGetRandevu').addEventListener('click', function () {
+                // Form verilerini al
+                var isim = document.getElementsByName('isim')[0].value;
+                var telefon = document.getElementsByName('telefon')[0].value;
+                var hastane = document.getElementsByName('hastane')[0].value;
+                var sube = document.getElementsByName('sube')[0].value;
+                var departman = document.getElementsByName('departman')[0].value;
+                var mesaj = document.getElementsByName('message')[0].value;
+
+                // AJAX ile Controller'daki AddRandevu Action'ına isteği gönder
+                $.ajax({
+                    type: 'POST',
+                    url: '/Appointment/AddRandevu',
+                    data: { isim, telefon, hastane, sube, departman, mesaj },
+                    success: function (response) {
+                        alert(response.message);
+                        // Başarı durumuna göre sayfayı yeniden yükleyebilir ya da başka bir işlem yapabilirsiniz.
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script> *@
+
+</body>
+
+@* @section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnGetRandevu").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/GetRandevu',
+                })
+            })
+        })
+    </script>
+} *@
+
+
+
