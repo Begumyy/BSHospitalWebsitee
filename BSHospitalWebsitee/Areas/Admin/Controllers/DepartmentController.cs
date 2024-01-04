@@ -22,6 +22,15 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Add(Department department)
         {
+            if (!ModelState.IsValid)
+            {
+               
+                // Eğer modelin doğruluğu sağlanmıyorsa, hataları inceleyebilir veya uygun bir şekilde işleyebilirsiniz
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                // Hataları inceleyip uygun bir şekilde cevap verebilirsiniz
+
+                return BadRequest(new { message = "E-posta adresi doğru formatta değil", errors = ModelState });
+            }
             _unitOfWork.Departments.Add(department);
             _unitOfWork.Save();
             return Json(new { success = true });

@@ -12,10 +12,13 @@ namespace CineScore.Models
     [Table("Users")]
     public class AppUser:BaseModel
     {
-        [EmailAddress(ErrorMessage ="Email doğru formatta girilmedi")]
+        [Required(ErrorMessage = "Email doğru formatta girilmedi")]
         public string Email { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
         public string? Gsm { get; set; }
+        [Required]
         public int UserTypeId { get; set; }
         
         

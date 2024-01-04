@@ -15,8 +15,6 @@ namespace BSHospital.Websitee.Controllers
             _unitOfWork = unitOfWork;
         }
 
-
-
         [HttpPost]
         public IActionResult Add(Appointment appointment)
         {
@@ -26,37 +24,17 @@ namespace BSHospital.Websitee.Controllers
             _unitOfWork.Save();
             return Ok(appointment.Id);
 
-            //_unitOfWork.Appointments.Add(appointment);
-            //_unitOfWork.Save();
-            //return Ok();
-
-            ////appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
-
-            ////appointment.Department = _unitOfWork.Departments.GetById(appointment.DepartmentId);
-            ////_unitOfWork.Appointments.Add(appointment);
-            ////_unitOfWork.Save();
-            ////return Ok();
         }
-
         public IActionResult Index()
         {
 
             return View();
         }
-
-        public IActionResult GetAll()
+           public IActionResult GetAll()
         {
             var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).ToList();
             return Json(list);
         }
-
-        //[HttpPost]
-        //public IActionResult Delete(int id)
-        //{
-        //    _unitOfWork.Appointments.DeleteById(id);
-        //    _unitOfWork.Save();
-        //    return Ok();
-        //}
 
         [HttpPost]
         public IActionResult DeleteById(int id)

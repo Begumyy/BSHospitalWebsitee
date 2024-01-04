@@ -38,31 +38,31 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Name Surname</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtName" placeholder="Kullanıcı Adınız ">
+                                <input type="text" class="form-control" id="txtName" placeholder="Kullanıcı Adınız" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">TCKN</label>
+                            <label for="inputName" class="col-4 col-form-label" required>TCKN</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtTCKN" placeholder="TC Number ">
+                                <input type="text" class="form-control" maxlength="11" id="txtTCKN" placeholder="TC Number" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Yas</label>
                             <div class="col-8">
-                                <input type="number" class="form-control" id="txtYas" placeholder="Yas ">
+                                <input type="number" class="form-control" id="txtYas" placeholder="Yas" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Adres</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtAdres" placeholder="Adress">
+                                <input type="text" class="form-control" id="txtAdres" placeholder="Adress" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Phone</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtPhone" placeholder="Telefon">
+                                <input type="text" class="form-control" maxlength="12" id="txtPhone" placeholder="Telefon" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -72,19 +72,7 @@
                             </div>
                         </div>
 
-                        @*  <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Select Kullanıcı </label>
-                            <div class="col-8">
-                                <select class="form-select" name="script" id="ddlUser"> </select>
-                            </div>
-                        </div> *@
-
-                        @* <div class="mb-3 row">
-                        <label for="inputName" class="col-4 col-form-label">Select Patient</label>
-                        <div class="col-8">
-                        <select class="form-select" name="script" id="ddlPatient"> </select>
-                        </div>
-                        </div> *@
+                        
 
                          <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
@@ -163,7 +151,7 @@
                 $("#modalId").modal('show');
                 fillListDepartment();
                 fillListHospital();
-                fillListUser();
+               
                 fillListDoctor();
              });
 

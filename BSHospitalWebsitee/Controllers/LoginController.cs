@@ -25,6 +25,12 @@ namespace BSHospital.Websitee.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login1()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
@@ -53,7 +59,7 @@ namespace BSHospital.Websitee.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // Oturumu sonlandır
-            return RedirectToAction("Login", "Login"); // Çıkış yapıldığında login sayfasına yönlendir
+            return RedirectToAction("Index","Home"); // Çıkış yapıldığında login sayfasına yönlendir
         }
 
        

@@ -22,7 +22,8 @@
     <link href="~/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- Sweet Alert-->
     <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-    <meta content="Begüm & Savaş" name="author" />
+
+    <link href="https://code.jquery.com/jquery-3.6.4.min.js"></link>
 
     @await RenderSectionAsync("Styles", required: false)
 
@@ -69,12 +70,6 @@
 
                 <div class="d-flex">
 
-
-
-
-
-
-
                     <div class="dropdown d-none d-lg-inline-block ms-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
                             <i class="uil-minus-path"></i>
@@ -93,8 +88,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-
-                            <a class="dropdown-item" asp-controller="User" asp-action="Index"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Çıkış</span></a>
+                            <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-area=""><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Çıkış</span></a>
                         </div>
                     </div>
 
@@ -131,38 +125,7 @@
                 <i class="fa fa-fw fa-bars"></i>
             </button>
 
-            <div data-simplebar class="sidebar-menu-scroll">
-
-                <!--- Sidemenu -->
-                <div id="sidebar-menu">
-                    <!-- Left Menu Start -->
-                    <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title">Menu</li>
-
-                        <li>
-                            <a asp-action="Index" asp-controller="Dashboard">
-                                <i class="uil-home-alt"></i>
-                                <span>Randevular</span>
-                            </a>
-                        </li>
-                        @* <li>
-                            <a asp-action="Index" asp-controller="Department">
-                                <i class="uil-home-alt"></i>
-                                <span>Departmanlar</span>
-                            </a>
-                        </li> *@
-                       
-                        
-                        
-                        
-                       
-
-
-
-                    </ul>
-                </div>
-                <!-- Sidebar -->
-            </div>
+           
         </div>
         <!-- Left Sidebar End -->
         <!-- ============================================================== -->

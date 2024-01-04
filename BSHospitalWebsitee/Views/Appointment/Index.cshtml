@@ -1,9 +1,29 @@
-﻿<a class="btn btn-success" id="btnEkle">Randevu Ekle</a>
+﻿@{
+    ViewData["Title"] = "Index1";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-12 ">
+        <div class="card border border-primary">
+            <div class="card-header bg-primary border-primary">
+                <h5 class="my-0 text-white"><i class="uil uil-message me-3"></i>Randevular</h5>
+
+            </div><!-- end card-header -->
+            <div class="card-body">
+                <a class="btn btn-success" id="btnEkle">Yeni Randevu Ekle</a>
+                <table id="tblListAppointment" class="table table-striped table-bordered">
+                </table>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div>
+</div>
+
+
+
 <div id="divList" class="row"></div>
 <div id="divListPatinet" class="row"> </div>
-<form>
+<form id="createRandevuForm">
     <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-        <a class="btn btn-primary" id="btnAdd">Yeni Departman Ekle</a
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -15,38 +35,38 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Hastane Adı</label>
                             <div class="col-8">
-                                <select  class="form-select" id="ddlHospital" placeholder="Hastane Adı  "></select>
+                                <select class="form-select" id="ddlHospital" placeholder="Hastane Adı  "></select>
                             </div>
                         </div>
 
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Name Surname</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtName" placeholder="Kullanıcı Adınız ">
+                                <input type="text" class="form-control" id="txtName" placeholder="Kullanıcı Adınız" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">TCKN</label>
+                            <label for="inputName" class="col-4 col-form-label" required>TCKN</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtTCKN" placeholder="TC Number ">
+                                <input type="tel" class="form-control input-mask" id="txtTCKN" data-inputmask="'mask': '(99)9999999999'" placeholder="TCKN giriniz" maxlength="14" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Yas</label>
                             <div class="col-8">
-                                <input type="number" class="form-control" id="txtYas" placeholder="Yas ">
+                                <input type="number" class="form-control" id="txtYas" placeholder="Yas" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Adres</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtAdres" placeholder="Adress">
+                                <input type="text" class="form-control" id="txtAdres" placeholder="Adress" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Phone</label>
                             <div class="col-8">
-                                <input type="text" class="form-control" id="txtPhone" placeholder="Telefon">
+                                <input type="tel" class="form-control input-mask" id="txtPhone" data-inputmask="'mask': '(99)9999999999'" placeholder="Gsm Numarası giriniz" maxlength="14" required>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -55,19 +75,8 @@
                                 <select class="form-select" name="script" id="ddlDepartment"> </select>
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Select Kullanıcı </label>
-                            <div class="col-8">
-                                <select class="form-select" name="script" id="ddlUser"> </select>
-                            </div>
-                        </div>
 
-                        @* <div class="mb-3 row">
-                            <label for="inputName" class="col-4 col-form-label">Select Patient</label>
-                            <div class="col-8">
-                                <select class="form-select" name="script" id="ddlPatient"> </select>
-                            </div>
-                        </div> *@
+
 
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Select Doctor</label>
@@ -78,14 +87,14 @@
                         <div class="mb-3 row">
                             <label for="inputName" class="col-4 col-form-label">Appointment</label>
                             <div class="col-8">
-                                <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Entry Days ">
+                                <input type="datetime-local" class="form-control" id="txtAppointment" placeholder="Entry Days" onchange="validateDateTime()">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a  id="btnAppointment" class="btn btn-primary">Create Appointment</a>
+                    <a id="btnAppointment" class="btn btn-primary">Create Appointment</a>
                 </div>
             </div>
         </div>
@@ -96,173 +105,160 @@
 
 @section Scripts{
     <script type="text/javascript">
+        var dataTable;
 
         $(document).ready(function () {
-            Listele();
-            $("#btnAdd").click(function () {
+            //Listele();
+            fillListHospital();
+            fillListDoctor();
+            fillListDepartment();
+            $("#btnEkle").click(function () {
                 $("input").val('');
-                $("#modalTitleId").modal('show')
-                fillListHospital();
-                fillListDoctor();
-                fillListDepartment();
-                fillListPatient();
-                fillListUser();
-            });
-            $("#btnAppointment").off().click(function () {                            
+                // $("#modalId").modal('show')
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Appointment/Add',
-                    data: randevu1 = {
-                        hospitalId: $("#ddlHospital").val(),
-                        departmentId: $("#ddlDepartment").val(),
-                        doctorId: $("#ddlDoctor").val(),
-                        appointmentDate: $("#txtAppointment").val(),
+                $("#btnAppointment").off().click(function () {
 
-                        patient: {
-                            patientName: $("#txtName").val(),
-                            tckn: $("#txtTCKN").val(),
-                            address: $("#txtAdres").val(),
-                            Phone: $("#txtPhone").val(),
-                            age: $("#txtYas").val(),
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Appointment/Add',
+                        data: randevu1 = {
+                            hospitalId: $("#ddlHospital").val(),
                             departmentId: $("#ddlDepartment").val(),
-                            userId:$("#ddlUser").val()
-                            
-                        }
-                    },
-                    success: function () {
-                        $("#modalId").modal('hide');
-                        Listele();
-                        refreshDataTable();
-                    }
-                });
-            })    
-        })
-        function Listele() {//büyük harfle yazmıssın sen metodu ama guncelleme yapıldıktan sonra kucuk harfle cagirmissin, normalde javascript dunyasında metod isimleri camelCase dir yani kucuk harfle baslr bilgin olsun.
-            $.ajax({
-                type: 'GET',
-                url: '/Appointment/GetAll',
-                success: function (res) {
-                    $("#divList").empty();
-                    for (var item of res) {
-                        console.log(item);
-                        const patientName = item.patient && item.patient.patientName ? item.patient.patientName : 'Belirtilmemiş';
-                        // const patientTCKN = item.patient && item.patient.tckn ? item.patient.tckn : 'Belirtilmemiş';
+                            doctorId: $("#ddlDoctor").val(),
+                            appointmentDate: $("#txtAppointment").val(),
 
-                        $("#divList").append(`
-                            <div class="col-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="card-title bg-danger text-white"></h3>
-                                        <p class="card-text">Hosptail isim ${item.hospital.hospitalName}</p>
-                                                 <p class="card-text">Hasta ismi ${patientName}</p>
-                                          <p class="card-text">Hasta TCKN ${item.patient.tckn}</p>
-                                                  <p class="card-text">Hasta Yas ${item.patient.age}</p>
-                                                 <p class="card-text">Hasta Adress ${item.patient.address}</p>
-                                                 <p class="card-text">Hasta Telefon ${item.patient.phone}</p>
-                                                                 <p class="card-text">Hasta Telefon ${item.patient.userId}</p>
-                                                <p class="card-text"> Departman Adı :${item.department.departmantName}</p>
-                                        <p class="card-text"> Doktor Adı :${item.doctor.doctorName}</p>
-                                        <p class="card-text"> Randevu Tarihi : ${item.appointmentDate}</p>
-                                    </div>
-                                    <div class="card-footer text-center">
-                                     <a onclick="Update(${item.id},'${item.hospital.hospitalId}','${patientName}','${item.patient.tckn}','${item.patient.age}','${item.patient.address}','${item.patient.phone}','${item.department.departmantId}','${item.doctor.doctorId}','${item.appointmentDate}')  " class="btn btn-success">Guncelle</a>
-                                        <a onclick="Delete(${item.id})" class="btn btn-danger">Sil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `);
-                    }
+                            patient: {
+                                patientName: $("#txtName").val(),
+                                tckn: $("#txtTCKN").val(),
+                                address: $("#txtAdres").val(),
+                                Phone: $("#txtPhone").val(),
+                                age: $("#txtYas").val(),
+                                departmentId: $("#ddlDepartment").val(),
+                                userId: $("#ddlUser").val()
+
+                            }
+                        },
+                        success: function () {
+                            $("#modalId").modal('hide');
+                            alert("Kaydınız Başarılı Bir Şekilde Oluşmuştur Sağlık Danışmanlarımız Sizlere En Kısa Süre İçerisinde Geri Dönüş Sağlayacaklardır  ")
+                            // Listele();
+                        }
+                    });
+                });
+                $("#btnAppointment").text("Kaydet");
+                $("#modalTitleId").text("Hasta Ekle");
+                $("#modalId").modal('show');
+                
+                fillListDepartment();
+                fillListHospital();
+
+                fillListDoctor();
+            });
+
+        });
+
+
+
+        // function Listele() {
+        //     if ($.fn.DataTable.isDataTable('#tblListAppointment')) {
+        //         $('#tblListAppointment').DataTable().clear().destroy();
+        //     }
+
+        //     dataTable = $("#tblListAppointment").DataTable({
+        //         ajax: { url: '/Appointment/GetAll', dataSrc: '' },
+        //         columns: [
+        //             { data: 'id', title: 'ID' },
+        //             { data: 'hospital.hospitalName', title: 'Hastane Adı' }, // HospitalName için bu satırı ekleyin
+        //             { data: 'patient.patientName', title: 'Hasta Adı' },
+        //             { data: 'patient.tckn', title: 'TCKN' },
+        //             { data: 'patient.phone', title: 'Telefon' },
+        //             { data: 'patient.address', title: 'Adres' },
+        //             { data: 'patient.age', title: 'Yaş' },
+        //             { data: 'department.departmantName', title: 'Bölüm Adı' },
+        //             { data: 'doctor.doctorName', title: 'Doktor Adı' },
+
+        //             { data: 'appointmentDate', title: 'Randevu Tarihi' },
+        //             {
+        //                 data: "id",
+        //                 render: function (data, type, row) {
+        //                     return `<a href="#" onclick="deleteAppointment(${data})" class="btn btn-sm btn-danger">sil</a> <a onclick="Update('${data}','${row.department.departmantName}','${row.hospital.hospitalName}','${row.doctor.doctorName}','${row.patient.patientName}','${row.patient.tckn}','${row.patient.phone}','${row.patient.address}','${row.patient.age}')" class="btn btn-sm btn-primary">Güncelle</a>`;
+        //                 }
+
+        //             },
+
+
+        //         ]
+        //     });
+        // }
+       
+        function deleteAppointment(id) {
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteById","Appointment")',
+                data: { id: id },
+                success: function (data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Başarılı',
+                        message: 'Hasta Silindi',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $("#tblListAppointment ").DataTable().ajax.reload();
                 }
             });
+
         }
-        function Delete(id){
-            let deleteee ={id:id }
+
+        function Decline(id) {
+            let deleteee = { id: id }
             $.ajax({
-                type:"POST",
-                url:"/Appointment/DeleteById",
+                type: "POST",
+                url: "/Agent/Appointment/DeleteById",
                 data: deleteee,
                 success: function () {
                     Listele()
                 }
             })
         }
-        // function Update(id, hospitalName, departmantName, doctorName, appointmentDate, patientName, tckn, address, phone, age) {
-
-        //     Listele(id);
-          
-        //     $("#ddlHospital").val(hospitalName);
-        //     $("#ddlDepartment").val(departmantName);
-        //     $("#ddlDoctor").val(doctorName);
-        //     $("#txtAppointment").val(appointmentDate);
-        //     $("#txtName").val(patientName);
-        //     $("#txtTCKN").val(tckn);
-        //     $("#txtAdres").val(address);
-        //     $("#txtPhone").val(phone);
-        //     $("#txtYas").val(age);
-        //         $("#modalId").modal('show')
-
-        //     $("#Update").off();
-        //     $("#Update").click(function () {
-        //         var hospitalname = $("#ddlHospital").val();
-        //         var departmantname = $("#ddlDepartment").val();
-        //         var doctorname = $("#ddlDoctor").val();
-        //         var appointmentdate=  $("#txtAppointment").val();
-        //         var patientname= $("#txtName").val();
-        //         var tckn= $("#txtTCKN").val();
-        //         var address=  $("#txtAdres").val();
-        //         var phone=  $("#txtPhone").val();
-        //         var age=  $("#txtYas").val();
-
-        //         $.ajax({
-        //             type:"POST",
-        //             url: "/Appointment/Update",
-        //             data: { id: id, hospitalName: hospitalname, departmantName: departmantname, doctorName: doctorname, appointmentDate: appointmentdate, patientName: patientname, TCKN: tckn, Address: address, Phone: phone, Age: age }
-        //             success:function(){
-        //                 alert("Guncelleme yapıldı");
-        //                 $("#modalId").modal('hide');
-        //             }
-        //         })
 
 
-        //     });
+        function Update(id, departmantId, hospitalId, doctorId, patientName, tckn, phone, address, age, appointmentDate) {
+            $("input").val("");
 
-            
-
-
-            
-       //  }
-
-        function Update(id, hospitalId, patientName, tckn, age, address, phone, departmantId, doctorId, appointmentDate) {
-            // $("input").val("");
-            
-                fillListHospital(hospitalId);
+            fillListHospital(hospitalId);
             $("#ddlHospital").val(hospitalId);
-                fillListDepartment(departmantId);
-            $("#ddlDepartment").val(departmantId);
-                fillListDoctor(doctorId);
-            $("#ddlDoctor").val(doctorId);
-                $("#txtAppointment").val(appointmentDate);
-
-                $("#txtName").val(patientName);
-                $("#txtTCKN").val(tckn);
-            $("#txtAdres").val(address);
+            fillListPatient(patientName);
+            $("#txtName").val(patientName);
+            $("#txtTCKN").val(tckn);
             $("#txtPhone").val(phone);
             $("#txtYas").val(age);
+            $("#txtAdres").val(address);
+            fillListDepartment(departmantId);
+            $("#ddlDepartment").val(departmantId);
+            fillListDoctor(doctorId);
+            $("#ddlDoctor").val(doctorId);
+            $("#txtAppointment").val(appointmentDate);
+
+
+
+
+
             $("#modalId").modal("show");
-                $("#modalTitleId").text("Randevu Güncelle ");
+            $("#modalTitleId").text("Randevu Güncelle ");
             $("#btnAppointment").text("Guncelle");
 
             $("#btnAppointment").off();
 
 
             $("#btnAppointment").click(function () {
-               
+
                 $.ajax({
-                    type:"POST",
-                    url:"/Appointment/Update",
+                    type: "POST",
+                    url: "/Appointment/Update",
                     data: {
-                        id:id,
+                        id: id,
                         hospitalId: $("#ddlHospital").val(),
                         departmentId: $("#ddlDepartment").val(),
                         doctorId: $("#ddlDoctor").val(),
@@ -285,61 +281,54 @@
                 })
             })
         }
-        
 
 
-            function fillListDoctor(doctorName) {
-                $.ajax({
-                    type:'GET',
-                    url:'/Doctor/GetAll',
-                    success:function(res){
-                        $("#ddlDoctor").empty();
-                        for (var item of res) {
-                            $("#ddlDoctor").append(new Option(item.doctorName,item.id,false));
-                        }
-                    }
-                })
-            }
-        function fillListDepartment(departmantId) {
-                $.ajax({
-                    type:'GET',
-                    url:'/Department/GetAll',
-                    success: function (res) {
-                        $("#ddlDepartment").empty();
-                        for (var item of res) {
-                        $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
-                        }
-                    }
-                })
-        }
-            function fillListHospital(hospitalId){
-                $.ajax({
-                    type:'GET',
-                    url:'/Hospital/GetAll',
-                    success: function (res) {
-                        $("#ddlHospital").empty();
-                        for (var item of res) {
-                        $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
-                        }
-                    }
-                })
-            }
-        function fillListUser(userId) {
+        function fillListDoctor(doctorName) {
             $.ajax({
                 type: 'GET',
-                url: '/Admin/User/GetAll',
+                url: '/Doctor/GetAll',
                 success: function (res) {
-                    $("#ddlUser").empty();
+                    $("#ddlDoctor").empty();
                     for (var item of res) {
-                        $("#ddlUser").append(new Option(item.email, item.id, false, item.id == userId));
+                        $("#ddlDoctor").append(new Option(item.doctorName, item.id, false));
                     }
                 }
             })
         }
+
+        function fillListDepartment(departmantId) {
+            $.ajax({
+                type: 'GET',
+                url: '/Department/GetAll',
+                success: function (res) {
+                    $("#ddlDepartment").empty();
+                    for (var item of res) {
+                        $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
+                    }
+                }
+            })
+        }
+
+
+
+        function fillListHospital(hospitalId) {
+            $.ajax({
+                type: 'GET',
+                url: '/Hospital/GetAll',
+                success: function (res) {
+                    $("#ddlHospital").empty();
+                    for (var item of res) {
+                        $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
+                    }
+                }
+            })
+        }
+
+
         function fillListPatient(patientName) {
             $.ajax({
                 type: 'GET',
-                url: '/Patient/GetAll',
+                url: 'Appointment/GetAll',
                 success: function (res) {
                     $("#txtName").empty();
                     for (var item of res) {
@@ -350,5 +339,20 @@
                 }
             });
         }
+
+        function validateDateTime() {
+            var inputDate = new Date(document.getElementById("txtAppointment").value);
+            var dayOfWeek = inputDate.getDay(); // 0: Pazar, 1: Pazartesi, ..., 6: Cumartesi
+            var hour = inputDate.getHours();
+
+            // Kontrolü burada yapabilir ve istenmeyen gün ve saatleri engelleyebilirsiniz
+            if ((dayOfWeek == 0 || dayOfWeek == 6) || (hour < 9 || hour >= 17)) {
+                alert("Lütfen geçerli bir gün ve saat seçin. Pazartesi-Cuma günleri arasında, 09:00-17:00 saatleri arasında randevu alabilirsiniz.");
+                document.getElementById("txtAppointment").value = ""; // Geçersiz seçimi temizle
+            }
+        }
+
     </script>
 }
+
+

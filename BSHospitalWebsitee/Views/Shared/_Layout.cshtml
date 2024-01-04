@@ -15,7 +15,7 @@
 
     <!-- CSS Files -->
     <link href="~/_layout/assets/css/style.css" rel="stylesheet" />
-    <a href="~/_layout/assets/css/style.map">~/_layout/assets/css/style.map</a>
+    <a href="~/_layout/assets/css/style.map"></a>
 
     <link rel="stylesheet" href="~/_layout/assets/css/animate-3.7.0.css">
     <link rel="stylesheet" href="~/_layout/assets/css/font-awesome-4.7.0.min.css">
@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="~/_layout/assets/css/jquery.datetimepicker.min.css">
     <link rel="stylesheet" href="~/_layout/assets/css/linearicons.css">
     <link rel="stylesheet" href="~/_layout/assets/css/style.css">
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <!-- Preloader Starts -->
@@ -37,9 +38,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 d-md-flex">
-                        <h6 class="mr-3"><span class="mr-2"><i class="fa fa-mobile"></i></span> Bizi Arayın! +1 234 567 8900</h6>
-                        <h6 class="mr-3"><span class="mr-2"><i class="fa fa-envelope-o"></i></span> Bize Yazın! bshospitalgroup@gmail.com</h6>
-                        <h6><span class="mr-2"><i class="fa fa-map-marker"></i></span> Bizi Bulun!</h6>
+                        <h6 class="mr-3"><span class="mr-2"><i class="fa fa-mobile"></i></span> <a href="https://wa.me/905372594319/?text=Merhabalar Yardım almak istiyorum yardımcı olabilir misiniz ?" target="_blank"> Bizi Arayın! +90 537 259 4319</h6>
+
+                        <h6 class="mr-3"><span class="mr-2"><i class="fa fa-envelope-o"></i></span> Bize Yazın! <a href="mailto:bshospitalgroup@gmail.com"</a> bshospitalgroup@gmail.com</h6>
+                        
                     </div>
                     <div class="col-lg-3">
                         <div class="social-links">
@@ -56,7 +58,7 @@
             <div class="container">
                 <div class="row align-items-center justify-content-between d-flex">
                     <div id="logo">
-                        <a href="Home"><img src="~/_layout/assets/images/logo/bshospital.png" alt="" title="" /></a>
+                        <a href="Index"><img src="~/_layout/assets/images/logo/bshospital.png" alt="" title="" /></a>
                     </div>
                     <nav id="nav-menu-container">
                         <ul class="nav-menu">
@@ -64,6 +66,8 @@
                             <li class="menu-active"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Department">Departmanlar</a></li>
                             <li class="menu-active"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Doctor">Doktorlar</a></li>
                             <li class="menu-active"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">İletişim</a></li>
+                            <li class="menu-active"><a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Index">Randevu Al</a></li>
+                            <li class="menu-active"><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Giriş Yap</a></li>
                         </ul>
                     </nav><!-- #nav-menu-container -->
                 </div>
@@ -79,26 +83,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-2 col-lg-3">
-                        <div class="single-widget-home mb-5 mb-lg-0">
-                            <h3 class="mb-4">top products</h3>
-                            <ul>
-                                <li class="mb-2"><a href="#">managed website</a></li>
-                                <li class="mb-2"><a href="#">managed reputation</a></li>
-                                <li class="mb-2"><a href="#">power tools</a></li>
-                                <li><a href="#">marketing service</a></li>
-                            </ul>
-                        </div>
+                        
                     </div>
-                    <div class="col-xl-5 offset-xl-1 col-lg-6">
-                        <div class="single-widget-home mb-5 mb-lg-0">
-                            <h3 class="mb-4">newsletter</h3>
-                            <p class="mb-4">You can trust us. we only send promo offers, not a single.</p>
-                            <form action="#">
-                                <input type="email" placeholder="Your email here" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email here'" required>
-                                <button type="submit" class="template-btn">subscribe now</button>
-                            </form>
-                        </div>
-                    </div>
+                    
                     <div class="col-xl-3 offset-xl-1 col-lg-3">
                         <div class="single-widge-home">
                             
@@ -141,6 +128,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I"></script>
     <script src="~/_layout/assets/js/vendor/gmaps.min.js"></script>
     <script src="~/_layout/assets/js/main.js"></script>
-
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

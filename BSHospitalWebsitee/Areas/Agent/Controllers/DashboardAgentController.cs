@@ -30,6 +30,15 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         [HttpPost]
         public IActionResult Add(Appointment appointment)
         {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("Email", "E-posta adresi doğru formatta değil");
+                // Eğer modelin doğruluğu sağlanmıyorsa, hataları inceleyebilir veya uygun bir şekilde işleyebilirsiniz
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                // Hataları inceleyip uygun bir şekilde cevap verebilirsiniz
+
+                return BadRequest(new { message = "E-posta adresi doğru formatta değil", errors = ModelState });
+            }
 
             // Ardından randevuyu ekleyin
             _unitOfWork.Appointments.Add(appointment);
@@ -39,7 +48,7 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         }
         public IActionResult GetAll()
         {
-            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).Where(a => a.IsDeclined == false).Where(u=>u.User.Email=="g").ToList();
+            var list = _unitOfWork.Appointments.GetAll().Include(u => u.Patient).Include(u => u.Hospital).Include(u => u.Department).Include(u => u.Doctor).Where(a=>a.IsAccepted==false).Where(a => a.IsDeclined == false).ToList();
             return Json(list);
         }
         [HttpPost]

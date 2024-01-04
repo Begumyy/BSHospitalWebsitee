@@ -19,9 +19,18 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Add(Hospital hospital)
         {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                // ModelState'deki hataları al
+
+                return BadRequest(new { message = "Eksik veya hatalı alanlar var.", errors });
+                
+            }
             _unitOfWork.Hospitals.Add(hospital);
             _unitOfWork.Save();
-            return Json(new { success = true });
+            return Json(hospital);
         }
 
         public IActionResult GetAll()
