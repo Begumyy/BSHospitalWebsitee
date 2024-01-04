@@ -7,7 +7,7 @@
                     <h4>Daha iyi bir yaşam için her zaman yanınızdayız...</h4>
                     <h1>Sağlığınız bizim önceliğimiz</h1>
                     <p>HEMEN RANDEVU ALIN!</p>
-                    <a href="#" class="template-btn mt-3">Randevu Al</a>
+                    <a href="randevuForm" class="template-btn mt-3">Randevu Al</a>
                    
                     </div>
                 </div>
@@ -94,9 +94,9 @@
                                 <input type="text" placeholder="Hastane Seçiniz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Hastane Seçiniz'" required>
                             </div>
                             
-                            <div class="form-group">
+                           @*  <div class="form-group">
                                 <input type="text" placeholder="Şube Seçiniz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Şube Seçiniz'" required>
-                            </div>
+                            </div> *@
                             <div class="form-group">
                                 <input type="text" placeholder="Departman Seçiniz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Departman Seçiniz'" required>
                             </div>
@@ -236,19 +236,17 @@
                 var name = $("#txtName").val();
                 var phone = $("#txtPhone").val();
                 var hospital = $("#ddlHospital").val();
-                var branch = $("#ddlBranch").val();
                 var department = $("#ddlDepartment").val();
                 var message = $("#txtMessage")
 
                 $.ajax({
                     type: 'POST',
                     url: '/Appointment/AddRandevu',
-                    //contentType: 'application/json',
+                    contentType: 'application/json',
                     data: {
                         name: $("#txtName").val(),
                         phone: $("#txtPhone").val(),
                         hospital: $("#ddlHospital").val(),
-                        branch: $("#ddlBranch").val(),
                         department: $("#ddlDepartment").val(),
                         message: $("#txtMessage").val()
                     },
@@ -262,22 +260,5 @@
             });
         });
     </script>
-
-
-
-
 </body>
-
-@* @section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnGetRandevu").click(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '/Home/GetRandevu',
-                })
-            })
-        })
-    </script>
-} *@
 

@@ -15,7 +15,7 @@
                     <h4>Daha iyi bir yaşam için her zaman yanınızdayız...</h4>
                     <h1>Sağlığınız bizim önceliğimiz</h1>
                     <p>HEMEN RANDEVU ALIN!</p>
-                    <a href="#btnGetRandevu" class="template-btn mt-3">Randevu Al</a>
+                    <a href="#randevuForm" class="template-btn mt-3">Randevu Al</a>
 
                 </div>
             </div>
@@ -111,30 +111,22 @@
                                     <input type="tel" class="form-control" id="txtPhone" name="txtPhone" maxlength="11" placeholder="Telefonunuz" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Telefonunuz'" required>
                                 </div>
                             </div>
-
+                            <!-- Hastane Seçimi -->
                             <div class="mb-3 row">
                                 <label for="ddlHospital" class="col-4 col-form-label">Hastane Seçiniz</label>
                                 <div class="col-8">
                                     <select class="form-select" name="ddlHospital" id="ddlHospital" required>
-                                        <!-- Hospital options will be dynamically populated through JavaScript -->
+                                        <!-- Option'ları JavaScript ile dolduracağız -->
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="mb-3 row">
-                                <label for="ddlBranch" class="col-4 col-form-label">Şube Seçiniz</label>
-                                <div class="col-8">
-                                    <select class="form-select" name="ddlBranch" id="ddlBranch" required>
-                                        <!-- Branch options will be dynamically populated through JavaScript -->
-                                    </select>
-                                </div>
-                            </div>
-
+                            <!-- Departman Seçimi -->
                             <div class="mb-3 row">
                                 <label for="ddlDepartment" class="col-4 col-form-label">Departman Seçiniz</label>
                                 <div class="col-8">
                                     <select class="form-select" name="ddlDepartment" id="ddlDepartment" required>
-                                        <!-- Department options will be dynamically populated through JavaScript -->
+                                        <!-- Option'ları JavaScript ile dolduracağız -->
                                     </select>
                                 </div>
                             </div>
@@ -219,7 +211,9 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#randevuForm").click(function () {
+            //$("#btnGetRandevu").click(function (e) {
+                e.preventDefault(); // Sayfanın formun submit olayını durdur
+
                 // var name = $("input[placeholder='İsminiz']").val();
                 // var phone = $("input[placeholder='Telefonunuz']").val();
                 // var hospital = $("input[placeholder='Hastane Seçiniz']").val();
@@ -229,7 +223,6 @@
                 var name = $("#txtName").val();
                 var phone = $("#txtPhone").val();
                 var hospital = $("#ddlHospital").val();
-                var branch = $("#ddlBranch").val();
                 var department = $("#ddlDepartment").val();
                 var message = $("#txtMessage")
 
@@ -241,7 +234,6 @@
                         name: $("#txtName").val(),
                         phone: $("#txtPhone").val(),
                         hospital: $("#ddlHospital").val(),
-                        branch: $("#ddlBranch").val(),
                         department: $("#ddlDepartment").val(),
                         message: $("#txtMessage").val()
                     },
@@ -252,54 +244,79 @@
                         console.error('Error:', error);
                     }
                 });
-            });
+            //});
+
+                // Sayfa yüklendiğinde departmanları ve hastaneleri doldur
+                fillListDepartment();
+                fillListHospital();
+
         });
 
 
-            function fillListDepartment(departmantId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Appointment/AddRandevu',
-                    success: function (res) {
-                        $("#ddlDepartment").empty();
-                        for (var item of res) {
-                            $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
-                        }
-                    }
-                })
+    //         function fillListDepartment(departmantId) {
+    //             $.ajax({
+    //                 type: 'GET',
+    //                 url: '/Appointment/AddRandevu',
+    //                 success: function (res) {
+    //                     $("#ddlDepartment").empty();
+    //                     for (var item of res) {
+    //                         $("#ddlDepartment").append(new Option(item.departmantName, item.id, false, item.id == departmantId));
+    //                     }
+    //                 }
+    //             });
+    //         }
+
+    //         function fillListHospital(hospitalId) {
+    //             $.ajax({
+    //                 type: 'GET',
+    //                 url: '/Appointment/AddRandevu',
+    //                 success: function (res) {
+    //                     $("#ddlHospital").empty();
+    //                     for (var item of res) {
+    //                         $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
+    //                     }
+    //                 }
+    //             });
+    //         }
+
+            // JavaScript ile select etiketini doldur
+            function fillHospitalDropdown() {
+                var hospitals = ["Hospital A", "Hospital B", "Hospital C"]; // Örnek hastane isimleri
+
+                var ddlHospital = document.getElementById("ddlHospital");
+
+                hospitals.forEach(function (hospital) {
+                    var option = document.createElement("option");
+                    option.value = hospital;
+                    option.text = hospital;
+                    ddlHospital.add(option);
+                });
             }
 
+            function fillDepartmentDropdown() {
+                var departments = ["Department X", "Department Y", "Department Z"]; // Örnek departman isimleri
 
+                var ddlDepartment = document.getElementById("ddlDepartment");
 
-            function fillListHospital(hospitalId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Appointment/AddRandevu',
-                    success: function (res) {
-                        $("#ddlHospital").empty();
-                        for (var item of res) {
-                            $("#ddlHospital").append(new Option(item.hospitalName, item.id, false, item.id == hospitalId));
-                        }
-                    }
-                })
+                departments.forEach(function (department) {
+                    var option = document.createElement("option");
+                    option.value = department;
+                    option.text = department;
+                    ddlDepartment.add(option);
+                });
             }
 
-            function fillListBranch(branchId) {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Appointment/AddRandevu',
-                    success: function (res) {
-                        $("#ddlBranch").empty();
-                        for (var item of res) {
-                            $("#ddlBranch").append(new Option(item.branchName, item.id, false, item.id == branchId));
-                        }
-                    }
-                })
-            }
+            // Sayfa yüklendiğinde çağır
+            document.addEventListener('DOMContentLoaded', function () {
+                fillHospitalDropdown();
+                fillDepartmentDropdown();
+            });
+
+
 
     </script>
-}
 
+}
 
     @* <script>
         document.addEventListener('DOMContentLoaded', function () {
