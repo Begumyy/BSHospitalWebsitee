@@ -47,7 +47,7 @@
 @section Scripts{
     <script type="text/javascript">
        
-        $(document).ready(function () {
+      $(document).ready(function () {
             list();
             $("#btnAdd").click(function () {
                 $("input").val('');
@@ -61,8 +61,6 @@
                         success: function () {
                             $("#modalList").modal('hide');
                             $("#tblListDepartment").DataTable().ajax.reload();
-                            
-
                         }
                     });
 
@@ -73,7 +71,7 @@
                 $("#modalList").modal('show');// modalList'i mi yanlış yazmışım hocam 
                 fillListDepartment();
             });
-        });
+        
 
 
             //hocam ilk önce projyi çalıştırayım göstreryimm istersehiz nasıl oluyor diye? bi dk cocugu giydiriyorum tamam hocam.
@@ -99,6 +97,7 @@
             });
 
         }
+      });
 
      
         function deleteDepartment(id) {

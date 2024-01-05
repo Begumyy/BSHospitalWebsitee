@@ -53,7 +53,7 @@
                 $("input").val('');
                 $("#btnSave").off().click(function () {
                     var doctor = $("#txtDoctor").val();
-                        $.ajax({
+                         $.ajax({
                             type: 'POST',
                             url: '/Admin/Doctor/Add',
                             data: { doctorName: doctor},

@@ -17,14 +17,14 @@
                             <label for="inputName" class="col-4 col-form-label">Hastane Adı</label>
                             <div class="col-8">
                                 
-                                <select class="form-select" id="ddlHospital">
+                               @*  <select class="form-select" id="ddlHospital">
                                     <option value="">Hastane Adı Seçin</option>
 
                                     @foreach (var hospital in Model.Hospital.HospitalName)
                                     {
                                         <option value="@hospital.">@hospital</option>
                                     }
-                                </select>
+                                </select> *@
                             </div>
                         </div>
 
@@ -94,9 +94,7 @@
                 <div class="col-lg-5">
                     <h4>Daha iyi bir yaşam için her zaman yanınızdayız...</h4>
                     <h1>Sağlığınız bizim önceliğimiz</h1>
-                    <p>HEMEN RANDEVU ALIN!</p>
-                   @* <a asp-action="Index"asp-controller="Appointment" class="template-btn mt-3">Randevu Al</a> *@
-                    <a id="btnEkle" class="template-btn mt-3">Randevu Al</a>
+                    
                 </div>
             </div>
         </div>

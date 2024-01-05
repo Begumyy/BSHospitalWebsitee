@@ -21,17 +21,13 @@ namespace BSHospital.Websitee.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Add(Doctor doctor)
         {
-            if (!ModelState.IsValid)
+            if (doctor.DoctorName != null)
             {
 
-                // Eğer modelin doğruluğu sağlanmıyorsa, hataları inceleyebilir veya uygun bir şekilde işleyebilirsiniz
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                // Hataları inceleyip uygun bir şekilde cevap verebilirsiniz
-
-                return BadRequest(new { message = "E-posta adresi doğru formatta değil", errors = ModelState });
+               _unitOfWork.Doctors.Add(doctor);
+                _unitOfWork.Save();
             }
-            _unitOfWork.Doctors.Add(doctor);
-            _unitOfWork.Save();
+            
             return Json(new { success = true });
         }
 

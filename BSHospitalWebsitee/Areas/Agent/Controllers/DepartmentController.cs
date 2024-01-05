@@ -17,6 +17,8 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
             return View();
         }
 
+
+
         public IActionResult GetAll()
         {
             return Json(_unitOfWork.Departments.GetAll().ToList());

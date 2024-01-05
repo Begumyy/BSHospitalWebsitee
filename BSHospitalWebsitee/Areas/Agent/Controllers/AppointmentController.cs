@@ -24,21 +24,13 @@ namespace BSHospital.Websitee.Areas.Agent.Controllers
         [HttpPost]
         public IActionResult Add(Appointment appointment)
         {
-            if (!ModelState.IsValid)
+            if (appointment.AppointmentDate != null)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-                // ModelState'deki hataları al
-
-                return BadRequest(new { message = "Eksik veya hatalı alanlar var.", errors });
-                // Hataları JSON formatında dön
-            }
-
-
-            _unitOfWork.Appointments.Add(appointment);
+                _unitOfWork.Appointments.Add(appointment);
                 _unitOfWork.Save();
-                return Ok(appointment);
-            
 
+            }
+            return Json(new { success = true });
         }
         public IActionResult GetAll()
         {
